@@ -9,3 +9,131 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id               Int               @id @default(autoincrement())
+  name             String            @db.VarChar(63)
+  email            String            @unique
+  avatar           String?           @db.VarChar(255)
+  password         String            @db.VarChar(255)
+  sex              String            @db.VarChar(31)
+  role             String            @db.VarChar(31)
+  birthDate        DateTime?         @map("birth_date")
+  location         String            @db.VarChar(255)
+  createdAt        DateTime          @default(now()) @map("created_at")
+  level            String            @db.VarChar(31)
+  trainingTypes    String[]          @map("training_types") @db.VarChar(31)
+  refreshToken     String?           @map("refresh_token")
+  sportsman        Sportsman?
+  coach            Coach?
+  trainingRequests TrainingRequest[]
+  notifications    Notification[]
+
+  @@map("user")
+}
+
+model Sportsman {
+  id               Int               @id @default(autoincrement())
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           Int               @unique @map("user_id")
+  caloriesPerDay   Int               @map("calories_per_day") @db.SmallInt
+  caloriesToLose   Int               @map("calories_to_lose") @db.SmallInt
+  readyToTraining  Boolean           @map("ready_to_training")
+  trainingDuration String            @map("training_duration") @db.VarChar(31)
+  trainingRequests TrainingRequest[]
+
+  @@map("sportsman")
+}
+
+model Coach {
+  id                   Int        @id @default(autoincrement())
+  user                 User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               Int        @unique @map("user_id")
+  certificate          String     @db.VarChar(255)
+  achievements         String     @db.VarChar(511)
+  hasPersonalTrainings Boolean    @map("has_personal_trainings")
+  trainings            Training[]
+
+  @@map("coach")
+}
+
+model Training {
+  id             Int      @id @default(autoincrement())
+  title          String   @db.VarChar(63)
+  image          String   @db.VarChar(255)
+  level          String   @db.VarChar(31)
+  types          String[] @db.VarChar(31)
+  duration       String   @db.VarChar(31)
+  price          Int
+  calories       Int      @db.SmallInt
+  description    String   @db.VarChar(255)
+  sex            String   @db.VarChar(31)
+  video          String   @db.VarChar(255)
+  rating         Float    @default(0)
+  isSpecialOffer Boolean  @default(false) @map("is_special_offer")
+  coach          Coach    @relation(fields: [coachId], references: [id], onDelete: Cascade)
+  coachId        Int      @map("coach_id")
+  reviews        Review[]
+
+  @@map("training")
+}
+
+model Gym {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(63)
+  location    String   @db.VarChar(255)
+  isVerified  Boolean  @default(false) @map("is_verified")
+  parameters  String[] @db.VarChar(63)
+  photos      String[] @db.VarChar(255)
+  description String   @db.VarChar(511)
+  price       Int      @db.SmallInt
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("gym")
+}
+
+model Review {
+  id         Int      @id @default(autoincrement())
+  training   Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+  trainingId Int      @map("training_id")
+  rating     Int      @db.SmallInt
+  text       String   @db.Text
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("review")
+}
+
+model Order {
+  id            Int      @id @default(autoincrement())
+  type          String   @db.VarChar(31)
+  price         Int
+  quantity      Int      @db.SmallInt
+  sum           Int
+  paymentMethod String   @map("payment_method") @db.VarChar(31)
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("order")
+}
+
+model TrainingRequest {
+  id          Int       @id @default(autoincrement())
+  initiator   Sportsman @relation(fields: [initiatorId], references: [id], onDelete: Cascade)
+  initiatorId Int       @map("initiator_id")
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int       @map("user_id")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  status      String    @db.VarChar(31)
+
+  @@map("training_request")
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int      @map("user_id")
+  text      String   @db.VarChar(511)
+
+  @@map("notification")
+}

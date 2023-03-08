@@ -56,6 +56,24 @@
           "codeCoverage": true
         }
       }
+    },
+    "db-validate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx dotenv -e ../.env -- npx prisma validate --schema ./packages/backend/prisma/schema.prisma"
+      }
+    },
+    "db-migrate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx dotenv -e ../.env -- npx prisma migrate dev --schema ./packages/backend/prisma/schema.prisma --skip-seed"
+      }
+    },
+    "db-reset": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx dotenv -e ../.env -- npx prisma migrate reset --schema ./packages/backend/prisma/schema.prisma --skip-seed"
+      }
     }
   },
   "tags": []
