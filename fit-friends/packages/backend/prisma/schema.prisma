@@ -28,14 +28,15 @@ model User {
   coach            Coach?
   trainingRequests TrainingRequest[]
   notifications    Notification[]
+  orders           Order[]
 
   @@map("user")
 }
 
 model Sportsman {
-  id               Int               @id @default(autoincrement())
-  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId           Int               @unique @map("user_id")
+  id               Int               @id
+  user             User              @relation(fields: [id], references: [id], onDelete: Cascade)
+  // userId           Int               @unique @map("user_id")
   caloriesPerDay   Int               @map("calories_per_day") @db.SmallInt
   caloriesToLose   Int               @map("calories_to_lose") @db.SmallInt
   readyToTraining  Boolean           @map("ready_to_training")
@@ -46,9 +47,9 @@ model Sportsman {
 }
 
 model Coach {
-  id                   Int        @id @default(autoincrement())
-  user                 User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId               Int        @unique @map("user_id")
+  id                   Int        @id
+  user                 User       @relation(fields: [id], references: [id], onDelete: Cascade)
+  // userId               Int        @unique @map("user_id")
   certificate          String     @db.VarChar(255)
   achievements         String     @db.VarChar(511)
   hasPersonalTrainings Boolean    @map("has_personal_trainings")
@@ -60,9 +61,9 @@ model Coach {
 model Training {
   id             Int      @id @default(autoincrement())
   title          String   @db.VarChar(63)
-  image          String   @db.VarChar(255)
+  image          String?  @db.VarChar(255)
   level          String   @db.VarChar(31)
-  types          String[] @db.VarChar(31)
+  type           String   @db.VarChar(31)
   duration       String   @db.VarChar(31)
   price          Int
   calories       Int      @db.SmallInt
@@ -74,6 +75,7 @@ model Training {
   coach          Coach    @relation(fields: [coachId], references: [id], onDelete: Cascade)
   coachId        Int      @map("coach_id")
   reviews        Review[]
+  orders         Order[]
 
   @@map("training")
 }
@@ -88,6 +90,7 @@ model Gym {
   description String   @db.VarChar(511)
   price       Int      @db.SmallInt
   createdAt   DateTime @default(now()) @map("created_at")
+  orders      Order[]
 
   @@map("gym")
 }
@@ -104,26 +107,32 @@ model Review {
 }
 
 model Order {
-  id            Int      @id @default(autoincrement())
-  type          String   @db.VarChar(31)
+  id            Int       @id @default(autoincrement())
+  type          String    @db.VarChar(31)
   price         Int
-  quantity      Int      @db.SmallInt
+  quantity      Int       @db.SmallInt
   sum           Int
-  paymentMethod String   @map("payment_method") @db.VarChar(31)
-  createdAt     DateTime @default(now()) @map("created_at")
+  paymentMethod String    @map("payment_method") @db.VarChar(31)
+  createdAt     DateTime  @default(now()) @map("created_at")
+  training      Training? @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+  trainingId    Int?      @map("training_id")
+  gym           Gym?      @relation(fields: [gymId], references: [id], onDelete: Cascade)
+  gymId         Int?      @map("gym_id")
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int       @map("user_id")
 
   @@map("order")
 }
 
 model TrainingRequest {
-  id          Int       @id @default(autoincrement())
-  initiator   Sportsman @relation(fields: [initiatorId], references: [id], onDelete: Cascade)
-  initiatorId Int       @map("initiator_id")
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      Int       @map("user_id")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
-  status      String    @db.VarChar(31)
+  id           Int       @id @default(autoincrement())
+  initiator    Sportsman @relation(fields: [initiatorId], references: [id], onDelete: Cascade)
+  initiatorId  Int       @map("initiator_id")
+  targetUser   User      @relation(fields: [targetUserId], references: [id], onDelete: Cascade)
+  targetUserId Int       @map("target_user_id")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  status       String    @db.VarChar(31)
 
   @@map("training_request")
 }
