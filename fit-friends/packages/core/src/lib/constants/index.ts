@@ -6,7 +6,7 @@ export * from './review';
 export * from './training';
 export * from './training-request';
 
-export const enum Location {
+export enum Location {
   Pionerskaya = 'pionerskaya',
   Petrogradsraya = 'petrogradskaya',
   Udelnaya = 'udelnaya',
@@ -14,13 +14,13 @@ export const enum Location {
   Sportivnaya = 'sportivnaya',
 }
 
-export const enum Level {
+export enum Level {
   Beginner = 'beginner',
   Amateur = 'amateur',
   Professional = 'professional',
 }
 
-export const enum TrainingType {
+export enum TrainingType {
   Yoga = 'yoga',
   Running = 'running',
   Box = 'box',
@@ -30,7 +30,7 @@ export const enum TrainingType {
   Pilates = 'pilates',
 }
 
-export const enum TrainingTimeIntervals {
+export enum TrainingTimeIntervals {
   TenToThirtyMinutes = '10-30',
   ThirtyToFiftyMinutes = '30-50',
   FiftyToEightyMinutes = '50-80',

@@ -8,13 +8,13 @@ export const enum UserPassword {
   MaxLength = 15,
 }
 
-export const enum UserRole {
+export enum UserRole {
   Coach = 'coach',
   Sportsman = 'sportsman',
   Anonymous = 'anonymous',
 }
 
-export const enum UserSex {
+export enum UserSex {
   Male = 'male',
   Female = 'female',
   Any = 'any',
