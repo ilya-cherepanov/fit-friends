@@ -1,4 +1,4 @@
-export const enum OrderType {
+export enum OrderType {
   Subscription = 'subscription',
   Training = 'training',
 }
@@ -8,7 +8,7 @@ export const enum OrderTrainingCount {
   Max = 50,
 }
 
-export const enum OrderPaymentMethod {
+export enum OrderPaymentMethod {
   Visa = 'visa',
   Mir = 'mir',
   Umoney = 'umoney',

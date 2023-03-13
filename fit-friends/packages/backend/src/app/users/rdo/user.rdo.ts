@@ -1,73 +1,74 @@
 import {BaseUserResponse, CoachResponse, SportsmanResponse} from '@fit-friends/shared-types';
 import {Level, Location, UserRole, UserSex, TrainingTimeIntervals, TrainingType} from '@fit-friends/core';
-import {ApiProperty} from '@nestjs/swagger';
+import {ApiExtraModels, ApiProperty} from '@nestjs/swagger';
 
-class BaseUserRDO implements BaseUserResponse {
+export class BaseUserRDO implements BaseUserResponse {
   @ApiProperty({
-    description: '',
+    description: 'Идентификатор пользователя',
     example: 10,
   })
   id: number;
+
   @ApiProperty({
-    description: '',
+    description: 'Аватар пользователя',
     example: 'dd98c55d-0101-460c-a962-fd955c1a194c.jpg',
   })
   avatar: string;
 
   @ApiProperty({
-    description: '',
+    description: 'Дата рождения пользователя',
     example: '2002-03-10',
   })
   birthDate: string;
 
   @ApiProperty({
-    description: '',
+    description: 'Дата регистрации пользователя',
     example: '2023-03-10T15:18:29.847Z',
   })
   createdAt: string;
 
   @ApiProperty({
-    description: '',
+    description: 'Электронная почта пользователя',
     example: 'user@mail.com',
   })
   email: string;
 
   @ApiProperty({
-    description: '',
+    description: 'Уровень подготовки/квалификации пользователя',
     enum: Level,
     example: Level.Professional,
   })
   level: Level;
 
   @ApiProperty({
-    description: '',
+    description: 'Станция метро где находится пользователь',
     enum: Location,
     example: Location.Petrogradsraya,
   })
   location: Location;
 
   @ApiProperty({
-    description: '',
-    example: 'Valeara',
+    description: 'Имя пользователя',
+    example: 'Валера',
   })
   name: string;
 
   @ApiProperty({
-    description: '',
+    description: 'Тип пользоавтеля',
     enum: UserRole,
     example: UserRole.Sportsman
   })
   role: UserRole;
 
   @ApiProperty({
-    description: '',
+    description: 'Пол пользователя',
     enum: UserSex,
     example: UserSex.Any,
   })
   sex: UserSex;
 
   @ApiProperty({
-    description: '',
+    description: 'Тип тренировок',
     enum: TrainingType,
     isArray: true,
     example: [
@@ -81,28 +82,26 @@ class BaseUserRDO implements BaseUserResponse {
 
 export class SportsmanRDO extends BaseUserRDO implements SportsmanResponse {
   @ApiProperty({
-    description: '',
+    description: 'Количество калорий для траты в день',
     example: 1200,
-    required: false,
   })
   caloriesPerDay: number;
 
   @ApiProperty({
-    description: '',
+    description: 'Количество калорий для сброса',
     example: 1200,
-    required: false,
   })
   caloriesToLose: number;
 
   @ApiProperty({
-    description: '',
+    description: 'Время на тренировку',
     enum: TrainingTimeIntervals,
     example: TrainingTimeIntervals.FiftyToEightyMinutes,
   })
   trainingDuration: TrainingTimeIntervals;
 
   @ApiProperty({
-    description: '',
+    description: 'Готовность к тренировке',
     example: true,
   })
   readyToTraining: boolean;
@@ -110,23 +109,20 @@ export class SportsmanRDO extends BaseUserRDO implements SportsmanResponse {
 
 export class CoachRDO extends BaseUserRDO implements CoachResponse {
   @ApiProperty({
-    description: '',
+    description: 'Сертификат тренера',
     example: 'dd98c55d-0101-460c-a962-fd955c1a194c.pdf',
-    required: false,
   })
   certificate: string;
 
   @ApiProperty({
-    description: '',
-    example: '',
-    required: false,
+    description: 'Достижения тренера',
+    example: 'Персональный тренер и инструктор групповых программ с опытом  более 4х лет. Специализация: коррекция фигуры и осанки, снижение веса, восстановление после травм, пилатес.',
   })
   achievements: string;
 
   @ApiProperty({
-    description: '',
+    description: 'Флаг готовности проводить персональные тренеровки',
     example: true,
-    required: false,
   })
   hasPersonalTraining: boolean;
 }

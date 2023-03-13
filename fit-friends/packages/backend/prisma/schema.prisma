@@ -29,6 +29,8 @@ model User {
   trainingRequests TrainingRequest[]
   notifications    Notification[]
   orders           Order[]
+  friends          Friend[]          @relation("friend")
+  friendsBy        Friend[]          @relation("user")
 
   @@map("user")
 }
@@ -56,6 +58,16 @@ model Coach {
   trainings            Training[]
 
   @@map("coach")
+}
+
+model Friend {
+  user     User @relation("user", fields: [userId], references: [id], onDelete: Cascade)
+  friend   User @relation("friend", fields: [friendId], references: [id], onDelete: Cascade)
+  userId   Int  @map("user_id")
+  friendId Int  @map("friend_id")
+
+  @@id([userId, friendId])
+  @@map("friend")
 }
 
 model Training {

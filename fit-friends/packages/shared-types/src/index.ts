@@ -1,4 +1,4 @@
-export * from './lib/friends-list-response';
+export * from './lib/user-list-response';
 export * from './lib/jwt-payload';
 export * from './lib/login-data';
 export * from './lib/order-list-response';
@@ -10,3 +10,5 @@ export * from './lib/tokens-response';
 export * from './lib/training-data';
 export * from './lib/training-response';
 export * from './lib/user-response';
+export * from './lib/list-response';
+export * from './lib/order-data';

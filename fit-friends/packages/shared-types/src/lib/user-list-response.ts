@@ -1,8 +1,8 @@
 import {UserResponse} from './user-response';
 
 
-export interface FriendsListResponse {
+export interface UserListResponse {
   currentPage: number;
   totalPages: number;
-  friends: UserResponse[];
+  users: UserResponse[];
 }

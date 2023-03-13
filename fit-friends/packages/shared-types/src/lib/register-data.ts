@@ -9,16 +9,16 @@ export interface BaseRegisterData {
   level: Level;
   trainingTypes: TrainingType[];
   role: UserRole;
+  birthDate?: string;
 }
 
 export interface CoachRegisterData extends BaseRegisterData {
-  role: UserRole.Coach;
   achievements: string;
   hasPersonalTraining: boolean;
+  certificate: unknown;
 }
 
 export interface SportsmanRegisterData extends BaseRegisterData {
-  role: UserRole.Sportsman;
   caloriesPerDay: number;
   caloriesToLose: number;
   trainingDuration: TrainingTimeIntervals;

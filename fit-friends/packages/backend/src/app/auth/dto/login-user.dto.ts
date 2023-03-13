@@ -12,7 +12,7 @@ export class LoginUserDTO implements LoginData {
   email: string;
 
   @ApiProperty({
-    description: 'Password',
+    description: 'Пароль пользователя',
     minLength: UserPassword.MinLength,
     maxLength: UserPassword.MaxLength,
   })

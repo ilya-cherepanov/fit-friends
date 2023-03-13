@@ -8,4 +8,8 @@ export interface TrainingData {
   calories: number;
   sex: UserSex;
   description: string;
+  video: unknown;
+  image: unknown;
+  isSpecialOffer?: boolean;
+  price: number;
 }
