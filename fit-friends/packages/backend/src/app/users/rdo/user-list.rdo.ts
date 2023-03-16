@@ -1,21 +1,24 @@
 import {UserListResponse} from '@fit-friends/shared-types';
 import {BaseUserRDO, CoachRDO, SportsmanRDO} from './user.rdo';
-import {Type} from 'class-transformer';
+import {Expose, Type} from 'class-transformer';
 import {UserRole} from '@fit-friends/core';
-import {ApiProperty, getSchemaPath} from '@nestjs/swagger';
+import {ApiExtraModels, ApiProperty, getSchemaPath} from '@nestjs/swagger';
 
 
+@ApiExtraModels(CoachRDO, SportsmanRDO)
 export class UserListRDO implements UserListResponse {
   @ApiProperty({
     description: 'Текущая страница',
     example: 1,
   })
+  @Expose()
   currentPage: number;
 
   @ApiProperty({
     description: 'Общее количество страниц',
     example: 10,
   })
+  @Expose()
   totalPages: number;
 
   @ApiProperty({
@@ -37,5 +40,6 @@ export class UserListRDO implements UserListResponse {
       ],
     },
   })
+  @Expose()
   users: (SportsmanRDO | CoachRDO)[];
 }

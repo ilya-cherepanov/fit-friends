@@ -24,9 +24,7 @@ export class AuthController {
     description: 'Пользователь с данным email или паролем не существует'
   })
   async login(@Body() dto: LoginUserDTO) {
-    const tokens = await this.authService.login(dto);
-    console.log(tokens);
-    return fillObject(TokensRDO, tokens);
+    return fillObject(TokensRDO, await this.authService.login(dto));
   }
 
   @Post('logout')

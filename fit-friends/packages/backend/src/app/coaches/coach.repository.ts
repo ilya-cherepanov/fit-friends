@@ -40,7 +40,7 @@ export class CoachRepository {
           coach: {
             create: {
               certificate: newCoach.certificate,
-              hasPersonalTrainings: newCoach.hasPersonalTraining,
+              hasPersonalTrainings: newCoach.hasPersonalTrainings,
               achievements: newCoach.achievements,
             },
           },
@@ -74,7 +74,7 @@ export class CoachRepository {
           coach: {
             update: {
               certificate: updatedCoach.certificate,
-              hasPersonalTrainings: updatedCoach.hasPersonalTraining,
+              hasPersonalTrainings: updatedCoach.hasPersonalTrainings,
               achievements: updatedCoach.achievements,
             },
           },

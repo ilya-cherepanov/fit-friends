@@ -26,7 +26,7 @@ export interface CoachResponse extends BaseUserResponse {
   // role: UserRole.Coach;
   certificate: string;
   achievements: string;
-  hasPersonalTraining: boolean;
+  hasPersonalTrainings: boolean;
 }
 
 export type UserResponse = SportsmanResponse | CoachResponse;
