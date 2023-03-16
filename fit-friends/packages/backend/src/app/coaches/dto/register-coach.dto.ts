@@ -3,6 +3,7 @@ import {CoachRegisterData} from '@fit-friends/shared-types';
 import {ApiProperty} from '@nestjs/swagger';
 import {IsBoolean, IsString, Length} from 'class-validator';
 import {CoachAccomplishments} from '@fit-friends/core';
+import {Transform} from 'class-transformer';
 
 
 export class RegisterCoachDTO extends RegisterUserDTO implements CoachRegisterData {
@@ -23,7 +24,8 @@ export class RegisterCoachDTO extends RegisterUserDTO implements CoachRegisterDa
     required: false,
   })
   @IsBoolean()
-  hasPersonalTraining: boolean;
+  @Transform(({value}) => !!value)
+  hasPersonalTrainings: boolean;
 
   @ApiProperty({
     description: 'Файл с сертификатом',

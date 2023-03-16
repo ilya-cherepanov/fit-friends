@@ -14,8 +14,8 @@ export interface BaseRegisterData {
 
 export interface CoachRegisterData extends BaseRegisterData {
   achievements: string;
-  hasPersonalTraining: boolean;
-  certificate: unknown;
+  hasPersonalTrainings: boolean;
+  certificate?: unknown;
 }
 
 export interface SportsmanRegisterData extends BaseRegisterData {

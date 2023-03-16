@@ -3,6 +3,7 @@ import {SportsmanRegisterData} from '@fit-friends/shared-types';
 import {SportsmanLoseCalories, SportsmanLoseCaloriesPerDay, TrainingTimeIntervals} from '@fit-friends/core';
 import {ApiProperty} from '@nestjs/swagger';
 import {IsEnum, IsInt, Max, Min} from 'class-validator';
+import {Transform} from 'class-transformer';
 
 
 export class RegisterSportsmanDTO extends RegisterUserDTO implements SportsmanRegisterData {
@@ -15,6 +16,7 @@ export class RegisterSportsmanDTO extends RegisterUserDTO implements SportsmanRe
   @Max(SportsmanLoseCaloriesPerDay.Max)
   @Min(SportsmanLoseCaloriesPerDay.Min)
   @IsInt()
+  @Transform(({value}) => parseInt(value))
   caloriesPerDay: number;
 
   @ApiProperty({
@@ -26,6 +28,7 @@ export class RegisterSportsmanDTO extends RegisterUserDTO implements SportsmanRe
   @Max(SportsmanLoseCalories.Max)
   @Min(SportsmanLoseCalories.Min)
   @IsInt()
+  @Transform(({value}) => parseInt(value))
   caloriesToLose: number;
 
   @ApiProperty({

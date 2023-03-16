@@ -115,3 +115,6 @@ dist
 
 # Database
 db/
+
+# Upload
+upload/

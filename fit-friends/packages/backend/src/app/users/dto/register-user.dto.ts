@@ -10,7 +10,7 @@ import {
   UserSex
 } from '@fit-friends/core';
 import {ApiProperty} from '@nestjs/swagger';
-import {ArrayUnique, IsDateString, IsEmail, IsEnum, IsString, Length, MaxLength} from 'class-validator';
+import {ArrayMaxSize, ArrayUnique, IsDateString, IsEmail, IsEnum, IsString, Length, MaxLength} from 'class-validator';
 
 export abstract class RegisterUserDTO implements BaseRegisterData {
   @ApiProperty({
@@ -52,7 +52,7 @@ export abstract class RegisterUserDTO implements BaseRegisterData {
     required: false,
   })
   @IsDateString()
-  birthDate?: string;
+  birthDate: string;
 
   @ApiProperty({
     description: 'Пароль пользователя',
@@ -91,7 +91,7 @@ export abstract class RegisterUserDTO implements BaseRegisterData {
     ],
     maxLength: USER_MAX_TRAINING_TYPE_COUNT,
   })
-  @MaxLength(USER_MAX_TRAINING_TYPE_COUNT)
+  @ArrayMaxSize(USER_MAX_TRAINING_TYPE_COUNT)
   @ArrayUnique()
   @IsEnum(TrainingType, {each: true})
   trainingTypes: TrainingType[];
