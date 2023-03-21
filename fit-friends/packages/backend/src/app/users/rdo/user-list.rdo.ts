@@ -39,6 +39,7 @@ export class UserListRDO implements UserListResponse {
         {value: SportsmanRDO, name: UserRole.Sportsman},
       ],
     },
+    keepDiscriminatorProperty: true,
   })
   @Expose()
   users: (SportsmanRDO | CoachRDO)[];

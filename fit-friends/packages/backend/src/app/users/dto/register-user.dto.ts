@@ -97,7 +97,7 @@ export abstract class RegisterUserDTO implements BaseRegisterData {
   trainingTypes: TrainingType[];
 
   @ApiProperty({
-    description: 'Файл с сертификатом',
+    description: 'Аватар пользователя',
     type: 'string',
     format: 'binary',
     required: false,

@@ -5,6 +5,9 @@ export * from './order';
 export * from './review';
 export * from './training';
 export * from './training-request';
+export * from './sorting-order';
+
+export const MAX_COLLECTION_LENGTH = 50;
 
 export enum Location {
   Pionerskaya = 'pionerskaya',

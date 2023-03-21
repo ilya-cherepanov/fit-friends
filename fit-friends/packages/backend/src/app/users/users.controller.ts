@@ -1,4 +1,4 @@
-import {Controller, Get, UseGuards} from '@nestjs/common';
+import {Controller, Get, Query, UseGuards} from '@nestjs/common';
 import {UsersService} from './users.service';
 import {JWTPayload} from '@fit-friends/shared-types';
 import {User} from '../auth/decorators/user.decorator';
@@ -6,7 +6,16 @@ import {JWTAuthGuard} from '../auth/guards/jwt-auth.guard';
 import {CoachEntity, SportsmanEntity} from './user.entity';
 import {fillObject} from '@fit-friends/core';
 import {CoachRDO, SportsmanRDO} from './rdo/user.rdo';
-import {ApiExtraModels, ApiNotFoundResponse, ApiOkResponse, ApiTags, getSchemaPath} from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiExtraModels,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+  getSchemaPath
+} from '@nestjs/swagger';
+import {UsersQuery} from './query/users.query';
+import {UserListRDO} from './rdo/user-list.rdo';
 
 @Controller('users')
 @ApiTags('Users')
@@ -36,5 +45,17 @@ export class UsersController {
     } else if (userEntity instanceof SportsmanEntity) {
       return fillObject(SportsmanRDO, userEntity);
     }
+  }
+
+  @Get('/all')
+  @ApiOkResponse({
+    description: 'Возвращает список пользователей',
+    type: UserListRDO,
+  })
+  @ApiBadRequestResponse({
+    description: 'Неверный запрос',
+  })
+  async getAll(@Query() query: UsersQuery) {
+    return fillObject(UserListRDO, await this.usersService.getAll(query));
   }
 }

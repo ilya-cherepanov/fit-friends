@@ -1,5 +1,8 @@
 import {Injectable} from '@nestjs/common';
 import {PrismaService} from '../prisma/prisma.service';
+import {UserRole} from '@fit-friends/core';
+import {Prisma} from '@prisma/client';
+import {UserFilters} from '../../types/user-filters';
 
 @Injectable()
 export class UserRepository {
@@ -19,6 +22,39 @@ export class UserRepository {
     }
 
     return user;
+  }
+
+  async getAll(take: number, skip: number, filters: UserFilters, orderBy: UserRole) {
+    const query: Prisma.UserFindManyArgs = {
+      where: {
+        location: filters.locations ? {in: filters.locations} : undefined,
+        trainingTypes: filters.trainingTypes ? {hasSome: filters.trainingTypes} : undefined,
+        level: filters.level,
+      },
+      include: {
+        sportsman: true,
+        coach: true,
+      },
+      orderBy: {},
+      skip,
+      take,
+    };
+
+    if (orderBy === UserRole.Coach) {
+      query.orderBy = {
+        role: 'asc',
+      };
+    } else if (orderBy === UserRole.Sportsman) {
+      query.orderBy = {
+        role: 'desc',
+      };
+    } else {
+      query.orderBy = {
+        createdAt: 'desc',
+      };
+    }
+
+    return this.prismaService.user.findMany(query);
   }
 
   async getByEmail(email: string) {
@@ -43,6 +79,16 @@ export class UserRepository {
       data: {
         refreshToken,
       }
+    });
+  }
+
+  async count(filters: UserFilters) {
+    return this.prismaService.user.count({
+      where: {
+        location: filters.locations ? {in: filters.locations} : undefined,
+        trainingTypes: filters.trainingTypes ? {hasSome: filters.trainingTypes} : undefined,
+        level: filters.level,
+      },
     });
   }
 }

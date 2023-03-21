@@ -5,9 +5,11 @@ import {CoachesController} from './coaches.controller';
 import {MulterModule} from '@nestjs/platform-express';
 import {getUploadFilesConfig} from '../../config/upload.config';
 import {ConfigModule, ConfigService} from '@nestjs/config';
+import {UsersModule} from '../users/users.module';
 
 @Module({
   imports: [
+    UsersModule,
     MulterModule.registerAsync({
       useFactory: getUploadFilesConfig,
       imports: [ConfigModule],

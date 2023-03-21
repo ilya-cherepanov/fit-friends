@@ -2,14 +2,14 @@ import {TrainingType, Level, UserSex, TrainingTimeIntervals} from '@fit-friends/
 
 export interface TrainingData {
   title: string;
-  level: Level;
+  // level: Level;
   type: TrainingType;
   duration: TrainingTimeIntervals;
   calories: number;
   sex: UserSex;
   description: string;
   video: unknown;
-  image: unknown;
+  // image: unknown;
   isSpecialOffer?: boolean;
   price: number;
 }

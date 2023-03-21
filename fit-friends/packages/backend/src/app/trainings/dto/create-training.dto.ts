@@ -9,6 +9,7 @@ import {
 } from '@fit-friends/core';
 import {IsEnum, IsInt, IsString, Length, Max, Min} from 'class-validator';
 import {ApiProperty} from '@nestjs/swagger';
+import {Transform} from 'class-transformer';
 
 
 export class CreateTrainingDTO implements TrainingData {
@@ -18,9 +19,10 @@ export class CreateTrainingDTO implements TrainingData {
     maximum: TrainingCalories.Max,
     example: 2000,
   })
-  @Max(TrainingCalories.Max)
   @Min(TrainingCalories.Min)
+  @Max(TrainingCalories.Max)
   @IsInt()
+  @Transform(({value}) => parseInt(value))
   calories: number;
 
   @ApiProperty({
@@ -51,13 +53,13 @@ export class CreateTrainingDTO implements TrainingData {
   @IsEnum(TrainingTimeIntervals)
   duration: TrainingTimeIntervals;
 
-  @ApiProperty({
-    description: 'Требуемый уровень подготовки',
-    enum: Level,
-    example: Level.Amateur,
-  })
-  @IsEnum(Level)
-  level: Level;
+  // @ApiProperty({
+  //   description: 'Требуемый уровень подготовки',
+  //   enum: Level,
+  //   example: Level.Amateur,
+  // })
+  // @IsEnum(Level)
+  // level: Level;
 
   @ApiProperty({
     description: 'Пол пользователя для которого предназначена тренировка',
@@ -82,6 +84,7 @@ export class CreateTrainingDTO implements TrainingData {
   })
   @Min(MIN_PRICE)
   @IsInt()
+  @Transform(({value}) => parseInt(value))
   price: number;
 
   @ApiProperty({
@@ -91,10 +94,10 @@ export class CreateTrainingDTO implements TrainingData {
   })
   video: unknown;
 
-  @ApiProperty({
-    description: 'Фоновое изображение',
-    type: 'string',
-    format: 'binary',
-  })
-  image: unknown;
+  // @ApiProperty({
+  //   description: 'Фоновое изображение',
+  //   type: 'string',
+  //   format: 'binary',
+  // })
+  // image: unknown;
 }

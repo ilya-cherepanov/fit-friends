@@ -32,6 +32,18 @@ export abstract class BaseUserEntity implements BaseUser {
     return bcrypt.compare(password, this.password);
   }
 
+  update(user: Partial<BaseUser>) {
+
+    this.name = user.name ?? this.name;
+    this.email = user.email ?? this.email;
+    this.avatar = user.avatar ?? this.avatar;
+    this.sex = user.sex ?? this.sex;
+    this.birthDate = user.birthDate ?? this.birthDate;
+    this.location = user.location ?? this.location;
+    this.level = user.level ?? this.level;
+    this.trainingTypes = user.trainingTypes ?? this.trainingTypes;
+  }
+
   fillEntity(user: BaseUser) {
     this.name = user.name;
     this.email = user.email;
@@ -93,6 +105,15 @@ export class SportsmanEntity extends BaseUserEntity implements Sportsman {
     super(sportsman);
   }
 
+  update(user: Partial<Sportsman>) {
+    super.update(user);
+
+    this.caloriesToLose = user.caloriesToLose ?? this.caloriesToLose;
+    this.caloriesPerDay = user.caloriesPerDay ?? this.caloriesPerDay;
+    this.readyToTraining = user.readyToTraining ?? this.readyToTraining;
+    this.trainingDuration = user.trainingDuration ?? this.trainingDuration;
+  }
+
   fillEntity(sportsman: Sportsman) {
     super.fillEntity(sportsman);
     this.caloriesPerDay = sportsman.caloriesPerDay;
@@ -112,6 +133,14 @@ export class CoachEntity extends BaseUserEntity implements Coach {
 
   constructor(coach: Coach) {
     super(coach);
+  }
+
+  update(user: Partial<Coach>) {
+    super.update(user);
+
+    this.certificate = user.certificate ?? this.certificate;
+    this.achievements = user.achievements ?? this.achievements;
+    this.hasPersonalTrainings = user.hasPersonalTrainings ?? this.hasPersonalTrainings;
   }
 
   fillEntity(coach: Coach) {

@@ -10,3 +10,6 @@ export const PRISMA_NOT_FOUND_CODE = 'P2025';
 export const USER_WITH_EMAIL_ALREADY_EXISTS = 'The user with this email already exists!';
 export const INVALID_CREDENTIALS = 'Invalid email or password!';
 export const USER_NOT_FOUND = 'User not found!';
+export const USER_NOT_COACH = 'The user is not a coach!';
+export const USER_NOT_SPORTSMAN = 'The user is not a sportsman!';
+export const COACH_NOT_HAS_SPECIALIZATION = 'The coach does not have the specified specialization!';
