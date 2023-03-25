@@ -1,5 +1,6 @@
 import {Training} from '../../types/training';
 import {Level, TrainingTimeIntervals, TrainingType, UserSex} from '@fit-friends/core';
+import {Training as PrismaTraining} from '@prisma/client'
 
 
 export class TrainingEntity implements Training {
@@ -40,5 +41,29 @@ export class TrainingEntity implements Training {
     if (training.rating) {
       this.rating = training.rating;
     }
+  }
+
+  update(training: Partial<Training>) {
+    this.calories = training.calories ?? this.calories;
+    this.description = training.description ?? this.description;
+    this.duration = training.duration ?? this.duration;
+    this.image = training.image ?? this.image;
+    this.isSpecialOffer = training.isSpecialOffer ?? this.isSpecialOffer;
+    this.level = training.level ?? this.level;
+    this.price = training.price ?? this.price;
+    this.sex = training.sex ?? this.sex;
+    this.title = training.title ?? this.title;
+    this.type = training.type ?? this.type;
+    this.video = training.video ?? this.video;
+  }
+
+  static createFromPrisma(training: PrismaTraining) {
+    return new TrainingEntity({
+      ...training,
+      level: training.level as Level,
+      type: training.type as TrainingType,
+      sex: training.sex as UserSex,
+      duration: training.duration as TrainingTimeIntervals,
+    });
   }
 }

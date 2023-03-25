@@ -13,6 +13,12 @@ export const enum TrainingCalories {
   Max = 5000,
 }
 
+export enum TrainingOrderBy {
+  Expensive = 'expensive',
+  Cheap = 'cheap',
+  Free = 'free',
+}
+
 export const TRAINING_PHOTO_FORMATS = ['png', 'jpg', 'jpeg'] as const;
 export const TRAINING_PHOTO_FORMATS_REG_EXP =
   new RegExp(`(${TRAINING_PHOTO_FORMATS.join('|')})`);

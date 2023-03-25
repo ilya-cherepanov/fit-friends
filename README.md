@@ -1,3 +1,1 @@
-
-
 # fit-friends
