@@ -19,5 +19,6 @@ import {ConfigModule, ConfigService} from '@nestjs/config';
   ],
   providers: [TrainingsService, TrainingRepository],
   controllers: [TrainingsController],
+  exports: [TrainingRepository],
 })
 export class TrainingsModule {}

@@ -15,5 +15,3 @@ export const USER_NOT_SPORTSMAN = 'The user is not a sportsman!';
 export const COACH_NOT_HAS_SPECIALIZATION = 'The coach does not have the specified specialization!';
 export const TRAINING_NOT_FOUND = 'There is no training with this id!';
 export const COACH_NOT_OWNER = 'The coach is not the owner of the training!';
-
-

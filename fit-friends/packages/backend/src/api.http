@@ -154,7 +154,7 @@ POST http://localhost:3333/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "valeria@mail.com",
+  "email": "valeriaa@mail.com",
   "password": "pass1234"
 }
 
@@ -248,13 +248,36 @@ true
 
 ###
 
+# Get one training
 GET http://localhost:3333/api/trainings/3 HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTQxNjQ3OCwiZXhwIjoxNjgwMDIxMjc4fQ.lqB4dF7xYhA4qOrsOstERyFDdOKTSxm1WAyYz6739EI
 
 ###
 
+# Get multiple trainings
 GET http://localhost:3333/api/trainings?minCalories=1100&maxCalories=1000 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTQxNjQ3OCwiZXhwIjoxNjgwMDIxMjc4fQ.lqB4dF7xYhA4qOrsOstERyFDdOKTSxm1WAyYz6739EI
+
+###
+
+# Create order
+POST http://localhost:3333/api/orders HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE1LCJyb2xlIjoic3BvcnRzbWFuIiwiaWF0IjoxNjc5ODE0MTUyLCJleHAiOjE2ODA0MTg5NTJ9.bC09FwWBWU_SqG9REQIVP2kK5nxrZCgCko_reTEyJd8
+
+{
+  "type": "training",
+  "paymentMethod": "visa",
+  "quantity": 4,
+  "id": 3
+}
+
+###
+
+# Get
+GET http://localhost:3333/api/orders HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTQxNjQ3OCwiZXhwIjoxNjgwMDIxMjc4fQ.lqB4dF7xYhA4qOrsOstERyFDdOKTSxm1WAyYz6739EI
 

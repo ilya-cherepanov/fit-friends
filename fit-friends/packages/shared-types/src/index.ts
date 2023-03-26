@@ -9,6 +9,8 @@ export * from './lib/review-response';
 export * from './lib/tokens-response';
 export * from './lib/training-data';
 export * from './lib/training-response';
+export * from './lib/training-short-response';
 export * from './lib/user-response';
 export * from './lib/list-response';
 export * from './lib/order-data';
+export * from './lib/order-item-response';

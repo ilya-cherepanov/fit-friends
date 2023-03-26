@@ -4,7 +4,7 @@ import {IsEnum, IsInt, Max, Min} from 'class-validator';
 import {ApiProperty} from '@nestjs/swagger';
 
 
-export class OrderDTO implements OrderData {
+export class CreateOrderDTO implements OrderData {
   @ApiProperty({
     description: 'Способ оплаты',
     enum: OrderPaymentMethod,
