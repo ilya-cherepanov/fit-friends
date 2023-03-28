@@ -11,7 +11,7 @@ import {OrderRDO} from './rdo/order.rdo';
 import {GetManyOrdersQuery} from './query/get-many-orders.query';
 import {OrderListRDO} from './rdo/order-list.rdo';
 import {
-  ApiBadRequestResponse,
+  ApiBadRequestResponse, ApiBearerAuth,
   ApiCreatedResponse, ApiForbiddenResponse,
   ApiOkResponse,
   ApiTags,
@@ -27,6 +27,7 @@ export class OrdersController {
   @Post()
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Sportsman)
+  @ApiBearerAuth()
   @ApiCreatedResponse({
     description: 'Создает заказ',
     type: OrderRDO,
@@ -44,6 +45,7 @@ export class OrdersController {
   @Get()
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Coach)
+  @ApiBearerAuth()
   @ApiOkResponse({
     description: 'Возвращает оформленные заказы',
     type: OrderListRDO,

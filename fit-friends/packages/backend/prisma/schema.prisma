@@ -38,7 +38,6 @@ model User {
 model Sportsman {
   id               Int               @id
   user             User              @relation(fields: [id], references: [id], onDelete: Cascade)
-  // userId           Int               @unique @map("user_id")
   caloriesPerDay   Int               @map("calories_per_day") @db.SmallInt
   caloriesToLose   Int               @map("calories_to_lose") @db.SmallInt
   readyToTraining  Boolean           @map("ready_to_training")
@@ -51,7 +50,6 @@ model Sportsman {
 model Coach {
   id                   Int        @id
   user                 User       @relation(fields: [id], references: [id], onDelete: Cascade)
-  // userId               Int        @unique @map("user_id")
   certificate          String     @db.VarChar(255)
   achievements         String     @db.VarChar(511)
   hasPersonalTrainings Boolean    @map("has_personal_trainings")

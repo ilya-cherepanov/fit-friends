@@ -4,5 +4,6 @@ export const enum CoachAccomplishments {
 }
 
 export const COACH_CERTIFICATE_FORMATS = ['pdf'] as const;
+export const COACH_CERTIFICATE_MIME_TYPES = ['application/pdf'];
 export const COACH_CERTIFICATE_FORMATS_REG_EXP =
   new RegExp(`(${COACH_CERTIFICATE_FORMATS.join('|')})`);

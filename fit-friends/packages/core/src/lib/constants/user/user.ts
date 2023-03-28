@@ -22,5 +22,7 @@ export enum UserSex {
 
 export const USER_AVATAR_MAX_SIZE = 2**10 * 2**10; // 1MB
 export const USER_AVATAR_FORMATS = ['jpg', 'jpeg', 'png'] as const;
+export const USER_AVATAR_MIME_TYPES = USER_AVATAR_FORMATS
+  .map((avatarFormat) => `image/${avatarFormat}`);
 export const USER_AVATAR_FORMATS_REG_EXP =
   new RegExp(`(${USER_AVATAR_FORMATS.join('|')})`);

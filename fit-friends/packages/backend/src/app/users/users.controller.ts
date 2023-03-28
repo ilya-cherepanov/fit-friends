@@ -1,4 +1,4 @@
-import {Controller, Get, Query, UseGuards} from '@nestjs/common';
+import {Controller, Get, Param, ParseIntPipe, Post, Query, UseGuards} from '@nestjs/common';
 import {UsersService} from './users.service';
 import {JWTPayload} from '@fit-friends/shared-types';
 import {User} from '../auth/decorators/user.decorator';
@@ -7,15 +7,17 @@ import {CoachEntity, SportsmanEntity} from './user.entity';
 import {fillObject} from '@fit-friends/core';
 import {CoachRDO, SportsmanRDO} from './rdo/user.rdo';
 import {
-  ApiBadRequestResponse,
+  ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse,
   ApiExtraModels,
   ApiNotFoundResponse,
   ApiOkResponse,
-  ApiTags,
+  ApiTags, ApiUnauthorizedResponse,
   getSchemaPath
 } from '@nestjs/swagger';
 import {UsersQuery} from './query/users.query';
 import {UserListRDO} from './rdo/user-list.rdo';
+import {FriendsQuery} from './query/friends.query';
+
 
 @Controller('users')
 @ApiTags('Users')
@@ -23,8 +25,9 @@ import {UserListRDO} from './rdo/user-list.rdo';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get()
+  @Get('/one/:id')
   @UseGuards(JWTAuthGuard)
+  @ApiBearerAuth()
   @ApiOkResponse({
     description: 'Возвращает детальную информация о пользователе',
     schema: {
@@ -37,8 +40,11 @@ export class UsersController {
   @ApiNotFoundResponse({
     description: 'Пользователь не найден',
   })
-  async get(@User() user: JWTPayload) {
-    const userEntity = await this.usersService.get(user.sub);
+  @ApiUnauthorizedResponse({
+    description: 'Пользователь не авторизован',
+  })
+  async getById(@Param('id', ParseIntPipe) id: number) {
+    const userEntity = await this.usersService.get(id);
 
     if (userEntity instanceof CoachEntity) {
       return fillObject(CoachRDO, userEntity);
@@ -48,6 +54,8 @@ export class UsersController {
   }
 
   @Get('/all')
+  @UseGuards(JWTAuthGuard)
+  @ApiBearerAuth()
   @ApiOkResponse({
     description: 'Возвращает список пользователей',
     type: UserListRDO,
@@ -55,7 +63,43 @@ export class UsersController {
   @ApiBadRequestResponse({
     description: 'Неверный запрос',
   })
+  @ApiUnauthorizedResponse({
+    description: 'Пользователь не авторизован',
+  })
   async getAll(@Query() query: UsersQuery) {
     return fillObject(UserListRDO, await this.usersService.getAll(query));
+  }
+
+  @Post('/friends/:id')
+  @UseGuards(JWTAuthGuard)
+  @ApiBearerAuth()
+  @ApiCreatedResponse({
+    description: 'Добавляет другого пользователя в друзья',
+  })
+  @ApiBadRequestResponse({
+    description: 'Неверный запрос',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Пользователь не авторизован',
+  })
+  async addFriend(@Param('id', ParseIntPipe) friendId: number, @User() user: JWTPayload) {
+    await this.usersService.addFriend(friendId, user.sub);
+  }
+
+  @Get('/friends')
+  @UseGuards(JWTAuthGuard)
+  @ApiBearerAuth()
+  @ApiOkResponse({
+    description: 'Возвращает список друзей пользователя',
+    type: UserListRDO,
+  })
+  @ApiBadRequestResponse({
+    description: 'Неверный запрос',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Пользователь не авторизован',
+  })
+  async getFriends(@User() user: JWTPayload, @Query() query: FriendsQuery) {
+    return fillObject(UserListRDO, await this.usersService.getFriends(query, user.sub));
   }
 }

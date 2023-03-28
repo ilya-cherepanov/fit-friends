@@ -1,6 +1,6 @@
 import {Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards} from '@nestjs/common';
 import {AuthService} from './auth.service';
-import {ApiForbiddenResponse, ApiOkResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiForbiddenResponse, ApiOkResponse, ApiTags, ApiUnauthorizedResponse} from '@nestjs/swagger';
 import {LoginUserDTO} from './dto/login-user.dto';
 import {fillObject} from '@fit-friends/core';
 import {TokensRDO} from './rdo/tokens.rdo';
@@ -30,6 +30,7 @@ export class AuthController {
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JWTAuthGuard)
+  @ApiBearerAuth()
   @ApiOkResponse({
     description: 'Сбрасывает refresh token',
   })
@@ -42,6 +43,7 @@ export class AuthController {
 
   @Get('refresh')
   @UseGuards(JWTRefreshGuard)
+  @ApiBearerAuth()
   @ApiOkResponse({
     description: 'Возвращает новую пару токенов',
     type: TokensRDO,

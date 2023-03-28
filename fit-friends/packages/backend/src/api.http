@@ -9,7 +9,7 @@ Content-Disposition: form-data; name="name"
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="email"
 
-valeria@mail.com
+valerya@mail.com
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="password"
 
@@ -70,13 +70,20 @@ true
 
 PUT http://localhost:3333/api/coaches HTTP/1.1
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTMyMDA5MywiZXhwIjoxNjc5OTI0ODkzfQ.7FniOySbWw0uF4ppHD7PyuwP9juokd9JPRcm369tQ_M
+#Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTMyMDA5MywiZXhwIjoxNjc5OTI0ODkzfQ.7FniOySbWw0uF4ppHD7PyuwP9juokd9JPRcm369tQ_M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTk5ODAwMSwiZXhwIjoxNjgwNjAyODAxfQ.XoQWmUzL6t53p_wVGSJyWMZThnUX9Jf0QXCkplAIAaY
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="level"
+Content-Disposition: form-data; name="certificate"; filename="certificate.pdf"
+Content-Type: application/pdf
 
-amateur
-------WebKitFormBoundary7MA4YWxkTrZu0gW--
+< /home/ilya/assets/certificate.pdf
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+#------WebKitFormBoundary7MA4YWxkTrZu0gW
+#Content-Disposition: form-data; name="level"
+#
+#amateur
+#------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ###
 
@@ -91,7 +98,7 @@ Content-Disposition: form-data; name="name"
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="email"
 
-valeriaa@mail.com
+valeri@mail.com
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="password"
 
@@ -154,7 +161,7 @@ POST http://localhost:3333/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "valeriaa@mail.com",
+  "email": "valeria@mail.com",
   "password": "pass1234"
 }
 
@@ -170,18 +177,21 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiO
 # Refresh tokens
 GET http://localhost:3333/api/auth/refresh HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3ODk3NjI4MiwiZXhwIjoxNjc5NTgxMDgyfQ.xrMczcmM_OU7kxNSqNCnQY91RhirHLXXmhT2S_cRrlg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTk5ODEwNCwiZXhwIjoxNjgwNjAyOTA0fQ.a1EGWNCTBaaHPCmtKF34DgpM57KMvHfLWKRhpZmfTcI
 
 ###
 
-GET http://localhost:3333/api/users HTTP/1.1
+# Get user
+GET http://localhost:3333/api/users/one/7 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE1LCJyb2xlIjoic3BvcnRzbWFuIiwiaWF0IjoxNjc4OTc4NTI0LCJleHAiOjE2Nzg5Nzk0MjR9.nRTOYTEB_JIrCqH9iptmThylwmAGZuVjCVOQ1AU7MDM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTQxNjQ3OCwiZXhwIjoxNjgwMDIxMjc4fQ.lqB4dF7xYhA4qOrsOstERyFDdOKTSxm1WAyYz6739EI
 
 ###
 
+# Get many users
 GET http://localhost:3333/api/users/all?sortBy=sportsman&locations[]=udelnaya HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTQxNjQ3OCwiZXhwIjoxNjgwMDIxMjc4fQ.lqB4dF7xYhA4qOrsOstERyFDdOKTSxm1WAyYz6739EI
 
 ###
 
@@ -256,7 +266,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiO
 ###
 
 # Get multiple trainings
-GET http://localhost:3333/api/trainings?minCalories=1100&maxCalories=1000 HTTP/1.1
+GET http://localhost:3333/api/trainings?minCalories=1000&maxCalories=1000 HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTQxNjQ3OCwiZXhwIjoxNjgwMDIxMjc4fQ.lqB4dF7xYhA4qOrsOstERyFDdOKTSxm1WAyYz6739EI
 
@@ -276,8 +286,22 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE1LCJyb2xlI
 
 ###
 
-# Get
+# Get many orders
 GET http://localhost:3333/api/orders HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTQxNjQ3OCwiZXhwIjoxNjgwMDIxMjc4fQ.lqB4dF7xYhA4qOrsOstERyFDdOKTSxm1WAyYz6739EI
+
+###
+
+# Create friend
+POST http://localhost:3333/api/users/friends/22 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTQxNjQ3OCwiZXhwIjoxNjgwMDIxMjc4fQ.lqB4dF7xYhA4qOrsOstERyFDdOKTSxm1WAyYz6739EI
+
+###
+
+# Get friend list
+GET http://localhost:3333/api/users/friends?page=0 HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTQxNjQ3OCwiZXhwIjoxNjgwMDIxMjc4fQ.lqB4dF7xYhA4qOrsOstERyFDdOKTSxm1WAyYz6739EI
 

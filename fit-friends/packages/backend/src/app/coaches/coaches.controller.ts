@@ -3,6 +3,7 @@ import {RegisterCoachDTO} from './dto/register-coach.dto';
 import {FileFieldsInterceptor} from '@nestjs/platform-express';
 import {CoachesService} from './coaches.service';
 import {
+  ApiBearerAuth,
   ApiConflictResponse,
   ApiConsumes,
   ApiCreatedResponse,
@@ -16,7 +17,9 @@ import {User} from '../auth/decorators/user.decorator';
 import {JWTAuthGuard} from '../auth/guards/jwt-auth.guard';
 import {RolesGuard} from '../auth/guards/roles.guard';
 import {Roles} from '../auth/decorators/roles.decorator';
-import {UserRole} from '@fit-friends/core';
+import {fillObject, UserRole} from '@fit-friends/core';
+import {CoachFilesValidationPipe} from './pipes/coach-files-validation.pipe';
+import {CoachRDO} from '../users/rdo/user.rdo';
 
 @Controller('coaches')
 @ApiTags('Coaches', 'Users')
@@ -34,12 +37,21 @@ export class CoachesController {
   })
   @ApiCreatedResponse({
     description: 'Регистрирует тренера',
+    type: CoachRDO,
   })
   async create(
     @Body() dto: RegisterCoachDTO,
-    @UploadedFiles() files: {avatar: Express.Multer.File[], certificate: Express.Multer.File[]},
+    @UploadedFiles(
+      new CoachFilesValidationPipe({
+        certificate: {isOptional: false},
+        avatar: {isOptional: false}
+      })
+    ) files: {avatar: Express.Multer.File[], certificate: Express.Multer.File[]},
   ) {
-    await this.coachesService.create(dto, files.avatar[0].filename, files.certificate[0].filename);
+    return fillObject(
+      CoachRDO,
+      await this.coachesService.create(dto, files.avatar[0].filename, files.certificate[0].filename)
+    );
   }
 
   @Put()
@@ -50,8 +62,10 @@ export class CoachesController {
   ]))
   @Roles(UserRole.Coach)
   @ApiConsumes('multipart/form-data')
+  @ApiBearerAuth()
   @ApiOkResponse({
     description: 'Данные пользователя изменены',
+    type: CoachRDO,
   })
   @ApiForbiddenResponse({
     description: 'Пользователь не является тренером',
@@ -62,8 +76,21 @@ export class CoachesController {
   async update(
     @User() user: JWTPayload,
     @Body() dto: UpdateCoachDTO,
-    @UploadedFiles() files: {avatar: Express.Multer.File[], certificate: Express.Multer.File[]}
+    @UploadedFiles(
+      new CoachFilesValidationPipe({
+        certificate: {isOptional: true},
+        avatar: {isOptional: true}
+      })
+    ) files: {avatar?: Express.Multer.File[], certificate?: Express.Multer.File[]}
   ) {
-    await this.coachesService.update(user.sub, dto, files?.avatar?.[0].filename, files?.certificate?.[0].filename)
+    return fillObject(
+      CoachRDO,
+      await this.coachesService.update(
+        user.sub,
+        dto,
+        files?.avatar?.[0].filename,
+        files?.certificate?.[0].filename
+      )
+    );
   }
 }

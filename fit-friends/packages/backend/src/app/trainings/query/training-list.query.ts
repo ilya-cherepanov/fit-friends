@@ -33,10 +33,6 @@ export class TrainingListQuery {
     example: 2000,
     required: false,
   })
-  @ValidateIf(
-    (obj, value) => obj.minPrice ? obj.minPrice <= value : true,
-    {message: 'maxPrice must be greater or equal to minPrice'}
-  )
   @IsInt()
   @Transform(({value}) => parseInt(value))
   @IsOptional()
@@ -57,10 +53,6 @@ export class TrainingListQuery {
     example: 1200,
     required: false,
   })
-  @ValidateIf(
-    (obj, value) => obj.minCalories ? obj.minCalories <= value : true,
-    {message: 'maxCalories must be greater or equal to minCalories'}
-  )
   @IsInt()
   @Transform(({value}) => parseInt(value))
   @IsOptional()
@@ -87,10 +79,6 @@ export class TrainingListQuery {
     maximum: ReviewTrainingRating.Max,
     required: false,
   })
-  @ValidateIf(
-    (obj, value) => obj.minRating ? obj.minRating <= value : true,
-    {message: 'maxRating must be greater or equal to minRating'}
-  )
   @Max(ReviewTrainingRating.Max)
   @Min(ReviewTrainingRating.Min)
   @IsInt()

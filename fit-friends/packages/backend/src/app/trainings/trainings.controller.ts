@@ -23,7 +23,7 @@ import {Roles} from '../auth/decorators/roles.decorator';
 import {JWTAuthGuard} from '../auth/guards/jwt-auth.guard';
 import {RolesGuard} from '../auth/guards/roles.guard';
 import {
-  ApiBadRequestResponse,
+  ApiBadRequestResponse, ApiBearerAuth,
   ApiConsumes,
   ApiCreatedResponse,
   ApiForbiddenResponse,
@@ -43,6 +43,7 @@ export class TrainingsController {
 
   @Get(':id')
   @UseGuards(JWTAuthGuard)
+  @ApiBearerAuth()
   @ApiOkResponse({
     description: 'Возвращает список тренеровок тренера',
     type: TrainingRDO,
@@ -57,6 +58,7 @@ export class TrainingsController {
   @Get()
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Coach)
+  @ApiBearerAuth()
   @ApiOkResponse({
     description: 'Возвращает список тренеровок тренера',
     type: TrainingListRDO,
@@ -79,6 +81,7 @@ export class TrainingsController {
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Coach)
   @ApiConsumes('multipart/form-data')
+  @ApiBearerAuth()
   @ApiCreatedResponse({
     description: 'Возвращает только что созданную тренеровку',
     type: TrainingRDO,
@@ -109,6 +112,7 @@ export class TrainingsController {
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Coach)
   @ApiConsumes('multipart/form-data')
+  @ApiBearerAuth()
   @ApiOkResponse({
     description: 'Возвращает обновленные данные о тренировке',
     type: TrainingRDO,

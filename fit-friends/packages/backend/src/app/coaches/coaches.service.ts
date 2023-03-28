@@ -4,7 +4,6 @@ import {RegisterCoachDTO} from './dto/register-coach.dto';
 import {BaseUserEntity, CoachEntity} from '../users/user.entity';
 import {UserRepository} from '../users/user.repository';
 import {USER_NOT_COACH, USER_NOT_FOUND} from '../../constants';
-import {UserRole} from '@fit-friends/core';
 import {UpdateCoachDTO} from './dto/update-coach.dto';
 
 
@@ -25,7 +24,7 @@ export class CoachesService {
 
     await coachEntity.setPassword(dto.password);
 
-    return this.coachRepository.create(coachEntity);
+    return BaseUserEntity.createFromPrisma(await this.coachRepository.create(coachEntity));
   }
 
   async update(coachId: number, dto: UpdateCoachDTO, avatar?: string, certificate?: string) {
@@ -48,6 +47,6 @@ export class CoachesService {
       birthDate: new Date(dto.birthDate ?? coachEntity.birthDate),
     });
 
-    await this.coachRepository.update(coachEntity);
+    return BaseUserEntity.createFromPrisma(await this.coachRepository.update(coachEntity));
   }
 }

@@ -91,4 +91,42 @@ export class UserRepository {
       },
     });
   }
+
+  async createFriend(friendId: number, userId: number) {
+    return this.prismaService.friend.upsert({
+      where: {
+        userId_friendId: {
+          friendId,
+          userId,
+        },
+      },
+      update: {},
+      create: {
+        userId,
+        friendId,
+      },
+    });
+  }
+
+  async getFriendsCount(userId) {
+    return this.prismaService.friend.count({where: {userId}});
+  }
+
+  async getFriends(take: number, skip: number, userId: number) {
+    const friends = await this.prismaService.friend.findMany({
+      where: {userId},
+      include: {
+        friend: {
+          include: {
+            sportsman: true,
+            coach: true,
+          },
+        },
+      },
+      take,
+      skip,
+    });
+
+    return friends.map((friend) => friend.friend);
+  }
 }

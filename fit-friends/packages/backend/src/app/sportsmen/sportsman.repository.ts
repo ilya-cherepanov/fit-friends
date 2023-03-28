@@ -46,6 +46,9 @@ export class SportsmanRepository {
             },
           },
         },
+        include: {
+          sportsman: true,
+        },
       });
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError
@@ -80,6 +83,9 @@ export class SportsmanRepository {
               trainingDuration: sportsmanEntity.trainingDuration,
             },
           },
+        },
+        include: {
+          sportsman: true,
         },
       });
     } catch (err) {

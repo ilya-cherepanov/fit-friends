@@ -45,6 +45,9 @@ export class CoachRepository {
             },
           },
         },
+        include: {
+          coach: true,
+        },
       });
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError
@@ -78,6 +81,9 @@ export class CoachRepository {
               achievements: updatedCoach.achievements,
             },
           },
+        },
+        include: {
+          coach: true,
         },
       });
     } catch (err) {

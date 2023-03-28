@@ -9,6 +9,7 @@ import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app/app.module';
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
 import {PrismaService} from './app/prisma/prisma.service';
+import {GLOBAL_PREFIX} from './constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,24 +18,24 @@ async function bootstrap() {
     .setTitle('Fit Friends')
     .setDescription('Fit Friends API')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('spec', app, document);
 
   app.useGlobalPipes(new ValidationPipe({
-    // whitelist: true,
+    whitelist: true,
     transform: true,
   }));
 
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
 
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
+  app.setGlobalPrefix(GLOBAL_PREFIX);
   const port = process.env.PORT || 3333;
   await app.listen(port);
   Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+    `🚀 Application is running on: http://localhost:${port}/${GLOBAL_PREFIX}`
   );
 }
 

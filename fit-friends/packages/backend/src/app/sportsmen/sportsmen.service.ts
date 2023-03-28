@@ -23,7 +23,7 @@ export class SportsmenService {
 
     await sportsmanEntity.setPassword(dto.password);
 
-    return this.sportsmanRepository.create(sportsmanEntity);
+    return BaseUserEntity.createFromPrisma(await this.sportsmanRepository.create(sportsmanEntity));
   }
 
   async update(sportsmanId: number, dto: UpdateSportsmanDTO, avatar?: string) {
@@ -45,6 +45,6 @@ export class SportsmenService {
       birthDate: new Date(dto.birthDate ?? sportsmanEntity.birthDate),
     });
 
-    await this.sportsmanRepository.update(sportsmanEntity);
+    return BaseUserEntity.createFromPrisma(await this.sportsmanRepository.update(sportsmanEntity));
   }
 }
