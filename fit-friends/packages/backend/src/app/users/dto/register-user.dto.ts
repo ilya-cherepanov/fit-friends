@@ -10,7 +10,7 @@ import {
   UserSex
 } from '@fit-friends/core';
 import {ApiProperty} from '@nestjs/swagger';
-import {ArrayMaxSize, ArrayUnique, IsDateString, IsEmail, IsEnum, IsString, Length, MaxLength} from 'class-validator';
+import {ArrayMaxSize, ArrayUnique, IsDateString, IsEmail, IsEnum, IsString, Length} from 'class-validator';
 
 export abstract class RegisterUserDTO implements BaseRegisterData {
   @ApiProperty({

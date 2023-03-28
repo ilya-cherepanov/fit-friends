@@ -1,6 +1,6 @@
 import {ConflictException, Injectable} from '@nestjs/common';
 import {PrismaService} from '../prisma/prisma.service';
-import {CoachEntity, SportsmanEntity} from '../users/user.entity';
+import {SportsmanEntity} from '../users/user.entity';
 import {Prisma} from '@prisma/client';
 import {PRISMA_VIOLATION_OF_UNIQUENESS_CODE, USER_WITH_EMAIL_ALREADY_EXISTS} from '../../constants';
 

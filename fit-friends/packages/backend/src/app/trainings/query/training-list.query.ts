@@ -1,4 +1,4 @@
-import {ArrayUnique, IsArray, IsEnum, IsInt, IsOptional, Max, Min, ValidateIf} from 'class-validator';
+import {ArrayUnique, IsArray, IsEnum, IsInt, IsOptional, Max, Min} from 'class-validator';
 import {Transform} from 'class-transformer';
 import {MIN_PRICE, ReviewTrainingRating, TrainingOrderBy, TrainingTimeIntervals, TrainingType} from '@fit-friends/core';
 import {ApiProperty} from '@nestjs/swagger';

@@ -3,8 +3,6 @@ import {Order} from '../../types/order';
 import {PrismaService} from '../prisma/prisma.service';
 import {keyBy} from 'lodash';
 import {OrdersSort} from '../../types/orders-sort';
-import {Prisma} from '@prisma/client';
-import {g} from 'vitest/dist/index-5aad25c1';
 
 
 @Injectable()

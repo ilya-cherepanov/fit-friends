@@ -1,4 +1,4 @@
-import {CoachResponse, TrainingResponse} from '@fit-friends/shared-types';
+import {TrainingResponse} from '@fit-friends/shared-types';
 import {
   Level, MIN_PRICE,
   TrainingCalories,

@@ -15,7 +15,6 @@ export interface BaseUserResponse {
 }
 
 export interface SportsmanResponse extends BaseUserResponse {
-  // role: UserRole.Sportsman;
   caloriesPerDay: number;
   caloriesToLose: number;
   readyToTraining: boolean;
@@ -23,7 +22,6 @@ export interface SportsmanResponse extends BaseUserResponse {
 }
 
 export interface CoachResponse extends BaseUserResponse {
-  // role: UserRole.Coach;
   certificate: string;
   achievements: string;
   hasPersonalTrainings: boolean;
