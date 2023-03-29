@@ -87,7 +87,7 @@ export class TrainingListQuery {
   maxRating?: number;
 
   @ApiProperty({
-    description: 'Тип тренеровок',
+    description: 'Тип тренировок',
     example: [TrainingType.Yoga, TrainingType.Pilates],
     enum: TrainingType,
     isArray: true,
@@ -100,7 +100,7 @@ export class TrainingListQuery {
   types?: TrainingType[];
 
   @ApiProperty({
-    description: 'Длительность тренеровок',
+    description: 'Длительность тренировок',
     example: TrainingTimeIntervals.EightyToOneHundred,
     enum: TrainingTimeIntervals,
     required: false,

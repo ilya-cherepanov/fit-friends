@@ -23,11 +23,13 @@ import {Roles} from '../auth/decorators/roles.decorator';
 import {JWTAuthGuard} from '../auth/guards/jwt-auth.guard';
 import {RolesGuard} from '../auth/guards/roles.guard';
 import {
-  ApiBadRequestResponse, ApiBearerAuth,
+  ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiConsumes,
   ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiOkResponse,
+  ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse
 } from '@nestjs/swagger';
@@ -44,8 +46,11 @@ export class TrainingsController {
   @Get(':id')
   @UseGuards(JWTAuthGuard)
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Получить данные тренировки',
+  })
   @ApiOkResponse({
-    description: 'Возвращает список тренеровок тренера',
+    description: 'Возвращает список тренировок тренера',
     type: TrainingRDO,
   })
   @ApiUnauthorizedResponse({
@@ -59,8 +64,11 @@ export class TrainingsController {
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Coach)
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Получить список тренировок',
+  })
   @ApiOkResponse({
-    description: 'Возвращает список тренеровок тренера',
+    description: 'Возвращает список тренировок тренера',
     type: TrainingListRDO,
   })
   @ApiBadRequestResponse({
@@ -82,8 +90,11 @@ export class TrainingsController {
   @Roles(UserRole.Coach)
   @ApiConsumes('multipart/form-data')
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Создать тренировку',
+  })
   @ApiCreatedResponse({
-    description: 'Возвращает только что созданную тренеровку',
+    description: 'Возвращает только что созданную тренировку',
     type: TrainingRDO,
   })
   @ApiUnauthorizedResponse({
@@ -113,6 +124,9 @@ export class TrainingsController {
   @Roles(UserRole.Coach)
   @ApiConsumes('multipart/form-data')
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Редактировать данные тренировки',
+  })
   @ApiOkResponse({
     description: 'Возвращает обновленные данные о тренировке',
     type: TrainingRDO,

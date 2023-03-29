@@ -13,7 +13,7 @@ import {OrderListRDO} from './rdo/order-list.rdo';
 import {
   ApiBadRequestResponse, ApiBearerAuth,
   ApiCreatedResponse, ApiForbiddenResponse,
-  ApiOkResponse,
+  ApiOkResponse, ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse
 } from '@nestjs/swagger';
@@ -28,8 +28,11 @@ export class OrdersController {
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Sportsman)
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Создать заказ',
+  })
   @ApiCreatedResponse({
-    description: 'Создает заказ',
+    description: 'Возвращает созданый заказ',
     type: OrderRDO,
   })
   @ApiUnauthorizedResponse({
@@ -46,6 +49,9 @@ export class OrdersController {
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Coach)
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Получить список заказов тренера',
+  })
   @ApiOkResponse({
     description: 'Возвращает оформленные заказы',
     type: OrderListRDO,

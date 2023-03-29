@@ -1,0 +1,86 @@
+# Register sportsman
+POST http://localhost:3333/api/sportsmen HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="name"
+
+Валерия
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="email"
+
+valeri@mail.com
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="password"
+
+pass1234
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="trainingTypes"
+
+crossfit
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="trainingTypes"
+
+yoga
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="trainingTypes"
+
+box
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="sex"
+
+female
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="location"
+
+petrogradskaya
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="level"
+
+professional
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="birthDate"
+
+1989-01-31
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="role"
+
+sportsman
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="avatar"; filename="avatar.jpg"
+Content-Type: image/jpeg
+
+< /home/ilya/assets/avatar.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="caloriesPerDay"
+
+1000
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="caloriesToLose"
+
+3000
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="trainingDuration"
+
+50-80
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+# Update sportsman
+PUT http://localhost:3333/api/sportsmen HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJyb2xlIjoic3BvcnRzbWFuIiwiaWF0IjoxNjgwMTEzMTM4LCJleHAiOjE2ODA3MTc5Mzh9.27rRsHxhT_06OCvI5FyteSHIeZNpZGuMKEmXLYO8-Ek
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="avatar"; filename="avatar.jpg"
+Content-Type: image/jpeg
+
+< /home/ilya/assets/avatar.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="location"
+
+udelnaya
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###

@@ -67,18 +67,12 @@ export class OrderRepository {
           quantity: sorting.orderByQuantity,
         },
       };
-    } else if (sorting.orderBySum) {
-      return {
-        _sum: {
-          sum: sorting.orderBySum,
-        },
-      };
-    } else {
-      return {
-        _sum: {
-          sum: 'desc',
-        },
-      };
     }
+
+    return {
+      _sum: {
+        sum: sorting.orderBySum ?? 'desc',
+      },
+    };
   }
 }

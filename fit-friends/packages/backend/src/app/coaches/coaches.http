@@ -1,0 +1,88 @@
+# Register coach
+POST http://localhost:3333/api/coaches HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="name"
+
+Валерия
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="email"
+
+valerya@mail.com
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="password"
+
+pass1234
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="trainingTypes"
+
+crossfit
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="trainingTypes"
+
+yoga
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="trainingTypes"
+
+box
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="sex"
+
+female
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="location"
+
+petrogradskaya
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="level"
+
+professional
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="birthDate"
+
+1989-01-31
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="role"
+
+coach
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="avatar"; filename="avatar.jpg"
+Content-Type: image/jpeg
+
+< /home/ilya/assets/avatar.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="achievements"
+
+Привет! Я профессиональный тренер по боксу. Не боюсь пробовать новое, также увлекаюсь кроссфитом, йогой и силовыми тренировками.
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="certificate"; filename="certificate.pdf"
+Content-Type: application/pdf
+
+< /home/ilya/assets/certificate.pdf
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="hasPersonalTrainings"
+
+true
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+# Update coach
+PUT http://localhost:3333/api/coaches HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+#Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTMyMDA5MywiZXhwIjoxNjc5OTI0ODkzfQ.7FniOySbWw0uF4ppHD7PyuwP9juokd9JPRcm369tQ_M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTk5ODAwMSwiZXhwIjoxNjgwNjAyODAxfQ.XoQWmUzL6t53p_wVGSJyWMZThnUX9Jf0QXCkplAIAaY
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="certificate"; filename="certificate.pdf"
+Content-Type: application/pdf
+
+< /home/ilya/assets/certificate.pdf
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="level"
+
+professional
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###

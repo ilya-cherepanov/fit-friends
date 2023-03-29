@@ -1,0 +1,27 @@
+# Get user
+GET http://localhost:3333/api/users/one/7 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY4MDExNzEzNSwiZXhwIjoxNjgwNzIxOTM1fQ.pum1Xch_HmSMJymz4FM-_hv850CnpBW3A_ASZ-ESres
+
+###
+
+# Get many users
+GET http://localhost:3333/api/users/all?sortBy=sportsman&locations[]=udelnaya HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY4MDExNzEzNSwiZXhwIjoxNjgwNzIxOTM1fQ.pum1Xch_HmSMJymz4FM-_hv850CnpBW3A_ASZ-ESres
+
+###
+
+# Create friend
+POST http://localhost:3333/api/users/friends/22 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY4MDExNzEzNSwiZXhwIjoxNjgwNzIxOTM1fQ.pum1Xch_HmSMJymz4FM-_hv850CnpBW3A_ASZ-ESres
+
+###
+
+# Get friend list
+GET http://localhost:3333/api/users/friends?page=0 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY4MDExNzEzNSwiZXhwIjoxNjgwNzIxOTM1fQ.pum1Xch_HmSMJymz4FM-_hv850CnpBW3A_ASZ-ESres
+
+###

@@ -17,7 +17,7 @@ import {
   ApiConflictResponse,
   ApiConsumes,
   ApiCreatedResponse,
-  ApiForbiddenResponse, ApiOkResponse,
+  ApiForbiddenResponse, ApiOkResponse, ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse
 } from '@nestjs/swagger';
@@ -37,6 +37,9 @@ export class SportsmenController {
   @Post()
   @UseInterceptors(FileInterceptor('avatar'))
   @ApiConsumes('multipart/form-data')
+  @ApiOperation({
+    summary: 'Зарегистрировать спортсмена',
+  })
   @ApiConflictResponse({
     description: 'Пользователь с таким email уже существует',
   })
@@ -61,6 +64,9 @@ export class SportsmenController {
   @Roles(UserRole.Sportsman)
   @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
+  @ApiOperation({
+    summary: 'Редактировать данные спортсмена',
+  })
   @ApiOkResponse({
     description: 'Данные пользователя изменены',
     type: SportsmanRDO,

@@ -8,7 +8,7 @@ import {
   ApiConsumes,
   ApiCreatedResponse,
   ApiForbiddenResponse,
-  ApiOkResponse,
+  ApiOkResponse, ApiOperation,
   ApiTags, ApiUnauthorizedResponse
 } from '@nestjs/swagger';
 import {JWTPayload} from '@fit-friends/shared-types';
@@ -32,12 +32,15 @@ export class CoachesController {
     {name: 'certificate'},
   ]))
   @ApiConsumes('multipart/form-data')
-  @ApiConflictResponse({
-    description: 'Пользователь с таким email уже существует',
+  @ApiOperation({
+    summary: 'Зарегистрировать тренера',
   })
   @ApiCreatedResponse({
-    description: 'Регистрирует тренера',
+    description: 'Возвращает созданного тренера',
     type: CoachRDO,
+  })
+  @ApiConflictResponse({
+    description: 'Пользователь с таким email уже существует',
   })
   async create(
     @Body() dto: RegisterCoachDTO,
@@ -63,6 +66,9 @@ export class CoachesController {
   @Roles(UserRole.Coach)
   @ApiConsumes('multipart/form-data')
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Редактировать данные тренера',
+  })
   @ApiOkResponse({
     description: 'Данные пользователя изменены',
     type: CoachRDO,

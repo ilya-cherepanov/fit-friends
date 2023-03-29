@@ -10,7 +10,7 @@ import {
   ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse,
   ApiExtraModels,
   ApiNotFoundResponse,
-  ApiOkResponse,
+  ApiOkResponse, ApiOperation,
   ApiTags, ApiUnauthorizedResponse,
   getSchemaPath
 } from '@nestjs/swagger';
@@ -28,6 +28,9 @@ export class UsersController {
   @Get('/one/:id')
   @UseGuards(JWTAuthGuard)
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Получить данные о пользователе',
+  })
   @ApiOkResponse({
     description: 'Возвращает детальную информация о пользователе',
     schema: {
@@ -56,6 +59,9 @@ export class UsersController {
   @Get('/all')
   @UseGuards(JWTAuthGuard)
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Получить список пользователей',
+  })
   @ApiOkResponse({
     description: 'Возвращает список пользователей',
     type: UserListRDO,
@@ -73,6 +79,9 @@ export class UsersController {
   @Post('/friends/:id')
   @UseGuards(JWTAuthGuard)
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Добавить в друзья',
+  })
   @ApiCreatedResponse({
     description: 'Добавляет другого пользователя в друзья',
   })
@@ -89,6 +98,9 @@ export class UsersController {
   @Get('/friends')
   @UseGuards(JWTAuthGuard)
   @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Получить список друзей',
+  })
   @ApiOkResponse({
     description: 'Возвращает список друзей пользователя',
     type: UserListRDO,

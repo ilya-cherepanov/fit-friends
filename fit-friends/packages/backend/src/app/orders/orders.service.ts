@@ -15,16 +15,16 @@ export class OrdersService {
 
   async create(dto: CreateOrderDTO, sportsmanId: number) {
     if (dto.type === OrderType.Training) {
-      return await this.createTrainingOrder(dto, sportsmanId);
-    } else {
-      throw new NotImplementedException();
+      return this.createTrainingOrder(dto, sportsmanId);
     }
+
+    throw new NotImplementedException();
   }
 
   async getMany(userId: number, query: GetManyOrdersQuery) {
     const skip = query.page * MAX_COLLECTION_LENGTH;
 
-    const trainigs = await this.orderRepository.getMany(MAX_COLLECTION_LENGTH, skip, userId, {
+    const trainings = await this.orderRepository.getMany(MAX_COLLECTION_LENGTH, skip, userId, {
       orderBySum: query.sortBySum,
       orderByQuantity: query.sortByQuantity,
     });
@@ -34,19 +34,18 @@ export class OrdersService {
     return {
       totalPages: Math.ceil(count / MAX_COLLECTION_LENGTH),
       currentPage: query.page,
-      items: trainigs,
+      items: trainings,
     };
   }
 
   private async createTrainingOrder(dto: CreateOrderDTO, sportsmanId: number) {
     const training = await this.trainingRepository.getById(dto.id);
-    const price = training.isSpecialOffer ? training.price * 0.9 : training.price;
 
     return this.orderRepository.create({
       type: dto.type,
-      price,
+      price: training.price,
       quantity: dto.quantity,
-      sum: price * dto.quantity,
+      sum: training.price * dto.quantity,
       paymentMethod: dto.paymentMethod,
       userId: sportsmanId,
       trainingId: dto.id,

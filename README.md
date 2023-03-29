@@ -28,7 +28,7 @@ OpenAPI спецификации сервиса находятся по адре
 1. `npm run cli` - cli для генерации данных
 2. `npx nx run backend:db-validate` - проверяет корректность `schema.prisma` файла
 3. `npx nx run backend:db-migrate` - запускает миграцию для базы данных
-4. `npx nx run backend:db-reset` - сбрасывает данные в базе бд
+4. `npx nx run backend:db-reset` - сбрасывает данные в бд
 5. `npx nx run backend/frontend:serve` - запускает dev server для проектов
 6. `npx nx run backend/frontend:lint` - запускает линтер для проектов
 7. `npx nx run backend/frontend:build` - создает релизный build для проектов
