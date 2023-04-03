@@ -6,6 +6,7 @@ export * from './review';
 export * from './training';
 export * from './training-request';
 export * from './sorting-order';
+export * from './eating';
 
 export const MAX_COLLECTION_LENGTH = 50;
 
