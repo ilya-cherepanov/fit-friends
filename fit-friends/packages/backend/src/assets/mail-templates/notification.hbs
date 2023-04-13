@@ -1,0 +1,13 @@
+<h2>Новые тренировки</h2>
+
+<ul>
+{{#each coaches}}
+  <li>Тренер: {{name}}
+    <ul>
+      {{#each trainings}}
+        <li><a href="{{../../url}}/trainings/{{id}}">{{title}}</a></li>
+      {{/each}}
+    </ul>
+  </li>
+{{/each}}
+</ul>

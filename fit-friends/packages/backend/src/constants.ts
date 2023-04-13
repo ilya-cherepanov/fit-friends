@@ -26,3 +26,7 @@ export const CERTIFICATE_REQUIRED = 'The certificate field is required!';
 export const CERTIFICATE_INCOMPATIBLE_MIME =
   `The certificate field mime type must be among: ${USER_AVATAR_MIME_TYPES.join(', ')}`;
 export const GLOBAL_PREFIX = 'api';
+export const BALANCE_ITEM_NOT_FOUND = 'The balance item not found!';
+export const USERS_ALREADY_FRIENDS = 'Users are already friends!';
+export const SPORTSMAN_NOT_FOUND = 'User not found or not a sportsman!';
+export const FRIEND_NOT_FOUND = 'Friend not found!';

@@ -118,4 +118,11 @@ export class TrainingRepository {
       },
     })
   }
+
+  async resetNew() {
+    return this.prismaService.training.updateMany({
+      where: {isNew: true},
+      data: {isNew: false},
+    });
+  }
 }

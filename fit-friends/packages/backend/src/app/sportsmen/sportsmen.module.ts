@@ -18,5 +18,6 @@ import {UsersModule} from '../users/users.module';
   ],
   providers: [SportsmenService, SportsmanRepository],
   controllers: [SportsmenController],
+  exports: [SportsmanRepository],
 })
 export class SportsmenModule {}

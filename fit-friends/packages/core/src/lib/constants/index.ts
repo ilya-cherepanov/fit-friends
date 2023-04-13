@@ -7,6 +7,8 @@ export * from './training';
 export * from './training-request';
 export * from './sorting-order';
 export * from './eating';
+export * from './friend';
+export * from './balance';
 
 export const MAX_COLLECTION_LENGTH = 50;
 

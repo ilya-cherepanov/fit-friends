@@ -74,6 +74,13 @@
       "options": {
         "command": "npx dotenv -e ../.env -- npx prisma migrate reset --schema ./packages/backend/prisma/schema.prisma --skip-seed"
       }
+    },
+    "db-seed": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx dotenv -e ../../../.env -- npx prisma db seed",
+        "cwd": "packages/backend"
+      }
     }
   },
   "tags": []

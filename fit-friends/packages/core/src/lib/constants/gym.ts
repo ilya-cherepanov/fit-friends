@@ -14,7 +14,7 @@ export enum GymDescription {
 }
 
 
-export const enum GymParameters {
+export enum GymParameters {
   Pool = 'pool',
   FreeParking = 'free-parking',
   Massage = 'massage',

@@ -14,3 +14,6 @@ export * from './lib/user-response';
 export * from './lib/list-response';
 export * from './lib/order-data';
 export * from './lib/order-item-response';
+export * from './lib/gym-response';
+export * from './lib/notification-response';
+export * from './lib/friend-response';

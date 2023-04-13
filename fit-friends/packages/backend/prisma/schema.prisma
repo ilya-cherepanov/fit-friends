@@ -35,18 +35,21 @@ model User {
   subscriptions    Subscriber[]      @relation("subscriber")
   subscribers      Subscriber[]      @relation("trainer")
   balances         Balance[]
+  reviews          Review[]
+  favoriteGyms     FavoriteGym[]
 
   @@map("user")
 }
 
 model Sportsman {
-  id               Int               @id
-  user             User              @relation(fields: [id], references: [id], onDelete: Cascade)
-  caloriesPerDay   Int               @map("calories_per_day") @db.SmallInt
-  caloriesToLose   Int               @map("calories_to_lose") @db.SmallInt
-  readyToTraining  Boolean           @map("ready_to_training")
-  trainingDuration String            @map("training_duration") @db.VarChar(31)
-  trainingRequests TrainingRequest[]
+  id                 Int                 @id
+  user               User                @relation(fields: [id], references: [id], onDelete: Cascade)
+  caloriesPerDay     Int                 @map("calories_per_day") @db.SmallInt
+  caloriesToLose     Int                 @map("calories_to_lose") @db.SmallInt
+  readyToTraining    Boolean             @map("ready_to_training")
+  trainingDuration   String              @map("training_duration") @db.VarChar(31)
+  trainingRequests   TrainingRequest[]
+  completedTrainings CompletedTraining[]
 
   @@map("sportsman")
 }
@@ -63,52 +66,54 @@ model Coach {
 }
 
 model Friend {
-  user     User @relation("user", fields: [userId], references: [id], onDelete: Cascade)
-  friend   User @relation("friend", fields: [friendId], references: [id], onDelete: Cascade)
-  userId   Int  @map("user_id")
-  friendId Int  @map("friend_id")
+  user     User   @relation("user", fields: [userId], references: [id], onDelete: Cascade)
+  friend   User   @relation("friend", fields: [friendId], references: [id], onDelete: Cascade)
+  userId   Int    @map("user_id")
+  friendId Int    @map("friend_id")
+  status   String @default("under-consideration") @db.VarChar(31)
 
   @@id([userId, friendId])
   @@map("friend")
 }
 
 model Training {
-  id                Int                 @id @default(autoincrement())
-  title             String              @db.VarChar(63)
-  image             String?             @db.VarChar(255)
-  level             String              @db.VarChar(31)
-  type              String              @db.VarChar(31)
-  duration          String              @db.VarChar(31)
-  price             Int
-  calories          Int                 @db.SmallInt
-  description       String              @db.VarChar(255)
-  sex               String              @db.VarChar(31)
-  video             String              @db.VarChar(255)
-  rating            Float               @default(0)
-  isSpecialOffer    Boolean             @default(false) @map("is_special_offer")
-  coach             Coach               @relation(fields: [coachId], references: [id], onDelete: Cascade)
-  coachId           Int                 @map("coach_id")
-  isNew             Boolean             @default(true) @map("is_new")
-  reviews           Review[]
-  orders            Order[]
-  completedTraining CompletedTraining[]
-  balances          Balance[]
+  id                 Int                 @id @default(autoincrement())
+  title              String              @db.VarChar(63)
+  image              String?             @db.VarChar(255)
+  level              String              @db.VarChar(31)
+  type               String              @db.VarChar(31)
+  duration           String              @db.VarChar(31)
+  price              Int
+  calories           Int                 @db.SmallInt
+  description        String              @db.VarChar(255)
+  sex                String              @db.VarChar(31)
+  video              String              @db.VarChar(255)
+  rating             Float               @default(0)
+  isSpecialOffer     Boolean             @default(false) @map("is_special_offer")
+  coach              Coach               @relation(fields: [coachId], references: [id], onDelete: Cascade)
+  coachId            Int                 @map("coach_id")
+  isNew              Boolean             @default(true) @map("is_new")
+  reviews            Review[]
+  orders             Order[]
+  completedTrainings CompletedTraining[]
+  balances           Balance[]
 
   @@map("training")
 }
 
 model Gym {
-  id          Int       @id @default(autoincrement())
-  title       String    @db.VarChar(63)
-  location    String    @db.VarChar(255)
-  isVerified  Boolean   @default(false) @map("is_verified")
-  parameters  String[]  @db.VarChar(63)
-  photos      String[]  @db.VarChar(255)
-  description String    @db.VarChar(511)
-  price       Int       @db.SmallInt
-  createdAt   DateTime  @default(now()) @map("created_at")
-  orders      Order[]
-  balances    Balance[]
+  id           Int           @id @default(autoincrement())
+  title        String        @db.VarChar(63)
+  location     String        @db.VarChar(255)
+  isVerified   Boolean       @default(false) @map("is_verified")
+  parameters   String[]      @db.VarChar(63)
+  photos       String[]      @db.VarChar(255)
+  description  String        @db.VarChar(511)
+  price        Int           @db.SmallInt
+  createdAt    DateTime      @default(now()) @map("created_at")
+  orders       Order[]
+  balances     Balance[]
+  favoriteGyms FavoriteGym[]
 
   @@map("gym")
 }
@@ -119,6 +124,8 @@ model Review {
   trainingId Int      @map("training_id")
   rating     Int      @db.SmallInt
   text       String   @db.Text
+  author     User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId   Int      @map("author_id")
   createdAt  DateTime @default(now()) @map("created_at")
 
   @@map("review")
@@ -173,16 +180,19 @@ model Eating {
   createdAt DateTime @default(now()) @map("created_at") @db.Date
   type      String   @db.VarChar(31)
 
+  @@unique([createdAt, type, userId])
   @@map("eating")
 }
 
 model CompletedTraining {
-  id         Int      @id @default(autoincrement())
-  training   Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
-  trainingId Int      @map("traininig_id")
-  createdAt  DateTime @default(now()) @map("created_at")
-  calories   Int      @db.SmallInt
-  duration   String   @db.VarChar(31)
+  id         Int       @id @default(autoincrement())
+  training   Training  @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+  trainingId Int       @map("traininig_id")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  calories   Int       @db.SmallInt
+  duration   String    @db.VarChar(31)
+  sportsman  Sportsman @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int       @map("user_id")
 
   @@map("completed_training")
 }
@@ -210,4 +220,14 @@ model Subscriber {
 
   @@id([subscriberId, trainerId])
   @@map("subscriber")
+}
+
+model FavoriteGym {
+  userId Int  @map("user_id")
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gymId  Int  @map("gym_id")
+  gym    Gym  @relation(fields: [gymId], references: [id], onDelete: Cascade)
+
+  @@id([userId, gymId])
+  @@map("favorite_gyms")
 }

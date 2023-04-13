@@ -1,0 +1,11 @@
+POST http://localhost:3333/api/gyms/1/favorites/true HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInJvbGUiOiJzcG9ydHNtYW4iLCJpYXQiOjE2ODExMjYwNTQsImV4cCI6MTY4MTczMDg1NH0.HmykloLcdcJM6XGe8vqRpGHnvwjHr-rvKUbvbrQ6Kn0
+
+###
+
+GET http://localhost:3333/api/gyms/favorites HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInJvbGUiOiJzcG9ydHNtYW4iLCJpYXQiOjE2ODExMjYwNTQsImV4cCI6MTY4MTczMDg1NH0.HmykloLcdcJM6XGe8vqRpGHnvwjHr-rvKUbvbrQ6Kn0
+
+###
