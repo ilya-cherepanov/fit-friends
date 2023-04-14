@@ -20,6 +20,7 @@ import { MailingModule } from './mailing/mailing.module';
 import { SubscribersModule } from './subscribers/subscribers.module';
 import { mailOptions } from '../config/mail.config';
 import { NotificationsModule } from './notifications/notifications.module';
+import { TrainingRequestsModule } from './training-requests/training-requests.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     MailingModule,
     SubscribersModule,
     NotificationsModule,
+    TrainingRequestsModule,
   ],
   controllers: [],
   providers: [],
