@@ -16,6 +16,7 @@ import {fillObject} from '@fit-friends/core';
 import {NotificationListRDO} from './rdo/notification-list.rdo';
 import {NotificationsService} from './notifications.service';
 import {
+  ApiBearerAuth,
   ApiNoContentResponse,
   ApiOkResponse,
   ApiOperation, ApiParam,
@@ -32,6 +33,7 @@ export class NotificationsController {
 
   @Get()
   @UseGuards(JWTAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Получить уведомления пользователя',
   })
@@ -61,6 +63,7 @@ export class NotificationsController {
   @Delete(':id')
   @UseGuards(JWTAuthGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Удалить уведомление',
   })

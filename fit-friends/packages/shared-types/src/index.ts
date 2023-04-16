@@ -17,3 +17,6 @@ export * from './lib/order-item-response';
 export * from './lib/gym-response';
 export * from './lib/notification-response';
 export * from './lib/friend-response';
+export * from './lib/date-interval-request';
+export * from './lib/eating-response';
+export * from './lib/balance-response';

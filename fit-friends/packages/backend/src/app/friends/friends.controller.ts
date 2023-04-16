@@ -15,7 +15,7 @@ import {
   ApiBearerAuth,
   ApiCreatedResponse, ApiForbiddenResponse, ApiNoContentResponse,
   ApiOkResponse,
-  ApiOperation, ApiParam,
+  ApiOperation, ApiParam, ApiTags,
   ApiUnauthorizedResponse
 } from '@nestjs/swagger';
 import {User} from '../auth/decorators/user.decorator';
@@ -31,6 +31,7 @@ import {FriendRDO} from './rdo/friend.rdo';
 
 
 @Controller('friends')
+@ApiTags('Friends')
 export class FriendsController {
   constructor(private readonly friendsService: FriendsService) {}
 

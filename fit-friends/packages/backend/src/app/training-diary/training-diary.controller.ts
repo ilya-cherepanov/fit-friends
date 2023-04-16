@@ -11,7 +11,7 @@ import {CompletedTrainingsQuery} from './query/completed-trainings.query';
 import {CompletedTrainingListRDO} from './rdo/completed-training-list.rdo';
 import {CompletedTrainingRDO} from './rdo/completed-training.rdo';
 import {
-  ApiBadRequestResponse,
+  ApiBadRequestResponse, ApiBearerAuth,
   ApiCreatedResponse, ApiForbiddenResponse, ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -30,6 +30,7 @@ export class TrainingDiaryController {
   @Post(':trainingId')
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Sportsman)
+  @ApiBearerAuth()
   @ApiParam({
     name: 'trainingId',
     description: 'Идентификатор тренировки',
@@ -68,6 +69,7 @@ export class TrainingDiaryController {
   @Get()
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Sportsman)
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Получить список выполненных тренировок за указаный интервал времени',
   })

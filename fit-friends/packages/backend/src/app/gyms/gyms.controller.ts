@@ -16,7 +16,15 @@ import {Roles} from '../auth/decorators/roles.decorator';
 import {fillObject, UserRole} from '@fit-friends/core';
 import {RolesGuard} from '../auth/guards/roles.guard';
 import {JWTAuthGuard} from '../auth/guards/jwt-auth.guard';
-import {ApiNoContentResponse, ApiOkResponse, ApiOperation, ApiParam, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiNoContentResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags
+} from '@nestjs/swagger';
 import {FavoriteGymsRDO} from './rdo/favorite-gyms.rdo';
 
 
@@ -28,6 +36,7 @@ export class GymsController {
   @Get('favorites')
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Sportsman)
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Получить понравившиеся спортивные залы',
   })
@@ -45,6 +54,7 @@ export class GymsController {
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Sportsman)
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Установить статус фаворита',
   })

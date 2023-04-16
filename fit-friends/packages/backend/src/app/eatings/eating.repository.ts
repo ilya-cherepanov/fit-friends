@@ -6,19 +6,37 @@ import {PrismaService} from '../prisma/prisma.service';
 export class EatingRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async getMany(afterDate: Date, beforeDate: Date, sportsmanId: number) {
-    return this.prismaService.eating.findMany({
-      where: {
-        createdAt: {
-          gte: afterDate,
-          lte: beforeDate,
+  async getMany(skip: number, take: number, afterDate: Date, beforeDate: Date, sportsmanId: number) {
+    const [eatings, count] = await this.prismaService.$transaction([
+      this.prismaService.eating.findMany({
+        where: {
+          createdAt: {
+            gte: afterDate,
+            lte: beforeDate,
+          },
+          userId: sportsmanId,
         },
-        userId: sportsmanId,
-      },
-      orderBy: {
-        createdAt: 'asc',
-      },
-    });
+        orderBy: {
+          createdAt: 'asc',
+        },
+        take,
+        skip,
+      }),
+      this.prismaService.eating.count({
+        where: {
+          createdAt: {
+            gte: afterDate,
+            lte: beforeDate,
+          },
+          userId: sportsmanId,
+        }
+      }),
+    ]);
+
+    return {
+      eatings,
+      count,
+    };
   }
 
   async upsert(sportsmanId: number, eatings: CreateEatingDTO[]) {

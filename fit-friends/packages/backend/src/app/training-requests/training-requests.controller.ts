@@ -7,21 +7,23 @@ import {User} from '../auth/decorators/user.decorator';
 import {JWTPayload} from '@fit-friends/shared-types';
 import {RolesGuard} from '../auth/guards/roles.guard';
 import {
-  ApiBadRequestResponse, ApiConflictResponse,
+  ApiBadRequestResponse, ApiBearerAuth, ApiConflictResponse,
   ApiCreatedResponse,
   ApiForbiddenResponse, ApiNotFoundResponse,
-  ApiOperation, ApiParam,
+  ApiOperation, ApiParam, ApiTags,
   ApiUnauthorizedResponse
 } from '@nestjs/swagger';
 
 
 @Controller('training-requests')
+@ApiTags('Training requests')
 export class TrainingRequestsController {
   constructor(private readonly trainingRequestService: TrainingRequestsService) {}
 
   @Post(':targetId')
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Sportsman)
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Отправить приглашение на тренировку',
   })
@@ -52,6 +54,7 @@ export class TrainingRequestsController {
   @Put(':initiatorId/accept')
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(JWTAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Принять приглашение на тренировку',
   })
@@ -82,6 +85,7 @@ export class TrainingRequestsController {
   @Put(':initiatorId/reject')
   @HttpCode(HttpStatus.NO_CONTENT)
   @UseGuards(JWTAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Отклонить приглашение на тренировку',
   })

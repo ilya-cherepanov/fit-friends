@@ -3,8 +3,10 @@ import {OrderType} from '@fit-friends/core';
 import {TrainingRDO} from '../../trainings/rdo/training.rdo';
 import {GymRDO} from '../../gyms/rdo/gym.rdo';
 import {ApiProperty} from '@nestjs/swagger';
+import {BalanceResponse} from '@fit-friends/shared-types';
 
-export class BalanceItemRDO {
+
+export class BalanceItemRDO implements BalanceResponse {
   @ApiProperty({
     description: 'Идентификатор записи баланса пользователя',
     example: 10,

@@ -1,9 +1,10 @@
 import {BalanceItemRDO} from './balance-item.rdo';
 import {Expose, Type} from 'class-transformer';
 import {ApiProperty} from '@nestjs/swagger';
+import {BalanceResponse, ListResponse} from '@fit-friends/shared-types';
 
 
-export class BalanceListRDO {
+export class BalanceListRDO implements ListResponse<BalanceResponse> {
   @ApiProperty({
     description: 'Текущая страница',
     example: 1,

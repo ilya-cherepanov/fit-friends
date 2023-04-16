@@ -34,7 +34,7 @@ export class SubscribersController {
 
   @Get()
   @ApiOperation({
-    description: 'Отправить уведомления о новых тренировках',
+    summary: 'Отправить уведомления о новых тренировках',
   })
   async sendMailNotifications() {
     await this.subscribersService.sendNotifications();
@@ -45,7 +45,7 @@ export class SubscribersController {
   @Roles(UserRole.Sportsman)
   @ApiBearerAuth()
   @ApiOperation({
-    description: 'Получить статус подписки на тренера',
+    summary: 'Получить статус подписки на тренера',
   })
   @ApiParam({
     name: 'coachId',
@@ -75,7 +75,7 @@ export class SubscribersController {
   @Roles(UserRole.Sportsman)
   @ApiBearerAuth()
   @ApiOperation({
-    description: 'Установить статус подписки на тренера',
+    summary: 'Установить статус подписки на тренера',
   })
   @ApiParam({
     name: 'coachId',
