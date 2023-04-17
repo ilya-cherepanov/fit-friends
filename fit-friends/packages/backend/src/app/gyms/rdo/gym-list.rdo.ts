@@ -4,7 +4,7 @@ import {Expose, Type} from 'class-transformer';
 import {ApiProperty} from '@nestjs/swagger';
 
 
-export class FavoriteGymsRDO implements ListResponse<GymResponse> {
+export class GymListRdo implements ListResponse<GymResponse> {
   @ApiProperty({
     description: 'Текущая страница',
     example: 1,

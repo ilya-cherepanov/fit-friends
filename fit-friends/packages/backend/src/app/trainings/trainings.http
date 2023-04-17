@@ -68,9 +68,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJyb2xlI
 
 ###
 
-# Get trainings
-GET http://localhost:3333/api/trainings?minCalories=1000&maxCalories=1000 HTTP/1.1
+# Get coaches trainings
+GET http://localhost:3333/api/coach-trainings?minCalories=1000&maxCalories=1000 HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJyb2xlIjoic3BvcnRzbWFuIiwiaWF0IjoxNjgwMTEzMTM4LCJleHAiOjE2ODA3MTc5Mzh9.27rRsHxhT_06OCvI5FyteSHIeZNpZGuMKEmXLYO8-Ek
+
+###
+
+# Get trainings
+GET http://localhost:3333/api/trainings?minCalories=1000 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInJvbGUiOiJzcG9ydHNtYW4iLCJpYXQiOjE2ODE3NDQzMjAsImV4cCI6MTY4MjM0OTEyMH0.ReGj24h-Iuk5GC-u7Yd1ubVpFxlQNnr-qTnxlRot3Nc
 
 ###

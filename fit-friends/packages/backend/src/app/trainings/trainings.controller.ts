@@ -38,12 +38,12 @@ import {TrainingListQuery} from './query/training-list.query';
 import {TrainingListRDO} from './rdo/training-list.rdo';
 
 
-@Controller('trainings')
+@Controller()
 @ApiTags('Trainings')
 export class TrainingsController {
   constructor(private readonly trainingsService: TrainingsService) {}
 
-  @Get(':id')
+  @Get('trainings/:id')
   @UseGuards(JWTAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({
@@ -60,12 +60,33 @@ export class TrainingsController {
     return fillObject(TrainingRDO, await this.trainingsService.get(id));
   }
 
-  @Get()
+  @Get('trainings')
+  @UseGuards(JWTAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Получить список тренировок',
+  })
+  @ApiOkResponse({
+    description: 'Возвращает список тренировок',
+    type: TrainingListRDO,
+  })
+  @ApiBadRequestResponse({
+    description: 'Неверная строка запроса',
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Пользователь не авторизован',
+  })
+  async getMany(@Query() query: TrainingListQuery) {
+    return fillObject(TrainingListRDO, await this.trainingsService.getMany(query));
+  }
+
+
+  @Get('coach-trainings')
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Coach)
   @ApiBearerAuth()
   @ApiOperation({
-    summary: 'Получить список тренировок',
+    summary: 'Получить список тренировок тренера',
   })
   @ApiOkResponse({
     description: 'Возвращает список тренировок тренера',
@@ -80,11 +101,11 @@ export class TrainingsController {
   @ApiForbiddenResponse({
     description: 'Пользователь не является тренером',
   })
-  async getMany(@Query() query: TrainingListQuery, @User() coach: JWTPayload) {
-    return fillObject(TrainingListRDO, await this.trainingsService.getMany(query, coach.sub))
+  async getCoachMany(@Query() query: TrainingListQuery, @User() coach: JWTPayload) {
+    return fillObject(TrainingListRDO, await this.trainingsService.getMany(query, coach.sub));
   }
 
-  @Post()
+  @Post('trainings')
   @UseInterceptors(FileInterceptor('video'))
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Coach)
@@ -118,7 +139,7 @@ export class TrainingsController {
     return fillObject(TrainingRDO, await this.trainingsService.create(dto, user.sub, video.filename));
   }
 
-  @Put(':id')
+  @Put('trainings/:id')
   @UseInterceptors(FileInterceptor('video'))
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Coach)

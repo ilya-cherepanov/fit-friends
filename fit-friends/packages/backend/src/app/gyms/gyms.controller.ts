@@ -25,7 +25,9 @@ import {
   ApiResponse,
   ApiTags
 } from '@nestjs/swagger';
-import {FavoriteGymsRDO} from './rdo/favorite-gyms.rdo';
+import {GymListRdo} from './rdo/gym-list.rdo';
+import {GetGymsQuery} from './query/get-gyms.query';
+import {GymRDO} from './rdo/gym.rdo';
 
 
 @Controller('gyms')
@@ -47,7 +49,33 @@ export class GymsController {
     @User() user: JWTPayload,
     @Query('page', new DefaultValuePipe(0), ParseIntPipe) page: number
   ) {
-    return fillObject(FavoriteGymsRDO, await this.gymsService.getFavorites(user.sub, page));
+    return fillObject(GymListRdo, await this.gymsService.getFavorites(user.sub, page));
+  }
+
+  @Get('many')
+  @UseGuards(JWTAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Получить список спортивных залов',
+  })
+  async getMany(@Query() query: GetGymsQuery) {
+    return fillObject(GymListRdo, await this.gymsService.getMany(query));
+  }
+
+  @Get('one/:gymId')
+  @UseGuards(JWTAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Получить спортивный зал',
+  })
+  @ApiParam({
+    name: 'gymId',
+    description: 'Идентификатор спортивного зала',
+    type: Number,
+    example: 33,
+  })
+  async getOne(@Param('gymId', ParseIntPipe) gymId: number) {
+    return fillObject(GymRDO, await this.gymsService.getOne(gymId));
   }
 
   @Post(':id/favorites/:state')
