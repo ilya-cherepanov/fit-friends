@@ -125,4 +125,22 @@ export class TrainingRepository {
       data: {isNew: false},
     });
   }
+
+  async recalculateAvgRating(trainingId: number) {
+    const {_avg: {rating: avgRating}} = await this.prismaService.review.aggregate({
+      where: {
+        trainingId,
+      },
+      _avg: {
+        rating: true,
+      },
+    });
+
+    return this.prismaService.training.update({
+      where: {id: trainingId},
+      data: {
+        rating: avgRating,
+      },
+    });
+  }
 }

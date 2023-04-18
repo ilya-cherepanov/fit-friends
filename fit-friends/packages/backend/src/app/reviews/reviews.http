@@ -1,0 +1,19 @@
+# Get reviews
+GET http://localhost:3333/api/trainings/1/reviews HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInJvbGUiOiJzcG9ydHNtYW4iLCJpYXQiOjE2ODE3NDQzMjAsImV4cCI6MTY4MjM0OTEyMH0.ReGj24h-Iuk5GC-u7Yd1ubVpFxlQNnr-qTnxlRot3Nc
+
+###
+
+# Create review
+POST http://localhost:3333/api/reviews HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInJvbGUiOiJzcG9ydHNtYW4iLCJpYXQiOjE2ODE3NDQzMjAsImV4cCI6MTY4MjM0OTEyMH0.ReGj24h-Iuk5GC-u7Yd1ubVpFxlQNnr-qTnxlRot3Nc
+
+{
+  "trainingId": 1,
+  "text": "Регулярно выполняю эту тренировку дома и вижу результат! Спина стала прямее, появилось больше сил и гибкость тоже стала лучше, хотя упражнения довольно простые.",
+  "rating": 5
+}
+
+###

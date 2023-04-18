@@ -4,11 +4,13 @@ import {generateUser} from '../src/mock/user';
 import {UserRole} from '../../core/src';
 import {generateGym} from '../src/mock/gym';
 import {generateTraining} from '../src/mock/training';
-import {random, sampleSize} from 'lodash';
+import {random, sample, sampleSize} from 'lodash';
+import {generateReview} from '../src/mock/review';
 
 const prisma = new PrismaClient();
 
 async function fillDb() {
+  // Create Coaches
   const coaches = await Promise.all(
     Array.from({length: 5}, () => generateUser(UserRole.Coach))
   );
@@ -16,6 +18,7 @@ async function fillDb() {
     data: coach,
   })));
 
+  // Create Sportsmen
   const sportsmen = await Promise.all(
     Array.from({length: 5}, () => generateUser(UserRole.Sportsman))
   );
@@ -23,15 +26,40 @@ async function fillDb() {
     data: sportsman,
   })))
 
+  // Create Trainings
   const trainings = (await Promise.all(createdCoaches.map(async (createdCoach) => {
     return await Promise.all(
       Array.from({length: random(5, 10)}, () => generateTraining(createdCoach.id))
     );
   }))).flat();
-  const createdTrainings = await prisma.training.createMany({
-    data: trainings,
-  });
+  const createdTrainings = await prisma.$transaction(
+    trainings.map((training) => prisma.training.create({data: training}))
+  );
 
+  // Create Reviews
+  const reviews = createdTrainings.map((createdTraining) => {
+    return Array.from(
+      {length: random(5, 10)},
+      () => generateReview(createdTraining.id, sample(createdSportsmen).id)
+    );
+  }).flat();
+  const createdReviews = await prisma.$transaction(
+    reviews.map((review) => prisma.review.create({data: review}))
+  );
+  const avgReviewsRatings = await prisma.review.groupBy({
+    by: ['trainingId'],
+    _avg: {
+      rating: true,
+    },
+  });
+  await prisma.$transaction(
+    avgReviewsRatings.map((avgReviewsRatings) => prisma.training.update({
+      where: {id: avgReviewsRatings.trainingId},
+      data: {rating: avgReviewsRatings._avg.rating},
+    }))
+  );
+
+  // Create Subscribers
   const subscribers = await Promise.all(createdSportsmen.map((sportsman) => {
     const randomCoaches = sampleSize(createdCoaches, random(5, 10));
 
@@ -43,6 +71,7 @@ async function fillDb() {
     });
   }));
 
+  // Create Gyms
   const gyms = await Promise.all(
     Array.from({length: 10}, () => generateGym())
   );

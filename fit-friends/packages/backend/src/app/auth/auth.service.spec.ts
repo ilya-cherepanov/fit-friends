@@ -1,25 +1,25 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { SubscribersService } from './subscribers.service';
-import {SubscriberRepository} from './subscriber.repository';
-import {MailingModule} from '../mailing/mailing.module';
+import {Test, TestingModule} from '@nestjs/testing';
+import {AuthService} from './auth.service';
+import {UserRepository} from '../users/user.repository';
 import {PrismaModule} from '../prisma/prisma.module';
-import {TrainingsModule} from '../trainings/trainings.module';
+import {UsersModule} from '../users/users.module';
+import {JwtModule} from '@nestjs/jwt';
 import {ConfigModule} from '@nestjs/config';
 import {ENV_FILE_PATH} from '../../constants';
 import {envSchema} from '../env.schema';
-import {jwtOptions} from '../../config/jwt.config';
 import {uploadOptions} from '../../config/upload.config';
 import {mailOptions} from '../../config/mail.config';
+import {jwtOptions} from '../../config/jwt.config';
 
-describe('SubscribersService', () => {
-  let service: SubscribersService;
+
+describe('AuthService', () => {
+  let service: AuthService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
-        MailingModule,
         PrismaModule,
-        TrainingsModule,
+        UsersModule,
         ConfigModule.forRoot({
           isGlobal: true,
           cache: true,
@@ -27,11 +27,12 @@ describe('SubscribersService', () => {
           validationSchema: envSchema,
           load: [jwtOptions, uploadOptions, mailOptions],
         }),
+        JwtModule.register({}),
       ],
-      providers: [SubscribersService, SubscriberRepository],
+      providers: [AuthService, UserRepository],
     }).compile();
 
-    service = module.get<SubscribersService>(SubscribersService);
+    service = module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {

@@ -5,7 +5,7 @@ import {REVIEW_TEXTS} from './constants';
 import {ReviewTrainingRating} from '../../../core/src/index';
 
 
-export function generateReview(trainingId: number, sportsmanId: number): Prisma.ReviewCreateArgs['data'] {
+export function generateReview(trainingId: number, sportsmanId: number) {
   return {
     trainingId,
     authorId: sportsmanId,

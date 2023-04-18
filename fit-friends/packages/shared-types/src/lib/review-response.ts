@@ -1,9 +1,9 @@
-import {UserResponse} from './user-response';
+import {SportsmanResponse} from './user-response';
 
 export interface ReviewResponse {
   id: number;
   rating: number;
   text: string;
-  user: UserResponse;
+  author: SportsmanResponse;
   createdAt: string;
 }

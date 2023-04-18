@@ -20,3 +20,4 @@ export * from './lib/friend-response';
 export * from './lib/date-interval-request';
 export * from './lib/eating-response';
 export * from './lib/balance-response';
+export * from './lib/review-request';
