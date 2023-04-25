@@ -1,6 +1,7 @@
 import {Balance} from '../../types/balance';
 import {OrderType} from '@fit-friends/core';
-import {ConflictException} from '@nestjs/common';
+import {ConflictException, InternalServerErrorException} from '@nestjs/common';
+import {BALANCE_CANNOT_BE_NEGATIVE} from '../../constants';
 
 
 export class BalanceEntity implements Balance {
@@ -43,10 +44,16 @@ export class BalanceEntity implements Balance {
 
   increment(count = 1) {
     this.remains += count;
+    return this.remains;
   }
 
   decrement(count = 1) {
     const result = this.remains - count;
-    this.remains = result >= 0 ? result : 0;
+    if (result < 0) {
+      throw new InternalServerErrorException(BALANCE_CANNOT_BE_NEGATIVE);
+    }
+
+    this.remains = result;
+    return this.remains;
   }
 }

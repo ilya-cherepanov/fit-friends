@@ -1,5 +1,7 @@
 import {BadRequestException, PipeTransform} from '@nestjs/common';
 import {COACH_CERTIFICATE_MIME_TYPES, USER_AVATAR_MAX_SIZE, USER_AVATAR_MIME_TYPES} from '@fit-friends/core';
+import {Express} from 'express';
+import {Multer} from 'multer';
 import {
   AVATAR_INCOMPATIBLE_MIME,
   AVATAR_MUST_BE_LESS,

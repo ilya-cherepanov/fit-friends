@@ -32,5 +32,5 @@ export class EatingRDO implements EatingResponse {
     example: '2023-04-16T16:05:58.770Z',
   })
   @Expose()
-  createAt: string;
+  createdAt: string;
 }

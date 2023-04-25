@@ -1,6 +1,7 @@
 import {IsDate, IsEnum, IsInt, Min} from 'class-validator';
 import {EatingType} from '@fit-friends/core';
 import {ApiProperty} from '@nestjs/swagger';
+import {Transform} from 'class-transformer';
 
 
 export class CreateEatingDTO {
@@ -17,6 +18,7 @@ export class CreateEatingDTO {
     example: '2023-04-16T16:05:58.770Z',
   })
   @IsDate()
+  @Transform(({value}) => new Date(value))
   createdAt: Date;
 
   @ApiProperty({

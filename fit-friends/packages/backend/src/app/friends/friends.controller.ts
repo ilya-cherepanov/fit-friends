@@ -63,51 +63,51 @@ export class FriendsController {
     return fillObject(FriendRDO, await this.friendsService.create(user.sub, friendId));
   }
 
-  @Post(':id/confirm')
-  @UseGuards(JWTAuthGuard, RolesGuard)
-  @Roles(UserRole.Sportsman)
-  @HttpCode(HttpStatus.OK)
-  @ApiBearerAuth()
-  @ApiOperation({
-    summary: 'Подтвердить предложение дружбы',
-  })
-  @ApiParam({
-    name: 'id',
-    description: 'Идентификатор пользовател предложившего дружбу',
-    example: 134,
-  })
-  @ApiUnauthorizedResponse({
-    description: 'Пользователь не авторизован',
-  })
-  @ApiForbiddenResponse({
-    description: 'Пользователь не является спортсменом',
-  })
-  async confirm(@Param('id', ParseIntPipe) friendId: number, @User() user: JWTPayload) {
-    return fillObject(FriendRDO, await this.friendsService.accept(user.sub, friendId));
-  }
-
-  @Post(':id/reject')
-  @UseGuards(JWTAuthGuard, RolesGuard)
-  @Roles(UserRole.Sportsman)
-  @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiBearerAuth()
-  @ApiOperation({
-    summary: 'Отклонить предложение дружбы',
-  })
-  @ApiParam({
-    name: 'id',
-    description: 'Идентификатор пользователя предложившего дружбу',
-    example: 134,
-  })
-  @ApiUnauthorizedResponse({
-    description: 'Пользователь не авторизован',
-  })
-  @ApiForbiddenResponse({
-    description: 'Пользователь не является спортсменом',
-  })
-  async reject(@Param('id', ParseIntPipe) friendId: number, @User() user: JWTPayload) {
-    await this.friendsService.reject(user.sub, friendId);
-  }
+  // @Post(':id/confirm')
+  // @UseGuards(JWTAuthGuard, RolesGuard)
+  // @Roles(UserRole.Sportsman)
+  // @HttpCode(HttpStatus.OK)
+  // @ApiBearerAuth()
+  // @ApiOperation({
+  //   summary: 'Подтвердить предложение дружбы',
+  // })
+  // @ApiParam({
+  //   name: 'id',
+  //   description: 'Идентификатор пользовател предложившего дружбу',
+  //   example: 134,
+  // })
+  // @ApiUnauthorizedResponse({
+  //   description: 'Пользователь не авторизован',
+  // })
+  // @ApiForbiddenResponse({
+  //   description: 'Пользователь не является спортсменом',
+  // })
+  // async confirm(@Param('id', ParseIntPipe) friendId: number, @User() user: JWTPayload) {
+  //   return fillObject(FriendRDO, await this.friendsService.accept(user.sub, friendId));
+  // }
+  //
+  // @Post(':id/reject')
+  // @UseGuards(JWTAuthGuard, RolesGuard)
+  // @Roles(UserRole.Sportsman)
+  // @HttpCode(HttpStatus.NO_CONTENT)
+  // @ApiBearerAuth()
+  // @ApiOperation({
+  //   summary: 'Отклонить предложение дружбы',
+  // })
+  // @ApiParam({
+  //   name: 'id',
+  //   description: 'Идентификатор пользователя предложившего дружбу',
+  //   example: 134,
+  // })
+  // @ApiUnauthorizedResponse({
+  //   description: 'Пользователь не авторизован',
+  // })
+  // @ApiForbiddenResponse({
+  //   description: 'Пользователь не является спортсменом',
+  // })
+  // async reject(@Param('id', ParseIntPipe) friendId: number, @User() user: JWTPayload) {
+  //   await this.friendsService.reject(user.sub, friendId);
+  // }
 
   @Delete(':id')
   @UseGuards(JWTAuthGuard)
@@ -136,7 +136,7 @@ export class FriendsController {
   }
 
   @Get('')
-  @UseGuards(JWTAuthGuard, RolesGuard)
+  @UseGuards(JWTAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({
     summary: 'Получить список друзей',

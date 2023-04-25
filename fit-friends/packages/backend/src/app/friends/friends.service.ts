@@ -1,6 +1,11 @@
-import {BadRequestException, ConflictException, Injectable, NotFoundException} from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException
+} from '@nestjs/common';
 import {FriendRepository} from './friend.repository';
-import {SportsmanRepository} from '../sportsmen/sportsman.repository';
 import {FriendsQuery} from '../users/query/friends.query';
 import {MAX_COLLECTION_LENGTH} from '@fit-friends/core';
 import {NotificationsService} from '../notifications/notifications.service';
@@ -11,13 +16,14 @@ import {
   USERS_ALREADY_FRIENDS
 } from '../../constants';
 import {BaseUserEntity} from '../users/user.entity';
+import {UserRepository} from '../users/user.repository';
 
 
 @Injectable()
 export class FriendsService {
   constructor(
     private readonly friendRepository: FriendRepository,
-    private readonly sportsmanRepository: SportsmanRepository,
+    private readonly userRepository: UserRepository,
     private readonly notificationService: NotificationsService,
   ) {}
 
@@ -26,9 +32,9 @@ export class FriendsService {
       throw new BadRequestException(SAME_USER_CANNOT_BE_FRIEND);
     }
 
-    const sportsman = await this.sportsmanRepository.getById(friendId);
+    const sportsman = await this.userRepository.getById(friendId);
     if (!sportsman) {
-      throw new NotFoundException(SPORTSMAN_NOT_FOUND);
+      throw new NotFoundException(FRIEND_NOT_FOUND);
     }
 
     const friend = await this.friendRepository.getById(userId, friendId);
@@ -36,41 +42,16 @@ export class FriendsService {
       throw new ConflictException(USERS_ALREADY_FRIENDS);
     }
 
-    const createdFriend = this.friendRepository.create(userId, friendId);
+    const createdFriend = await this.friendRepository.create(userId, friendId);
 
     await this.notificationService.create(friendId,
-      `Пользователь ${sportsman.name} отправил вам предложение дружбы`
+      `Пользователь ${sportsman.name} добавил вас в друзья`
     );
 
     return createdFriend;
   }
 
-  async accept(userId: number, friendId: number) {
-    if (userId === friendId) {
-      throw new BadRequestException(SAME_USER_CANNOT_BE_FRIEND);
-    }
-
-    const friend = await this.friendRepository.accept(friendId, userId);
-
-    await this.notificationService.create(userId,
-      `Пользователь ${friend.user.name} принял предложение дружбы`
-    );
-
-    return friend;
-  }
-
-  async reject(userId: number, friendId: number) {
-    if (userId === friendId) {
-      throw new BadRequestException(SAME_USER_CANNOT_BE_FRIEND);
-    }
-
-    await this.friendRepository.reject(friendId, userId);
-
-    const user = await this.sportsmanRepository.getById(userId);
-    await this.notificationService.create(friendId, `Пользователь ${user.name} отклонил ваше предложение дружбы`);
-  }
-
-  async getMany(userId, query: FriendsQuery) {
+  async getMany(userId: number, query: FriendsQuery) {
     const skip = query.page * MAX_COLLECTION_LENGTH;
     const {friends, totalCount} = await this.friendRepository.getMany(MAX_COLLECTION_LENGTH, skip, userId);
 
@@ -91,8 +72,12 @@ export class FriendsService {
       throw new NotFoundException(FRIEND_NOT_FOUND);
     }
 
-    await this.friendRepository.delete(userId, friendId);
-    const user = await this.sportsmanRepository.getById(userId);
-    await this.notificationService.create(friend.id, `Пользователь ${user.name} удалил вас из друзей`);
+    const {count} = await this.friendRepository.delete(userId, friendId);
+    if (count < 1) {
+      throw new InternalServerErrorException();
+    }
+
+    const user = await this.userRepository.getById(userId);
+    await this.notificationService.create(friendId, `Пользователь ${user.name} удалил вас из друзей`);
   }
 }

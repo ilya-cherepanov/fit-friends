@@ -4,6 +4,8 @@ import {CreateOrderDTO} from './dto/create-order.dto';
 import {MAX_COLLECTION_LENGTH, OrderType} from '@fit-friends/core';
 import {TrainingRepository} from '../trainings/training.repository';
 import {GetManyOrdersQuery} from './query/get-many-orders.query';
+import {BalanceService} from '../balance/balance.service';
+import {BalanceEntity} from '../balance/balance-entity';
 
 
 @Injectable()
@@ -11,6 +13,7 @@ export class OrdersService {
   constructor(
     private readonly orderRepository: OrderRepository,
     private readonly trainingRepository: TrainingRepository,
+    private readonly balanceService: BalanceService,
   ) {}
 
   async create(dto: CreateOrderDTO, sportsmanId: number) {
@@ -41,7 +44,7 @@ export class OrdersService {
   private async createTrainingOrder(dto: CreateOrderDTO, sportsmanId: number) {
     const training = await this.trainingRepository.getById(dto.id);
 
-    return this.orderRepository.create({
+    const order = await this.orderRepository.create({
       type: dto.type,
       price: training.price,
       quantity: dto.quantity,
@@ -51,5 +54,16 @@ export class OrdersService {
       trainingId: dto.id,
       gymId: null,
     });
+
+    const balanceEntity = new BalanceEntity({
+      type: OrderType.Training,
+      userId: sportsmanId,
+      trainingId: dto.id,
+      remains: dto.quantity,
+    });
+
+    await this.balanceService.upsert(balanceEntity);
+
+    return order;
   }
 }

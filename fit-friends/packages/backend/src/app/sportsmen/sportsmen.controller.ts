@@ -28,6 +28,8 @@ import {JWTAuthGuard} from '../auth/guards/jwt-auth.guard';
 import {RolesGuard} from '../auth/guards/roles.guard';
 import {Roles} from '../auth/decorators/roles.decorator';
 import {SportsmanRDO} from '../users/rdo/user.rdo';
+import {Express} from 'express';
+
 
 @Controller('sportsmen')
 @ApiTags('Sportsmen', 'Users')

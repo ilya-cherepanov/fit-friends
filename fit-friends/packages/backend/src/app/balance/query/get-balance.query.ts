@@ -23,7 +23,8 @@ export class GetBalanceQuery {
     isArray: true,
     required: false,
   })
-  @IsEnum(OrderType)
+  @IsEnum(OrderType, {each: true})
   @IsOptional()
+  @Transform(({value}) => value ?? [OrderType.Subscription, OrderType.Training])
   types = [OrderType.Subscription, OrderType.Training];
 }

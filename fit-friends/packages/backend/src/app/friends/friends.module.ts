@@ -4,10 +4,11 @@ import { FriendsService } from './friends.service';
 import {SportsmenModule} from '../sportsmen/sportsmen.module';
 import {FriendRepository} from './friend.repository';
 import {NotificationsModule} from '../notifications/notifications.module';
+import {UsersModule} from '../users/users.module';
 
 
 @Module({
-  imports: [SportsmenModule, NotificationsModule],
+  imports: [UsersModule, NotificationsModule],
   controllers: [FriendsController],
   providers: [FriendsService, FriendRepository],
 })

@@ -1,0 +1,27 @@
+# Create training request
+POST http://localhost:3333/api/training-requests/131 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzMCwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MjI4ODk5MywiZXhwIjoxNjgyODkzNzkzfQ.ciMmTbDddWpJjz7JoVdZHywSlStGiCn4mp8a6tyT9dk
+
+###
+
+# Accept training request
+PUT http://localhost:3333/api/training-requests/130/accept HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzMSwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MjM0MTk0NSwiZXhwIjoxNjgyOTQ2NzQ1fQ.5of41OyDAjB56VNf0ekwCzaoXDYF5pIAZ-ezZtC-Nng
+
+###
+
+# Reject training request
+PUT http://localhost:3333/api/training-requests/130/reject HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzMSwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MjM0MTk0NSwiZXhwIjoxNjgyOTQ2NzQ1fQ.5of41OyDAjB56VNf0ekwCzaoXDYF5pIAZ-ezZtC-Nng
+
+###
+
+# Delete training request
+#DELETE http://localhost:3333/api/training-requests/131 HTTP/1.1
+#Content-Type: application/json
+#Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzMCwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MjI4ODk5MywiZXhwIjoxNjgyODkzNzkzfQ.ciMmTbDddWpJjz7JoVdZHywSlStGiCn4mp8a6tyT9dk
+
+###

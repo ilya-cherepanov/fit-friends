@@ -20,6 +20,6 @@ export class MailingService {
         ...subscriber,
         url: this.configService.get<string>('mail.frontendUrl'),
       },
-    }))
+    }));
   }
 }

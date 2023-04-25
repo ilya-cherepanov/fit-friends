@@ -1,8 +1,9 @@
 import {PrismaService} from '../prisma/prisma.service';
-import {NotFoundException} from '@nestjs/common';
+import {Injectable, NotFoundException} from '@nestjs/common';
 import {Notification} from '../../types/notification';
 
 
+@Injectable()
 export class NotificationRepository {
   constructor(private readonly prismaService: PrismaService) {}
 

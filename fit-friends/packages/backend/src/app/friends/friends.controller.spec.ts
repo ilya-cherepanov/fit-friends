@@ -4,7 +4,8 @@ import {FriendsService} from './friends.service';
 import {FriendRepository} from './friend.repository';
 import {PrismaModule} from '../prisma/prisma.module';
 import {NotificationsModule} from '../notifications/notifications.module';
-import {SportsmenModule} from '../sportsmen/sportsmen.module';
+import {UsersModule} from '../users/users.module';
+
 
 describe('FriendsController', () => {
   let controller: FriendsController;
@@ -14,7 +15,7 @@ describe('FriendsController', () => {
       imports: [
         PrismaModule,
         NotificationsModule,
-        SportsmenModule
+        UsersModule,
       ],
       controllers: [FriendsController],
       providers: [FriendsService, FriendRepository],

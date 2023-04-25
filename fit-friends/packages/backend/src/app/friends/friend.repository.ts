@@ -2,39 +2,42 @@ import {PrismaService} from '../prisma/prisma.service';
 import {FriendStatus} from '@fit-friends/core';
 import {Prisma} from '@prisma/client';
 import {
+  FRIEND_ALREADY_EXISTS,
   PRISMA_NOT_FOUND_CODE,
   PRISMA_VIOLATION_OF_UNIQUENESS_CODE,
   USER_WITH_EMAIL_ALREADY_EXISTS
 } from '../../constants';
-import {ConflictException, NotFoundException} from '@nestjs/common';
+import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 
 
+@Injectable()
 export class FriendRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async getById(sportsmanId: number, friendId: number) {
+  async getById(userId: number, friendId: number) {
     return this.prismaService.user.findFirst({
       where: {
-        id: sportsmanId,
+        id: userId,
         OR: [
           {
             friends: {
               some: {
-                friendId,
-              },
+                userId: friendId,
+              }
             },
           },
           {
             friendsBy: {
               some: {
-                userId: friendId,
-              },
+                friendId,
+              }
             },
           },
         ],
       },
       include: {
         sportsman: true,
+        coach: true,
       },
     });
   }
@@ -45,61 +48,16 @@ export class FriendRepository {
         data: {
           userId: sportsmanId,
           friendId,
+          status: FriendStatus.Accepted,
         },
       });
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError
         && err.code === PRISMA_VIOLATION_OF_UNIQUENESS_CODE) {
-        throw new ConflictException(USER_WITH_EMAIL_ALREADY_EXISTS);
-      } else {
-        throw err;
+        throw new ConflictException(FRIEND_ALREADY_EXISTS);
       }
-    }
-  }
 
-  async accept(sportsmanId: number, friendId: number) {
-    try {
-      return this.prismaService.friend.update({
-        where: {
-          userId_friendId: {
-            userId: sportsmanId,
-            friendId
-          },
-        },
-        data: {
-          status: FriendStatus.Accepted,
-        },
-        include: {
-          user: true,
-        },
-      });
-    } catch (err) {
-      if (err instanceof Prisma.PrismaClientKnownRequestError
-        && err.code === PRISMA_NOT_FOUND_CODE) {
-        throw new NotFoundException();
-      } else {
-        throw err;
-      }
-    }
-  }
-
-  async reject(sportsmanId: number, friendId: number) {
-    try {
-      return this.prismaService.friend.delete({
-        where: {
-          userId_friendId: {
-            userId: sportsmanId,
-            friendId,
-          },
-        }
-      });
-    } catch (err) {
-      if (err instanceof Prisma.PrismaClientKnownRequestError
-        && err.code === PRISMA_NOT_FOUND_CODE) {
-        throw new NotFoundException();
-      } else {
-        throw err;
-      }
+      throw err;
     }
   }
 
@@ -111,14 +69,14 @@ export class FriendRepository {
             {
               friendsBy: {
                 some: {
-                  userId,
+                  friendId: userId,
                 },
               },
             },
             {
               friends: {
                 some: {
-                  friendId: userId,
+                  userId,
                 },
               },
             }
@@ -126,10 +84,13 @@ export class FriendRepository {
         },
         include: {
           sportsman: true,
+          coach: true,
         },
         orderBy: {
           createdAt: 'desc',
         },
+        take,
+        skip,
       }),
       this.prismaService.friend.count({
         where: {

@@ -1,11 +1,20 @@
-POST http://localhost:3333/api/friends//favorites/true HTTP/1.1
+# Get Friends
+GET http://localhost:3333/api/friends HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY4MDExNzEzNSwiZXhwIjoxNjgwNzIxOTM1fQ.pum1Xch_HmSMJymz4FM-_hv850CnpBW3A_ASZ-ESres
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzMCwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MTk0MTM3MiwiZXhwIjoxNjgyNTQ2MTcyfQ.I5VNxJRpFfhBQ_a2G3PT8caNdxvQBNzcEuft7xUhr0A
 
 ###
 
-POST http://localhost:3333/api/friends//favorites/true HTTP/1.1
+# Create Friend
+POST http://localhost:3333/api/friends/162 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY4MDExNzEzNSwiZXhwIjoxNjgwNzIxOTM1fQ.pum1Xch_HmSMJymz4FM-_hv850CnpBW3A_ASZ-ESres
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzMCwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MTk0MTM3MiwiZXhwIjoxNjgyNTQ2MTcyfQ.I5VNxJRpFfhBQ_a2G3PT8caNdxvQBNzcEuft7xUhr0A
+
+###
+
+# Delete Friend
+DELETE http://localhost:3333/api/friends/162 HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzMCwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MTk0MTM3MiwiZXhwIjoxNjgyNTQ2MTcyfQ.I5VNxJRpFfhBQ_a2G3PT8caNdxvQBNzcEuft7xUhr0A
 
 ###

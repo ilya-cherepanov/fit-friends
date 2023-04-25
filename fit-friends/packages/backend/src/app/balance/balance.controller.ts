@@ -58,7 +58,7 @@ export class BalanceController {
     summary: 'Изменить баланс спортсмена',
   })
   @ApiOkResponse({
-    description: 'Изменяет запись балансва и возвращает новую',
+    description: 'Изменяет запись баланса и возвращает новую',
     // type: BalanceItemRDO,
   })
   @ApiUnauthorizedResponse({

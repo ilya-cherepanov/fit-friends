@@ -1,11 +1,14 @@
 import {PrismaClient} from '@prisma/client';
 import {generateUser} from '../src/mock/user';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {UserRole} from '../../core/src';
+import {FriendStatus, UserRole} from '../../core/src';
 import {generateGym} from '../src/mock/gym';
 import {generateTraining} from '../src/mock/training';
 import {random, sample, sampleSize} from 'lodash';
 import {generateReview} from '../src/mock/review';
+import {generateEatings} from '../src/mock/eatings';
+import {generateOrder} from '../src/mock/order';
+import {generateBalance} from '../src/mock/balance';
 
 const prisma = new PrismaClient();
 
@@ -77,7 +80,60 @@ async function fillDb() {
   );
   const createdGyms = await Promise.all(gyms.map((gym) => prisma.gym.create({
     data: gym,
-  })))
+  })));
+
+  // Create favorite gyms
+  const favoriteGyms = createdSportsmen.map((createdSportsman) => {
+    return sampleSize(createdGyms, random(5, 10)).map((createdGym) => ({
+      userId: createdSportsman.id,
+      gymId: createdGym.id,
+    }));
+  }).flat();
+  const createdFavoriteGyms = await prisma.$transaction(
+    favoriteGyms.map((favoriteGym) => prisma.favoriteGym.create({data: favoriteGym}))
+  );
+
+  // Create eatings
+  const eatings = createdSportsmen.map((createdSportsman) => generateEatings(createdSportsman.id)).flat();
+  const createdEatings = await prisma.$transaction(
+    eatings.map((eating) => prisma.eating.create({data: eating}))
+  );
+
+  // Create friends
+  const allUsers = [...createdSportsmen, ...createdCoaches];
+  const friends = createdSportsmen.map((createdSportsman, sportsmanIndex) =>
+    allUsers.map((user, userIndex) => {
+      if (Math.random() >= 0.5 && createdSportsman.id !== user.id && userIndex >= sportsmanIndex) {
+        return {
+          userId: createdSportsman.id,
+          friendId: user.id,
+          status: FriendStatus.Accepted,
+        };
+      }
+
+      return null;
+    })
+  ).flat().filter((friend) => friend !== null);
+  const createdFriends = await prisma.$transaction(
+    friends.map((friend) => prisma.friend.create({data: friend}))
+  );
+
+  // Create orders
+  const orders = createdSportsmen.map((createdSportsman) => {
+    return Array.from(
+      {length: random(5, 10)},
+      () => generateOrder(createdSportsman.id, createdTrainings, createdGyms),
+    );
+  }).flat();
+  const createdOrders = await prisma.$transaction(
+    orders.map((order) => prisma.order.create({data: order}))
+  );
+
+  // Create balance
+  const balance = generateBalance(orders);
+  const createdBalance = await prisma.$transaction(
+    balance.map((balanceItem) => prisma.balance.create({data: balanceItem}))
+  );
 }
 
 (async () => {

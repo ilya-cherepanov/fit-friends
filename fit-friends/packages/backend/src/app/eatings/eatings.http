@@ -1,0 +1,43 @@
+# Save Eatings
+POST http://localhost:3333/api/eatings HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzMCwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MTk0MTM3MiwiZXhwIjoxNjgyNTQ2MTcyfQ.I5VNxJRpFfhBQ_a2G3PT8caNdxvQBNzcEuft7xUhr0A
+
+{
+  "items": [
+    {
+      "type": "breakfast",
+      "calories": 300,
+      "createdAt": "2023-04-19T21:52:35.848Z"
+    },
+    {
+      "type": "lunch",
+      "calories": 800,
+      "createdAt": "2023-04-19T21:52:35.848Z"
+    },
+    {
+      "type": "dinner",
+      "calories": 800,
+      "createdAt": "2023-04-19T21:52:35.848Z"
+    },
+    {
+      "type": "snack",
+      "calories": 300,
+      "createdAt": "2023-04-19T21:52:35.848Z"
+    }
+  ]
+}
+
+###
+
+# Get Eatings
+GET http://localhost:3333/api/eatings HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzMCwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MTk0MTM3MiwiZXhwIjoxNjgyNTQ2MTcyfQ.I5VNxJRpFfhBQ_a2G3PT8caNdxvQBNzcEuft7xUhr0A
+
+{
+  "after": "2023-04-10T21:52:35.848Z",
+  "before": "2023-04-19T21:52:35.848Z"
+}
+
+###

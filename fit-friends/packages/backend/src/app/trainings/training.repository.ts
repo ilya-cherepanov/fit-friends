@@ -100,7 +100,7 @@ export class TrainingRepository {
     });
   }
 
-  async create(newTraining: TrainingEntity, coachId: number): Promise<Training> {
+  async create(newTraining: TrainingEntity, coachId: number) {
     return this.prismaService.training.create({
       data: {
         ...newTraining,

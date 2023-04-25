@@ -29,7 +29,7 @@ export class TrainingsService {
       throw new NotFoundException(TRAINING_NOT_FOUND);
     }
 
-    const coachEntity = this.getCoachEntity(training.coachId);
+    const coachEntity = await this.getCoachEntity(training.coachId);
 
     return {
       ...training,
@@ -87,7 +87,7 @@ export class TrainingsService {
     if (!training) {
       throw new NotFoundException(TRAINING_NOT_FOUND);
     }
-    if (training.coach.id !== coachId) {
+    if (training.coachId !== coachId) {
       throw new ForbiddenException(COACH_NOT_OWNER);
     }
 

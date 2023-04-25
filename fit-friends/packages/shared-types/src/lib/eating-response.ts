@@ -5,5 +5,5 @@ export interface EatingResponse {
   id: number;
   type: EatingType;
   calories: number;
-  createAt: string;
+  createdAt: string;
 }
