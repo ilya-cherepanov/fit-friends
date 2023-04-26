@@ -12,7 +12,6 @@ import {NotificationsService} from '../notifications/notifications.service';
 import {
   FRIEND_NOT_FOUND,
   SAME_USER_CANNOT_BE_FRIEND,
-  SPORTSMAN_NOT_FOUND,
   USERS_ALREADY_FRIENDS
 } from '../../constants';
 import {BaseUserEntity} from '../users/user.entity';

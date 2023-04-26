@@ -22,7 +22,6 @@ import {
   ApiOkResponse,
   ApiOperation,
   ApiParam,
-  ApiResponse,
   ApiTags
 } from '@nestjs/swagger';
 import {GymListRdo} from './rdo/gym-list.rdo';

@@ -54,4 +54,4 @@ export const TRAINING_DESCRIPTIONS = [
   'Тренируясь с резинкой для фитнеса, вы можете проработать почти все мышечные группы и разнообразить тренировки.',
 ] as const;
 
-export const TRAINING_VIDEO = 'training.mp4';
+export const TRAINING_VIDEO = 'video-1.mp4';

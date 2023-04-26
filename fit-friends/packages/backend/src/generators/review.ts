@@ -1,4 +1,3 @@
-import {Prisma} from '@prisma/client';
 import {random, sample} from 'lodash';
 import {REVIEW_TEXTS} from './constants';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries

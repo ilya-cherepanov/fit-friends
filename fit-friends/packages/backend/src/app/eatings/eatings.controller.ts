@@ -23,7 +23,6 @@ import {
   ApiBearerAuth, ApiForbiddenResponse,
   ApiOkResponse,
   ApiOperation,
-  ApiParam,
   ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse

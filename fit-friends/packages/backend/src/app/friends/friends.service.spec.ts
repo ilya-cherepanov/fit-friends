@@ -128,6 +128,10 @@ describe('FriendsService', () => {
       });
 
       await expect(friendsService.create(userId, friendId)).resolves.toStrictEqual({...friend});
+      expect(notificationService.create).toBeCalledWith(
+        friend.friendId,
+        `Пользователь ${user.name} добавил вас в друзья`
+      );
     });
   });
 

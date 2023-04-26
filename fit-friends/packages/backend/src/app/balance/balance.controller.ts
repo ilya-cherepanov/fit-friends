@@ -34,7 +34,7 @@ export class BalanceController {
   })
   @ApiOkResponse({
     description: 'Возвращает баланс пользователя',
-    // type: BalanceListRDO,
+    type: BalanceListRDO,
   })
   @ApiUnauthorizedResponse({
     description: 'Пользователь не авторизован',
@@ -59,7 +59,7 @@ export class BalanceController {
   })
   @ApiOkResponse({
     description: 'Изменяет запись баланса и возвращает новую',
-    // type: BalanceItemRDO,
+    type: BalanceItemRDO,
   })
   @ApiUnauthorizedResponse({
     description: 'Пользователь не авторизован',

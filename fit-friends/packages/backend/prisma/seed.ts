@@ -1,14 +1,16 @@
 import {PrismaClient} from '@prisma/client';
-import {generateUser} from '../src/mock/user';
+import {generateUser} from '../src/generators/user';
+import {generateGym} from '../src/generators/gym';
+import {generateTraining} from '../src/generators/training';
+import {random, sample, sampleSize} from 'lodash';
+import {generateReview} from '../src/generators/review';
+import {generateEatings} from '../src/generators/eatings';
+import {generateOrder} from '../src/generators/order';
+import {generateBalance} from '../src/generators/balance';
+import {generateNotification} from '../src/generators/notification';
+import {generateTrainingRequest} from '../src/generators/training-request';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {FriendStatus, UserRole} from '../../core/src';
-import {generateGym} from '../src/mock/gym';
-import {generateTraining} from '../src/mock/training';
-import {random, sample, sampleSize} from 'lodash';
-import {generateReview} from '../src/mock/review';
-import {generateEatings} from '../src/mock/eatings';
-import {generateOrder} from '../src/mock/order';
-import {generateBalance} from '../src/mock/balance';
 
 const prisma = new PrismaClient();
 
@@ -133,6 +135,32 @@ async function fillDb() {
   const balance = generateBalance(orders);
   const createdBalance = await prisma.$transaction(
     balance.map((balanceItem) => prisma.balance.create({data: balanceItem}))
+  );
+
+  // Create notifications
+  const notifications = allUsers.map((targetUser) => allUsers.map((user) => {
+    if (targetUser.id === user.id || Math.random() >= 0.5) {
+      return null;
+    }
+
+    return generateNotification(targetUser.id, user.name);
+  })).flat().filter((notification) => notification !== null);
+  const createdNotifications = await prisma.$transaction(
+    notifications.map((notification) => prisma.notification.create({data: notification}))
+  );
+
+  // Create training requests
+  const trainingRequests = createdSportsmen.map((createdSportsman, sportsmanIndex) =>
+    allUsers.map((user, userIndex) => {
+      if (Math.random() >= 0.5 && createdSportsman.id !== user.id && userIndex >= sportsmanIndex) {
+        return generateTrainingRequest(createdSportsman.id, user.id);
+      }
+
+      return null;
+    })
+  ).flat().filter((trainingRequest) => trainingRequest !== null);
+  const createdTrainingRequests = await prisma.$transaction(
+    trainingRequests.map((trainingRequest) => prisma.trainingRequest.create({data: trainingRequest})),
   );
 }
 

@@ -13,7 +13,8 @@
 
 1. Из корневой директории проекта перейдите в директорию `/fit-friends/packages/backend` и выполните `docker compose up -d`.
 2. Из корневой директории перейдите в директорию `/fit-friends` и выполните `npx nx run backend:db-migrate` для миграции бд 
-3. Выполните `npx nx run backend:serve` для запуска backend-сервера
+3. Выполните `npx nx run backend:db-seed` для начального наполнения базы данных
+4. Выполните `npx nx run backend:serve` для запуска backend-сервера
 
 ### Frontend
 
@@ -23,12 +24,17 @@
 
 OpenAPI спецификации сервиса находятся по адресу `http://localhost:3333/spec`
 
+## Отправка уведомлений по почте
+
+Для того чтобы отправить накопившиеся уведомления нужно сделать `GET` запрос по адресу `http://localhost:3333/api/subscribers`
+
 ## Сценарии
 
 1. `npm run cli` - cli для генерации данных
 2. `npx nx run backend:db-validate` - проверяет корректность `schema.prisma` файла
 3. `npx nx run backend:db-migrate` - запускает миграцию для базы данных
 4. `npx nx run backend:db-reset` - сбрасывает данные в бд
-5. `npx nx run backend/frontend:serve` - запускает dev server для проектов
-6. `npx nx run backend/frontend:lint` - запускает линтер для проектов
-7. `npx nx run backend/frontend:build` - создает релизный build для проектов
+5. `npx nx run backend:db-seed` - наполняет бд начальными данными. Пароль пользовател по умолчанию - `pass1234` 
+6. `npx nx run backend/frontend:serve` - запускает dev server для проектов
+7. `npx nx run backend/frontend:lint` - запускает линтер для проектов
+8. `npx nx run backend/frontend:build` - создает релизный build для проектов

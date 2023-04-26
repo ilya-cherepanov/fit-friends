@@ -20,7 +20,6 @@ import {Coach, Sportsman, User} from '@prisma/client';
 import {faker} from '@faker-js/faker/locale/ru';
 import {BaseUserEntity} from '../users/user.entity';
 import {getRandomTrainingImage} from '../../utils/image';
-import {TrainingEntity} from './training.entity';
 
 jest.mock('../../utils/image');
 
@@ -215,14 +214,6 @@ describe('TrainingService', () => {
           ...coach,
         },
         sportsman: null,
-      });
-
-      const coachEntity = BaseUserEntity.createFromPrisma({
-        ...user,
-        sportsman: null,
-        coach: {
-          ...coach,
-        },
       });
 
       await expect(trainingsService.create({...dto, type: TrainingType.Box}, coachId, video))

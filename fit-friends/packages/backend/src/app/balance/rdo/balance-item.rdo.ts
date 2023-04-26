@@ -22,8 +22,15 @@ export class BalanceItemRDO implements BalanceResponse {
   userId: number;
 
   @ApiProperty({
+    description: 'Количество оставшихся тренировок',
+    example: 10,
+  })
+  @Expose()
+  remains: number;
+
+  @ApiProperty({
     description: 'Тип записи баланаса пользователя',
-    type: OrderType,
+    enum: OrderType,
     example: OrderType.Training
   })
   @Expose()

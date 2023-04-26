@@ -7,7 +7,7 @@ import {UserRepository} from '../users/user.repository';
 import {Level, TrainingTimeIntervals, Location, TrainingType, UserRole, UserSex} from '@fit-friends/core';
 import {hash} from 'bcrypt';
 import {RegisterCoachDTO} from './dto/register-coach.dto';
-import {BaseUserEntity, CoachEntity} from '../users/user.entity';
+import {BaseUserEntity} from '../users/user.entity';
 import {BadRequestException, NotFoundException} from '@nestjs/common';
 
 

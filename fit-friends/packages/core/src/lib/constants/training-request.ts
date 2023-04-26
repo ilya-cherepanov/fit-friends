@@ -1,4 +1,4 @@
-export const enum TrainingRequestStatus {
+export enum TrainingRequestStatus {
   Rejected = 'rejected',
   Accepted = 'accepted',
   UnderConsideration = 'under-consideration',

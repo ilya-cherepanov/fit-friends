@@ -2,6 +2,7 @@ import {readdir} from 'node:fs/promises';
 import {resolve} from 'path';
 import {sample, sampleSize} from 'lodash';
 
+
 export const getRandomFileName = async (dirPath: string): Promise<string> => {
   const files = await readdir(dirPath);
 
@@ -24,7 +25,7 @@ export const getRandomGymImages = async (path: string, count: number): Promise<s
   return sampleSize(files, count);
 };
 
-export const getRandomAvatarImage = async (path: string): Promise<string> => {
+export const getRandomAvatarImage = async (): Promise<string> => {
   const files = await readdir(resolve(__dirname, 'assets/photos/avatars'));
 
   return sample(files);

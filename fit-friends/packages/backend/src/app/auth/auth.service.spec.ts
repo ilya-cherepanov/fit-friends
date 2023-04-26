@@ -17,7 +17,7 @@ import {
   NotFoundException,
   UnauthorizedException
 } from '@nestjs/common';
-import {Coach, Sportsman, User} from '@prisma/client';
+import {Sportsman, User} from '@prisma/client';
 import {Level, Location, TrainingTimeIntervals, TrainingType, UserRole, UserSex} from '@fit-friends/core';
 import {genSalt, hash} from 'bcrypt';
 import {JWTPayload} from '@fit-friends/shared-types';
@@ -87,18 +87,6 @@ describe('AuthService', () => {
       caloriesPerDay: 1000,
       caloriesToLose: 2000,
       readyToTraining: true,
-    };
-
-    const coach: Coach = {
-      id: 1,
-      certificate: 'certificate.png',
-      achievements: 'Achievements',
-      hasPersonalTrainings: true,
-    };
-
-    const jwtPayload: JWTPayload = {
-      sub: user.id,
-      role: UserRole.Sportsman,
     };
 
     it('should throw UnauthorizedException if user not exists', async () => {

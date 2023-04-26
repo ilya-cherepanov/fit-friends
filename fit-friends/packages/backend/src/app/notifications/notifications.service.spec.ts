@@ -6,7 +6,6 @@ import {DeepMockProxy, mockDeep} from 'jest-mock-extended';
 import {NotificationText} from '@fit-friends/core';
 import {faker} from '@faker-js/faker/locale/ru';
 import {InternalServerErrorException} from '@nestjs/common';
-import {count} from 'rxjs';
 
 
 describe('NotificationsService', () => {

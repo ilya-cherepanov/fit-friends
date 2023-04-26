@@ -3,6 +3,7 @@ paths:
   /auth/login:
     post:
       operationId: AuthController_login
+      summary: Авторизация пользователя
       parameters: []
       requestBody:
         required: true
@@ -25,6 +26,7 @@ paths:
   /auth/logout:
     post:
       operationId: AuthController_logout
+      summary: Выход из системы
       parameters: []
       responses:
         '200':
@@ -37,6 +39,7 @@ paths:
   /auth/refresh:
     get:
       operationId: AuthController_refresh
+      summary: Обновить пару токенов
       parameters: []
       responses:
         '200':
@@ -55,6 +58,7 @@ paths:
   /users/one/{id}:
     get:
       operationId: UsersController_getById
+      summary: Получить данные о пользователе
       parameters:
         - name: id
           required: true
@@ -81,6 +85,7 @@ paths:
   /users/all:
     get:
       operationId: UsersController_getAll
+      summary: Получить список пользователей
       parameters:
         - name: level
           required: false
@@ -157,6 +162,7 @@ paths:
   /users/friends/{id}:
     post:
       operationId: UsersController_addFriend
+      summary: Добавить в друзья
       parameters:
         - name: id
           required: true
@@ -176,6 +182,7 @@ paths:
   /users/friends:
     get:
       operationId: UsersController_getFriends
+      summary: Получить список друзей
       parameters: []
       responses:
         '200':
@@ -194,6 +201,7 @@ paths:
   /coaches:
     post:
       operationId: CoachesController_create
+      summary: Зарегистрировать тренера
       parameters: []
       requestBody:
         required: true
@@ -203,7 +211,7 @@ paths:
               $ref: '#/components/schemas/RegisterCoachDTO'
       responses:
         '201':
-          description: Регистрирует тренера
+          description: Возвращает созданного тренера
           content:
             application/json:
               schema:
@@ -215,6 +223,7 @@ paths:
         - Users
     put:
       operationId: CoachesController_update
+      summary: Редактировать данные тренера
       parameters: []
       requestBody:
         required: true
@@ -239,6 +248,7 @@ paths:
   /sportsmen:
     post:
       operationId: SportsmenController_create
+      summary: Зарегистрировать спортсмена
       parameters: []
       requestBody:
         required: true
@@ -260,6 +270,7 @@ paths:
         - Users
     put:
       operationId: SportsmenController_update
+      summary: Редактировать данные спортсмена
       parameters: []
       requestBody:
         required: true
@@ -284,6 +295,7 @@ paths:
   /trainings/{id}:
     get:
       operationId: TrainingsController_get
+      summary: Получить данные тренировки
       parameters:
         - name: id
           required: true
@@ -292,7 +304,7 @@ paths:
             type: number
       responses:
         '200':
-          description: Возвращает список тренеровок тренера
+          description: Возвращает список тренировок тренера
           content:
             application/json:
               schema:
@@ -305,6 +317,7 @@ paths:
         - bearer: []
     put:
       operationId: TrainingsController_update
+      summary: Редактировать данные тренировки
       parameters:
         - name: id
           required: true
@@ -336,6 +349,7 @@ paths:
   /trainings:
     get:
       operationId: TrainingsController_getMany
+      summary: Получить список тренировок
       parameters:
         - name: minPrice
           required: false
@@ -386,7 +400,7 @@ paths:
         - name: types
           required: false
           in: query
-          description: Тип тренеровок
+          description: Тип тренировок
           example:
             - yoga
             - pilates
@@ -405,7 +419,7 @@ paths:
         - name: duration
           required: false
           in: query
-          description: Длительность тренеровок
+          description: Длительность тренировок
           example: 80-100
           schema:
             enum:
@@ -428,7 +442,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Возвращает список тренеровок тренера
+          description: Возвращает список тренировок
           content:
             application/json:
               schema:
@@ -437,13 +451,12 @@ paths:
           description: Неверная строка запроса
         '401':
           description: Пользователь не авторизован
-        '403':
-          description: Пользователь не является тренером
       tags: *ref_4
       security:
         - bearer: []
     post:
       operationId: TrainingsController_create
+      summary: Создать тренировку
       parameters: []
       requestBody:
         required: true
@@ -453,7 +466,7 @@ paths:
               $ref: '#/components/schemas/CreateTrainingDTO'
       responses:
         '201':
-          description: Возвращает только что созданную тренеровку
+          description: Возвращает только что созданную тренировку
           content:
             application/json:
               schema:
@@ -467,9 +480,120 @@ paths:
       tags: *ref_4
       security:
         - bearer: []
+  /coach-trainings:
+    get:
+      operationId: TrainingsController_getCoachMany
+      summary: Получить список тренировок тренера
+      parameters:
+        - name: minPrice
+          required: false
+          in: query
+          description: Минимальная цена
+          example: 1000
+          schema:
+            type: number
+        - name: maxPrice
+          required: false
+          in: query
+          description: Максимальная цена
+          example: 2000
+          schema:
+            type: number
+        - name: minCalories
+          required: false
+          in: query
+          description: Минимальное количество калорий
+          example: 1000
+          schema:
+            type: number
+        - name: maxCalories
+          required: false
+          in: query
+          description: Максимальное количество калорий
+          example: 1200
+          schema:
+            type: number
+        - name: minRating
+          required: false
+          in: query
+          description: Минимальный рейтинг
+          example: 4
+          schema:
+            minimum: 1
+            maximum: 5
+            type: number
+        - name: maxRating
+          required: false
+          in: query
+          description: Максимальный рейтинг
+          example: 5
+          schema:
+            minimum: 1
+            maximum: 5
+            type: number
+        - name: types
+          required: false
+          in: query
+          description: Тип тренировок
+          example:
+            - yoga
+            - pilates
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - yoga
+                - running
+                - box
+                - stretching
+                - crossfit
+                - aerobics
+                - pilates
+        - name: duration
+          required: false
+          in: query
+          description: Длительность тренировок
+          example: 80-100
+          schema:
+            enum:
+              - 10-30
+              - 30-50
+              - 50-80
+              - 80-100
+              - 100-120
+            type: string
+        - name: orderBy
+          required: false
+          in: query
+          description: Сортировка
+          example: cheap
+          schema:
+            enum:
+              - expensive
+              - cheap
+              - free
+            type: string
+      responses:
+        '200':
+          description: Возвращает список тренировок тренера
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingListRDO'
+        '400':
+          description: Неверная строка запроса
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является тренером
+      tags: *ref_4
+      security:
+        - bearer: []
   /orders:
     post:
       operationId: OrdersController_create
+      summary: Создать заказ
       parameters: []
       requestBody:
         required: true
@@ -479,7 +603,7 @@ paths:
               $ref: '#/components/schemas/CreateOrderDTO'
       responses:
         '201':
-          description: Создает заказ
+          description: Возвращает созданый заказ
           content:
             application/json:
               schema:
@@ -494,6 +618,7 @@ paths:
         - bearer: []
     get:
       operationId: OrdersController_getMany
+      summary: Получить список заказов тренера
       parameters:
         - name: sortBySum
           required: false
@@ -529,6 +654,645 @@ paths:
         '403':
           description: Пользователь не является тренером
       tags: *ref_5
+      security:
+        - bearer: []
+  /balance:
+    get:
+      operationId: BalanceController_getMany
+      summary: Получить баланс спортсмена
+      parameters:
+        - name: types
+          required: false
+          in: query
+          description: Тип
+          example:
+            - training
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - subscription
+                - training
+      responses:
+        '200':
+          description: Возвращает баланс пользователя
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceListRDO'
+        '400':
+          description: Неправильный запрос
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является спортсменом
+      tags: &ref_6
+        - Balance
+      security:
+        - bearer: []
+    post:
+      operationId: BalanceController_change
+      summary: Изменить баланс спортсмена
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeBalanceDTO'
+      responses:
+        '200':
+          description: Изменяет запись баланса и возвращает новую
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceItemRDO'
+        '400':
+          description: Неправильный запрос
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является спортсменом
+        '404':
+          description: Не найдена запись баланса
+      tags: *ref_6
+      security:
+        - bearer: []
+  /eatings:
+    post:
+      operationId: EatingsController_save
+      summary: Сохранить изменения в дневнике питания
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEatingListDTO'
+      responses:
+        '200':
+          description: Изменения в дневнике питания сохранены
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EatingRDO'
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является спортсменом
+      tags: &ref_7
+        - Eatings
+      security:
+        - bearer: []
+    get:
+      operationId: EatingsController_get
+      summary: Получить записи дневника питания
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: Номер страницы
+          example: 1
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetEatingsDTO'
+      responses:
+        '200':
+          description: Возвращает записи дневника питания за указанный период
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EatingsRDO'
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является спортсменом
+      tags: *ref_7
+      security:
+        - bearer: []
+  /training-diary/{trainingId}:
+    post:
+      operationId: TrainingDiaryController_create
+      summary: Выполнить тренировку
+      parameters:
+        - name: trainingId
+          required: true
+          in: path
+          description: Идентификатор тренировки
+          example: 10
+          schema:
+            type: number
+      responses:
+        '201':
+          description: Создана запись о выполненой тренировке
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompletedTrainingRDO'
+        '400':
+          description: Невалидный id тренировки
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является спортсменом
+        '404':
+          description: Тренировка с данным id не найдена
+      tags: &ref_8
+        - Training
+        - Training diary
+      security:
+        - bearer: []
+  /training-diary:
+    get:
+      operationId: TrainingDiaryController_getMany
+      summary: Получить список выполненных тренировок за указаный интервал времени
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetCompletedTrainingsDTO'
+      responses:
+        '200':
+          description: Список выполненых тренировок за указаный интервал времени
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompletedTrainingRDO'
+        '400':
+          description: Невалидный запрос
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является спортсменом
+      tags: *ref_8
+      security:
+        - bearer: []
+  /friends/{id}:
+    post:
+      operationId: FriendsController_create
+      summary: Добавить в друзья
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Идентификатор пользователя, к которому адресовано предложени дружбы
+          example: 134
+          schema:
+            type: number
+      responses:
+        '201':
+          description: Добавляет другого пользователя в друзья
+        '400':
+          description: Неверный запрос
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является спортсменом
+      tags: &ref_9
+        - Friends
+      security:
+        - bearer: []
+    delete:
+      operationId: FriendsController_delete
+      summary: Прекратить дружбу
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Идентификатор пользователя, c которым нужно разорвать дружбу
+          example: 134
+          schema:
+            type: number
+      responses:
+        '204':
+          description: Дружба разорвана
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является спортсменом
+      tags: *ref_9
+      security:
+        - bearer: []
+  /friends:
+    get:
+      operationId: FriendsController_getMany
+      summary: Получить список друзей
+      parameters: []
+      responses:
+        '200':
+          description: Возвращает список друзей пользователя
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListRDO'
+        '400':
+          description: Неверный запрос
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является спортсменом
+      tags: *ref_9
+      security:
+        - bearer: []
+  /notifications:
+    get:
+      operationId: NotificationsController_getMany
+      summary: Получить уведомления пользователя
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: Номер текущей страницы
+          example: 10
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Возвращает уведомления пользователя
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationListRDO'
+        '401':
+          description: Пользователь не авторизован
+      tags: &ref_10
+        - Notifications
+      security:
+        - bearer: []
+  /notifications/{id}:
+    delete:
+      operationId: NotificationsController_delete
+      summary: Удалить уведомление
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Идентификатор уведомления
+          example: 10
+          schema:
+            type: number
+      responses:
+        '204':
+          description: Уведомление удаленно
+        '401':
+          description: Пользователь не авторизован
+      tags: *ref_10
+      security:
+        - bearer: []
+  /gyms/favorites:
+    get:
+      operationId: GymsController_getFavorites
+      summary: Получить понравившиеся спортивные залы
+      parameters:
+        - name: page
+          required: true
+          in: query
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Возврващает список спортивных залов
+      tags: &ref_11
+        - Gyms
+      security:
+        - bearer: []
+  /gyms/many:
+    get:
+      operationId: GymsController_getMany
+      summary: Получить список спортивных залов
+      parameters:
+        - name: minPrice
+          required: false
+          in: query
+          description: Минимальная цена
+          example: 500
+          schema:
+            minimum: 100
+            maximum: 5000
+            type: number
+        - name: maxPrice
+          required: false
+          in: query
+          description: Максимальная цена
+          example: 1000
+          schema:
+            minimum: 100
+            maximum: 5000
+            type: number
+        - name: location
+          required: false
+          in: query
+          description: Локация
+          example:
+            - petrogradskaya
+            - sportivnaya
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - pionerskaya
+                - petrogradskaya
+                - udelnaya
+                - zvezdnaya
+                - sportivnaya
+        - name: parameters
+          required: false
+          in: query
+          description: Дополнительные параметры зала
+          example:
+            - massage
+            - pool
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - pool
+                - free-parking
+                - massage
+                - kids-room
+        - name: isVerified
+          required: false
+          in: query
+          description: Только проверенные залы
+          example: true
+          schema:
+            default: false
+            type: boolean
+      responses:
+        '200':
+          description: ''
+      tags: *ref_11
+      security:
+        - bearer: []
+  /gyms/one/{gymId}:
+    get:
+      operationId: GymsController_getOne
+      summary: Получить спортивный зал
+      parameters:
+        - name: gymId
+          required: true
+          in: path
+          description: Идентификатор спортивного зала
+          example: 33
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+      tags: *ref_11
+      security:
+        - bearer: []
+  /gyms/{id}/favorites/{state}:
+    post:
+      operationId: GymsController_setFavoriteState
+      summary: Установить статус фаворита
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Идентификатор спортивного зала
+          example: 33
+          schema:
+            type: number
+        - name: state
+          required: true
+          in: path
+          description: Статус(true/false) фаворита
+          example: true
+          schema:
+            type: boolean
+      responses:
+        '204':
+          description: Установлен статус(true/false) фаворита
+      tags: *ref_11
+      security:
+        - bearer: []
+  /subscribers:
+    get:
+      operationId: SubscribersController_sendMailNotifications
+      summary: Отправить уведомления о новых тренировках
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags: &ref_12
+        - Subscribers
+  /subscribers/{coachId}:
+    get:
+      operationId: SubscribersController_get
+      summary: Получить статус подписки на тренера
+      parameters:
+        - name: coachId
+          required: true
+          in: path
+          description: Идентификатор тренера
+          example: 10
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Возвращает статус подписки
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscribingStateRDO'
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является спортсменом
+      tags: *ref_12
+      security:
+        - bearer: []
+  /subscribers/{coachId}/{state}:
+    post:
+      operationId: SubscribersController_setState
+      summary: Установить статус подписки на тренера
+      parameters:
+        - name: coachId
+          required: true
+          in: path
+          description: Идентификатор тренера
+          example: 10
+          schema:
+            type: number
+        - name: state
+          required: true
+          in: path
+          description: Состояние подписки
+          example: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Возвращает установленный статус подписки
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscribingStateRDO'
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является спортсменом
+      tags: *ref_12
+      security:
+        - bearer: []
+  /training-requests/{targetId}:
+    post:
+      operationId: TrainingRequestsController_create
+      summary: Отправить приглашение на тренировку
+      parameters:
+        - name: targetId
+          required: true
+          in: path
+          description: Идентификатор пользователя которому адресовано приглашение
+          example: 10
+          schema:
+            type: number
+      responses:
+        '201':
+          description: Создано приглашение на тренировку
+        '400':
+          description: Не валидный запрос
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является спортсменом
+        '409':
+          description: Приглашение на тренировку уже существует
+      tags: &ref_13
+        - Training requests
+      security:
+        - bearer: []
+  /training-requests/{initiatorId}/accept:
+    put:
+      operationId: TrainingRequestsController_accept
+      summary: Принять приглашение на тренировку
+      parameters:
+        - name: initiatorId
+          required: true
+          in: path
+          description: Пользователь, который отправил предложение тренировки
+          example: 10
+          schema:
+            type: number
+      responses:
+        '201':
+          description: Создано приглашение на тренировку
+        '400':
+          description: Не валидный запрос
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является спортсменом
+        '404':
+          description: Приглашение на тренировку не существует
+      tags: *ref_13
+      security:
+        - bearer: []
+  /training-requests/{initiatorId}/reject:
+    put:
+      operationId: TrainingRequestsController_reject
+      summary: Отклонить приглашение на тренировку
+      parameters:
+        - name: initiatorId
+          required: true
+          in: path
+          description: Пользователь, который отправил предложение тренировки
+          example: 10
+          schema:
+            type: number
+      responses:
+        '201':
+          description: Создано приглашение на тренировку
+        '400':
+          description: Не валидный запрос
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является спортсменом
+        '404':
+          description: Приглашение на тренировку не существует
+      tags: *ref_13
+      security:
+        - bearer: []
+  /reviews:
+    post:
+      operationId: ReviewsController_create
+      summary: Создать отзыв
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReviewDTO'
+      responses:
+        '201':
+          description: Создан отзыв
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReviewRDO'
+        '400':
+          description: Невалидный запрос
+        '401':
+          description: Пользователь не авторизован
+        '403':
+          description: Пользователь не является спортсменом
+        '404':
+          description: Не найдена тренировка с данным id
+      tags: &ref_14
+        - Reviews
+      security:
+        - bearer: []
+  /trainings/{trainingId}/reviews:
+    get:
+      operationId: ReviewsController_getMany
+      summary: Получить отзывы
+      parameters:
+        - name: trainingId
+          required: true
+          in: path
+          description: Идентификатор тренировки
+          example: 15
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          description: Номер страницы
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Возвращает список отзывов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewListRDO'
+        '400':
+          description: Невалидный запрос
+        '401':
+          description: Пользователь не авторизован
+        '404':
+          description: Не найдена тренировка с данным id
+      tags: *ref_14
       security:
         - bearer: []
 info:
@@ -603,7 +1367,7 @@ components:
         level:
           type: string
           description: Уровень подготовки/квалификации пользователя
-          enum: &ref_6
+          enum: &ref_15
             - beginner
             - amateur
             - professional
@@ -611,7 +1375,7 @@ components:
         location:
           type: string
           description: Станция метро где находится пользователь
-          enum: &ref_7
+          enum: &ref_16
             - pionerskaya
             - petrogradskaya
             - udelnaya
@@ -625,7 +1389,7 @@ components:
         role:
           type: string
           description: Тип пользоавтеля
-          enum: &ref_8
+          enum: &ref_17
             - coach
             - sportsman
             - anonymous
@@ -633,7 +1397,7 @@ components:
         sex:
           type: string
           description: Пол пользователя
-          enum: &ref_9
+          enum: &ref_18
             - male
             - female
             - any
@@ -641,11 +1405,11 @@ components:
         trainingTypes:
           type: array
           description: Тип тренировок
-          example: &ref_10
+          example: &ref_19
             - pilates
             - yoga
             - stretching
-          items: &ref_11
+          items: &ref_20
             type: string
             enum:
               - yoga
@@ -711,12 +1475,12 @@ components:
         level:
           type: string
           description: Уровень подготовки/квалификации пользователя
-          enum: *ref_6
+          enum: *ref_15
           example: professional
         location:
           type: string
           description: Станция метро где находится пользователь
-          enum: *ref_7
+          enum: *ref_16
           example: petrogradskaya
         name:
           type: string
@@ -725,18 +1489,18 @@ components:
         role:
           type: string
           description: Тип пользоавтеля
-          enum: *ref_8
+          enum: *ref_17
           example: sportsman
         sex:
           type: string
           description: Пол пользователя
-          enum: *ref_9
+          enum: *ref_18
           example: any
         trainingTypes:
           type: array
           description: Тип тренировок
-          example: *ref_10
-          items: *ref_11
+          example: *ref_19
+          items: *ref_20
         caloriesPerDay:
           type: number
           description: Количество калорий для траты в день
@@ -807,7 +1571,7 @@ components:
         level:
           type: string
           description: Уровень подготовки/квалификации пользователя
-          enum: &ref_12
+          enum: &ref_21
             - beginner
             - amateur
             - professional
@@ -815,7 +1579,7 @@ components:
         location:
           type: string
           description: Станция метро где находится пользователь
-          enum: &ref_13
+          enum: &ref_22
             - pionerskaya
             - petrogradskaya
             - udelnaya
@@ -841,7 +1605,7 @@ components:
         role:
           type: string
           description: Тип пользоавтеля
-          enum: &ref_14
+          enum: &ref_26
             - coach
             - sportsman
             - anonymous
@@ -849,7 +1613,7 @@ components:
         sex:
           type: string
           description: Пол пользователя
-          enum: &ref_15
+          enum: &ref_23
             - male
             - female
             - any
@@ -857,12 +1621,12 @@ components:
         trainingTypes:
           type: array
           description: Тип тренировок
-          example: &ref_16
+          example: &ref_24
             - pilates
             - yoga
             - stretching
           maxLength: 3
-          items: &ref_17
+          items: &ref_25
             type: string
             enum:
               - yoga
@@ -906,19 +1670,15 @@ components:
     UpdateCoachDTO:
       type: object
       properties:
-        email:
-          type: string
-          description: Электронная почта пользователя
-          example: user@mail.com
         level:
           type: string
           description: Уровень подготовки/квалификации пользователя
-          enum: *ref_12
+          enum: *ref_21
           example: professional
         location:
           type: string
           description: Станция метро где находится пользователь
-          enum: *ref_13
+          enum: *ref_22
           example: petrogradskaya
         name:
           type: string
@@ -930,28 +1690,17 @@ components:
           type: string
           description: Дата рождения пользователя
           example: '2002-03-10'
-        password:
-          type: string
-          description: Пароль пользователя
-          example: password1234
-          minLength: 6
-          maxLength: 15
-        role:
-          type: string
-          description: Тип пользоавтеля
-          enum: *ref_14
-          example: sportsman
         sex:
           type: string
           description: Пол пользователя
-          enum: *ref_15
+          enum: *ref_23
           example: any
         trainingTypes:
           type: array
           description: Тип тренировок
-          example: *ref_16
+          example: *ref_24
           maxLength: 3
-          items: *ref_17
+          items: *ref_25
         avatar:
           type: string
           description: Аватар пользователя
@@ -983,12 +1732,12 @@ components:
         level:
           type: string
           description: Уровень подготовки/квалификации пользователя
-          enum: *ref_12
+          enum: *ref_21
           example: professional
         location:
           type: string
           description: Станция метро где находится пользователь
-          enum: *ref_13
+          enum: *ref_22
           example: petrogradskaya
         name:
           type: string
@@ -1009,19 +1758,19 @@ components:
         role:
           type: string
           description: Тип пользоавтеля
-          enum: *ref_14
+          enum: *ref_26
           example: sportsman
         sex:
           type: string
           description: Пол пользователя
-          enum: *ref_15
+          enum: *ref_23
           example: any
         trainingTypes:
           type: array
           description: Тип тренировок
-          example: *ref_16
+          example: *ref_24
           maxLength: 3
-          items: *ref_17
+          items: *ref_25
         avatar:
           type: string
           description: Аватар пользователя
@@ -1057,19 +1806,15 @@ components:
     UpdateSportsmanDTO:
       type: object
       properties:
-        email:
-          type: string
-          description: Электронная почта пользователя
-          example: user@mail.com
         level:
           type: string
           description: Уровень подготовки/квалификации пользователя
-          enum: *ref_12
+          enum: *ref_21
           example: professional
         location:
           type: string
           description: Станция метро где находится пользователь
-          enum: *ref_13
+          enum: *ref_22
           example: petrogradskaya
         name:
           type: string
@@ -1081,28 +1826,17 @@ components:
           type: string
           description: Дата рождения пользователя
           example: '2002-03-10'
-        password:
-          type: string
-          description: Пароль пользователя
-          example: password1234
-          minLength: 6
-          maxLength: 15
-        role:
-          type: string
-          description: Тип пользоавтеля
-          enum: *ref_14
-          example: sportsman
         sex:
           type: string
           description: Пол пользователя
-          enum: *ref_15
+          enum: *ref_23
           example: any
         trainingTypes:
           type: array
           description: Тип тренировок
-          example: *ref_16
+          example: *ref_24
           maxLength: 3
-          items: *ref_17
+          items: *ref_25
         avatar:
           type: string
           description: Аватар пользователя
@@ -1151,7 +1885,7 @@ components:
         duration:
           type: string
           description: Время тренировки
-          enum: &ref_21
+          enum: &ref_30
             - 10-30
             - 30-50
             - 50-80
@@ -1169,7 +1903,7 @@ components:
         level:
           type: string
           description: Требуемый уровень подготовки
-          enum: &ref_22
+          enum: &ref_31
             - beginner
             - amateur
             - professional
@@ -1186,7 +1920,7 @@ components:
         sex:
           type: string
           description: Пол пользователя для которого предназначена тренировка
-          enum: &ref_23
+          enum: &ref_32
             - male
             - female
             - any
@@ -1200,7 +1934,7 @@ components:
         type:
           type: string
           description: Тип тренировки
-          enum: &ref_24
+          enum: &ref_33
             - yoga
             - running
             - box
@@ -1273,7 +2007,7 @@ components:
         duration:
           type: string
           description: Время тренировки
-          enum: &ref_18
+          enum: &ref_27
             - 10-30
             - 30-50
             - 50-80
@@ -1283,7 +2017,7 @@ components:
         sex:
           type: string
           description: Пол пользователя для которого предназначена тренировка
-          enum: &ref_19
+          enum: &ref_28
             - male
             - female
             - any
@@ -1291,7 +2025,7 @@ components:
         type:
           type: string
           description: Тип тренировки
-          enum: &ref_20
+          enum: &ref_29
             - yoga
             - running
             - box
@@ -1344,17 +2078,17 @@ components:
         duration:
           type: string
           description: Время тренировки
-          enum: *ref_18
+          enum: *ref_27
           example: 80-100
         sex:
           type: string
           description: Пол пользователя для которого предназначена тренировка
-          enum: *ref_19
+          enum: *ref_28
           example: any
         type:
           type: string
           description: Тип тренировки
-          enum: *ref_20
+          enum: *ref_29
           example: crossfit
         price:
           type: number
@@ -1479,7 +2213,7 @@ components:
         duration:
           type: string
           description: Время тренировки
-          enum: *ref_21
+          enum: *ref_30
           example: 80-100
         image:
           type: string
@@ -1492,7 +2226,7 @@ components:
         level:
           type: string
           description: Требуемый уровень подготовки
-          enum: *ref_22
+          enum: *ref_31
           example: amateur
         price:
           type: number
@@ -1506,7 +2240,7 @@ components:
         sex:
           type: string
           description: Пол пользователя для которого предназначена тренировка
-          enum: *ref_23
+          enum: *ref_32
           example: any
         title:
           type: string
@@ -1517,7 +2251,7 @@ components:
         type:
           type: string
           description: Тип тренировки
-          enum: *ref_24
+          enum: *ref_33
           example: crossfit
         video:
           type: string
@@ -1563,6 +2297,434 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrderItemRDO'
+      required:
+        - currentPage
+        - totalPages
+        - items
+    GymRDO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Идентификатор зала
+          example: 10
+        title:
+          type: string
+          description: Название зала
+          example: Grand Fitness
+        location:
+          type: string
+          description: Месторасположеине зала
+          enum:
+            - pionerskaya
+            - petrogradskaya
+            - udelnaya
+            - zvezdnaya
+            - sportivnaya
+          example: zvezdnaya
+        isVerified:
+          type: boolean
+          description: Признак, что зал проверен
+          example: true
+        parameters:
+          type: array
+          description: Дополнительные опции зала
+          example:
+            - pool
+            - massage
+          items:
+            type: string
+            enum:
+              - pool
+              - free-parking
+              - massage
+              - kids-room
+        photos:
+          description: Фотографии зала
+          example:
+            - 13f38369-00fc-4ff6-8134-1457e390624e.jpg
+            - 37f7e795-51ac-4e95-928a-878e3533f54c.jpg
+            - 60ec83a2-4894-4a41-bd5c-6c7d605c587e.jpg
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+          description: Описание зала
+          example: >-
+            Спортивный комплекс премиум-класса с 3 видами сауны, бассейном
+            длинной 54 м., услугами массажиста и большой парковкой.
+        price:
+          type: number
+          description: Цена занятия в зале
+          example: 200
+        createdAt:
+          type: string
+          description: Дата регистрации зала
+          example: '2023-04-09T20:59:26.320Z'
+      required:
+        - id
+        - title
+        - location
+        - isVerified
+        - parameters
+        - photos
+        - description
+        - price
+        - createdAt
+    BalanceItemRDO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Идентификатор записи баланса пользователя
+          example: 10
+        userId:
+          type: number
+          description: Идентификатор пользователя
+          example: 22
+        remains:
+          type: number
+          description: Количество оставшихся тренировок
+          example: 10
+        type:
+          type: string
+          description: Тип записи баланаса пользователя
+          enum:
+            - subscription
+            - training
+          example: training
+        training:
+          description: Тренеровка к которой привязан баланс
+          allOf:
+            - $ref: '#/components/schemas/TrainingRDO'
+        gym:
+          description: Спортивный зал к которой привязан баланс
+          allOf:
+            - $ref: '#/components/schemas/GymRDO'
+      required:
+        - id
+        - userId
+        - remains
+        - type
+    BalanceListRDO:
+      type: object
+      properties:
+        currentPage:
+          type: number
+          description: Текущая страница
+          example: 1
+        totalPages:
+          type: number
+          description: Общее количество страниц
+          example: 10
+        items:
+          description: Запись баланса пользователя
+          type: array
+          items:
+            $ref: '#/components/schemas/BalanceItemRDO'
+      required:
+        - currentPage
+        - totalPages
+        - items
+    ChangeBalanceDTO:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Тип записи баланса
+          enum:
+            - subscription
+            - training
+          example: training
+        id:
+          type: number
+          description: Идентификатор тренировки или зала к которому привязан баланс
+          example: 125
+        changeType:
+          type: string
+          description: Тип изменения баланса
+          enum:
+            - increment
+            - decrement
+          example: increment
+      required:
+        - type
+        - id
+        - changeType
+    CreateEatingDTO:
+      type: object
+      properties:
+        calories:
+          type: number
+          description: Калорийность приема пищи
+          example: 400
+        createdAt:
+          format: date-time
+          type: string
+          description: Дата приема пищи
+          example: '2023-04-16T16:05:58.770Z'
+        type:
+          type: string
+          description: Время приема пищи
+          enum:
+            - breakfast
+            - lunch
+            - dinner
+            - snack
+          example: dinner
+      required:
+        - calories
+        - createdAt
+        - type
+    CreateEatingListDTO:
+      type: object
+      properties:
+        items:
+          description: Данные о приеме пищи
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateEatingDTO'
+      required:
+        - items
+    EatingRDO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Идентификатор приема пищи
+          example: 10
+        type:
+          type: string
+          description: Время приема пищи
+          enum:
+            - breakfast
+            - lunch
+            - dinner
+            - snack
+          example: dinner
+        calories:
+          type: number
+          description: Калорийность приема пищи
+          example: 400
+        createdAt:
+          type: string
+          description: Дата приема пищи
+          example: '2023-04-16T16:05:58.770Z'
+      required:
+        - id
+        - type
+        - calories
+        - createdAt
+    GetEatingsDTO:
+      type: object
+      properties:
+        after:
+          format: date-time
+          type: string
+          description: Начало временного интервала
+          example: '2023-04-16T16:05:58.770Z'
+        before:
+          format: date-time
+          type: string
+          description: Конец временного интервала
+          example: '2023-04-16T16:05:58.770Z'
+      required:
+        - after
+        - before
+    EatingsRDO:
+      type: object
+      properties:
+        currentPage:
+          type: number
+          description: Текущая страница
+          example: 1
+        totalPages:
+          type: number
+          description: Всего страниц
+          example: 10
+        items:
+          description: Приемы пищи
+          type: array
+          items:
+            $ref: '#/components/schemas/EatingRDO'
+      required:
+        - currentPage
+        - totalPages
+        - items
+    CompletedTrainingRDO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Идетрификатор законченной тренировки
+          example: 123
+        createdAt:
+          type: string
+          description: Дата выполнения тренировки
+          example: '2023-04-09T21:12:09.862Z'
+        calories:
+          type: number
+          description: Потрачено калорий на тренировке
+          example: 1100
+        duration:
+          type: string
+          description: Длительность тренировки
+          enum:
+            - 10-30
+            - 30-50
+            - 50-80
+            - 80-100
+            - 100-120
+          example: 100-120
+        trainingId:
+          type: number
+          description: Идентификатор тренировки
+          example: 24
+      required:
+        - id
+        - createdAt
+        - calories
+        - duration
+        - trainingId
+    GetCompletedTrainingsDTO:
+      type: object
+      properties:
+        after:
+          format: date-time
+          type: string
+          description: Начало временного интервала
+          example: '2023-04-16T16:05:58.770Z'
+        before:
+          format: date-time
+          type: string
+          description: Конец временного интервала
+          example: '2023-04-16T16:05:58.770Z'
+      required:
+        - after
+        - before
+    NotificationRDO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Идентификатор уведомления
+          example: 10
+        text:
+          type: string
+          description: Текст уведомления
+          example: Катерина пригласила вас на тренировку
+        createdAt:
+          type: string
+          description: Время создания уведомления
+          example: '2023-04-12T17:38:51.653Z'
+      required:
+        - id
+        - text
+        - createdAt
+    NotificationListRDO:
+      type: object
+      properties:
+        currentPage:
+          type: number
+          description: Текущая страница
+          example: 1
+        totalPages:
+          type: number
+          description: Общее количество страниц
+          example: 10
+        items:
+          description: Список уведомлений
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationRDO'
+      required:
+        - currentPage
+        - totalPages
+        - items
+    SubscribingStateRDO:
+      type: object
+      properties:
+        isSubscribed:
+          type: boolean
+          description: Статус подписчика
+          example: false
+      required:
+        - isSubscribed
+    CreateReviewDTO:
+      type: object
+      properties:
+        trainingId:
+          type: number
+          description: Идентификатор тренировки
+          minimum: 0
+          example: 14
+        text:
+          type: string
+          description: Текст отзыва
+          minLength: 100
+          maxLength: 1024
+          example: Эта тренировка для меня зарядка по утрам, помогает проснуться.
+        rating:
+          type: number
+          description: Оценка тренировки
+          minimum: 1
+          maximum: 5
+          example: 5
+      required:
+        - trainingId
+        - text
+        - rating
+    ReviewRDO:
+      type: object
+      properties:
+        id:
+          type: number
+          description: Идентификатор отзыва
+          example: 15
+        text:
+          type: string
+          description: Текст отзыва
+          example: Эта тренировка для меня зарядка по утрам, помогает проснуться.
+        rating:
+          type: number
+          description: Оценка тренировки
+          example: 5
+        trainingId:
+          type: number
+          description: Идентификатор тренировки
+          example: 52
+        createdAt:
+          type: string
+          description: Дата создания отзыва
+          example: '2023-04-17T22:21:12.981Z'
+        author:
+          description: Автор отзыва
+          allOf:
+            - $ref: '#/components/schemas/SportsmanRDO'
+      required:
+        - id
+        - text
+        - rating
+        - trainingId
+        - createdAt
+        - author
+    ReviewListRDO:
+      type: object
+      properties:
+        currentPage:
+          type: number
+          description: Текущая страница
+          example: 1
+        totalPages:
+          type: number
+          description: Общее количество страниц
+          example: 10
+        items:
+          description: Список отзывов
+          type: array
+          items:
+            type: string
       required:
         - currentPage
         - totalPages

@@ -1,7 +1,7 @@
 # Get my balance
 GET http://localhost:3333/api/balance HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzMCwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MjI4ODk5MywiZXhwIjoxNjgyODkzNzkzfQ.ciMmTbDddWpJjz7JoVdZHywSlStGiCn4mp8a6tyT9dk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInJvbGUiOiJzcG9ydHNtYW4iLCJpYXQiOjE2ODI1NDIxNTcsImV4cCI6MTY4MzE0Njk1N30.tyKraPsCI8CdLE58KgKNCn_15jTO3tcEIB-QEew9pBA
 
 ###
 

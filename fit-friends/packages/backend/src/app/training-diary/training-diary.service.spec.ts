@@ -11,7 +11,7 @@ import {
   TrainingTitle,
   TrainingType,
   UserSex,
-  Location, OrderType,
+  OrderType,
 } from '@fit-friends/core';
 import {BalanceModule} from '../balance/balance.module';
 import {TrainingRepository} from '../trainings/training.repository';

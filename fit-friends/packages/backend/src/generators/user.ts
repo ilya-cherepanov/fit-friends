@@ -1,6 +1,10 @@
 import {Prisma} from '@prisma/client';
 import {faker} from '@faker-js/faker/locale/ru';
 import {random, sample, sampleSize} from 'lodash';
+import {GENERATED_USER_PASSWORD} from './constants';
+import {getRandomFileName} from '../utils/image';
+import {genSalt, hash} from 'bcrypt';
+import {resolve} from 'path';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {
   Level, SportsmanLoseCalories, SportsmanLoseCaloriesPerDay,
@@ -11,10 +15,6 @@ import {
   UserSex,
   Location
 } from '../../../core/src/index';
-import {GENERATED_USER_PASSWORD} from './constants';
-import {getRandomFileName} from '../utils/image';
-import {genSalt, hash} from 'bcrypt';
-import {resolve} from 'path';
 
 
 export async function generateUser(role: UserRole): Promise<Prisma.UserCreateArgs['data']> {
@@ -23,8 +23,9 @@ export async function generateUser(role: UserRole): Promise<Prisma.UserCreateArg
     email: faker.internet.email(),
     password: await hash(GENERATED_USER_PASSWORD, await genSalt(10)),
     sex: sample([UserSex.Male, UserSex.Female]),
+    birthDate: new Date(),
     role,
-    avatar: await getRandomFileName(resolve(__dirname, '../assets/photos/avatars')),
+    avatar: `photos/avatars/${await getRandomFileName(resolve(__dirname, '../assets/photos/avatars'))}`,
     level: sample(Object.values(Level)),
     trainingTypes: sampleSize(Object.values(TrainingType), random(USER_MAX_TRAINING_TYPE_COUNT)),
     location: sample(Object.values(Location)),
@@ -40,7 +41,7 @@ export async function generateUser(role: UserRole): Promise<Prisma.UserCreateArg
       create: {
         achievements: faker.lorem.paragraph(3),
         hasPersonalTrainings: Math.random() >= 0.5,
-        certificate: await getRandomFileName(resolve(__dirname, '../assets/photos/certificates')),
+        certificate: `photos/certificates/${await getRandomFileName(resolve(__dirname, '../assets/photos/certificates'))}`,
       },
     } : undefined,
   };

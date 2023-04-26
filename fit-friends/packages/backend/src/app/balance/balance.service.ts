@@ -60,6 +60,7 @@ export class BalanceService {
 
     const balanceEntityClone = Object.assign({}, balanceEntity);
     Object.setPrototypeOf(balanceEntityClone, BalanceEntity.prototype);
+    balanceEntityClone.id = balance.id;
     balanceEntityClone.increment(balance.remains);
     return this.balanceRepository.update(balanceEntityClone);
   }

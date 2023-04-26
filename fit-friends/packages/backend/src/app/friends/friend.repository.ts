@@ -3,11 +3,9 @@ import {FriendStatus} from '@fit-friends/core';
 import {Prisma} from '@prisma/client';
 import {
   FRIEND_ALREADY_EXISTS,
-  PRISMA_NOT_FOUND_CODE,
   PRISMA_VIOLATION_OF_UNIQUENESS_CODE,
-  USER_WITH_EMAIL_ALREADY_EXISTS
 } from '../../constants';
-import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
+import {ConflictException, Injectable} from '@nestjs/common';
 
 
 @Injectable()
