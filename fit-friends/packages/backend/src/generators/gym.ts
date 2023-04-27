@@ -1,13 +1,11 @@
-import {Prisma} from '@prisma/client';
 import {random, sample, sampleSize} from 'lodash';
 import {GYM_DESCRIPTIONS, GYM_NAMES} from './constants';
 import {getRandomFileNames} from '../utils/image';
 import {resolve} from 'path';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {GymParameters, GymPhotoCount, GymPrice, Location} from '../../../core/src/index';
+import {GymParameters, GymPhotoCount, GymPrice, Location} from '@fit-friends/core';
 
 
-export async function generateGym(): Promise<Prisma.GymCreateArgs['data']> {
+export async function generateGym() {
   const photos = await getRandomFileNames(
     resolve(__dirname, '../assets/photos/gyms'),
     random(GymPhotoCount.Min, GymPhotoCount.Max),

@@ -36,6 +36,7 @@ import {
 import {UpdateTrainingDTO} from './dto/update-traininig.dto';
 import {TrainingListQuery} from './query/training-list.query';
 import {TrainingListRDO} from './rdo/training-list.rdo';
+import {Express} from 'express';
 
 
 @Controller()

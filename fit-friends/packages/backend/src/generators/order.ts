@@ -1,7 +1,6 @@
 import {Gym, Training} from '@prisma/client';
 import {random, sample} from 'lodash';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {OrderPaymentMethod, OrderType} from '../../../core/src';
+import {OrderPaymentMethod, OrderType} from '@fit-friends/core';
 
 
 export function generateOrder(sportsmanId: number, trainings: Training[], gyms: Gym[]) {

@@ -51,7 +51,7 @@ export class GymsController {
     return fillObject(GymListRdo, await this.gymsService.getFavorites(user.sub, page));
   }
 
-  @Get('many')
+  @Get('')
   @UseGuards(JWTAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({
@@ -61,7 +61,7 @@ export class GymsController {
     return fillObject(GymListRdo, await this.gymsService.getMany(query));
   }
 
-  @Get('one/:gymId')
+  @Get(':gymId([0-9]+)')
   @UseGuards(JWTAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({

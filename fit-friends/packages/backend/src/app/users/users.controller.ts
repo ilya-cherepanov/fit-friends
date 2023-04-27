@@ -1,13 +1,11 @@
-import {Controller, Get, Param, ParseIntPipe, Post, Query, UseGuards} from '@nestjs/common';
+import {Controller, Get, Param, ParseIntPipe, Query, UseGuards} from '@nestjs/common';
 import {UsersService} from './users.service';
-import {JWTPayload} from '@fit-friends/shared-types';
-import {User} from '../auth/decorators/user.decorator';
 import {JWTAuthGuard} from '../auth/guards/jwt-auth.guard';
 import {CoachEntity, SportsmanEntity} from './user.entity';
 import {fillObject} from '@fit-friends/core';
 import {CoachRDO, SportsmanRDO} from './rdo/user.rdo';
 import {
-  ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse,
+  ApiBadRequestResponse, ApiBearerAuth,
   ApiExtraModels,
   ApiNotFoundResponse,
   ApiOkResponse, ApiOperation,
@@ -16,7 +14,6 @@ import {
 } from '@nestjs/swagger';
 import {UsersQuery} from './query/users.query';
 import {UserListRDO} from './rdo/user-list.rdo';
-import {FriendsQuery} from './query/friends.query';
 
 
 @Controller('users')
@@ -25,7 +22,7 @@ import {FriendsQuery} from './query/friends.query';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get('/one/:id')
+  @Get(':id([0-9]+)')
   @UseGuards(JWTAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({
@@ -56,7 +53,7 @@ export class UsersController {
     }
   }
 
-  @Get('/all')
+  @Get('')
   @UseGuards(JWTAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({
@@ -74,44 +71,5 @@ export class UsersController {
   })
   async getAll(@Query() query: UsersQuery) {
     return fillObject(UserListRDO, await this.usersService.getAll(query));
-  }
-
-  @Post('/friends/:id')
-  @UseGuards(JWTAuthGuard)
-  @ApiBearerAuth()
-  @ApiOperation({
-    summary: 'Добавить в друзья',
-  })
-  @ApiCreatedResponse({
-    description: 'Добавляет другого пользователя в друзья',
-  })
-  @ApiBadRequestResponse({
-    description: 'Неверный запрос',
-  })
-  @ApiUnauthorizedResponse({
-    description: 'Пользователь не авторизован',
-  })
-  async addFriend(@Param('id', ParseIntPipe) friendId: number, @User() user: JWTPayload) {
-    await this.usersService.addFriend(friendId, user.sub);
-  }
-
-  @Get('/friends')
-  @UseGuards(JWTAuthGuard)
-  @ApiBearerAuth()
-  @ApiOperation({
-    summary: 'Получить список друзей',
-  })
-  @ApiOkResponse({
-    description: 'Возвращает список друзей пользователя',
-    type: UserListRDO,
-  })
-  @ApiBadRequestResponse({
-    description: 'Неверный запрос',
-  })
-  @ApiUnauthorizedResponse({
-    description: 'Пользователь не авторизован',
-  })
-  async getFriends(@User() user: JWTPayload, @Query() query: FriendsQuery) {
-    return fillObject(UserListRDO, await this.usersService.getFriends(query, user.sub));
   }
 }

@@ -1,7 +1,6 @@
 import {random, sample} from 'lodash';
 import {REVIEW_TEXTS} from './constants';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {ReviewTrainingRating} from '../../../core/src/index';
+import {ReviewTrainingRating} from '@fit-friends/core';
 
 
 export function generateReview(trainingId: number, sportsmanId: number) {

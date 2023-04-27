@@ -9,8 +9,7 @@ import {generateOrder} from '../src/generators/order';
 import {generateBalance} from '../src/generators/balance';
 import {generateNotification} from '../src/generators/notification';
 import {generateTrainingRequest} from '../src/generators/training-request';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {FriendStatus, UserRole} from '../../core/src';
+import {FriendStatus, UserRole} from '@fit-friends/core';
 
 const prisma = new PrismaClient();
 

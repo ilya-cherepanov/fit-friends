@@ -1,11 +1,9 @@
-import {Prisma} from '@prisma/client';
 import {faker} from '@faker-js/faker/locale/ru';
 import {random, sample, sampleSize} from 'lodash';
 import {GENERATED_USER_PASSWORD} from './constants';
 import {getRandomFileName} from '../utils/image';
 import {genSalt, hash} from 'bcrypt';
 import {resolve} from 'path';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {
   Level, SportsmanLoseCalories, SportsmanLoseCaloriesPerDay,
   TrainingTimeIntervals,
@@ -14,10 +12,10 @@ import {
   UserRole,
   UserSex,
   Location
-} from '../../../core/src/index';
+} from '@fit-friends/core';
 
 
-export async function generateUser(role: UserRole): Promise<Prisma.UserCreateArgs['data']> {
+export async function generateUser(role: UserRole) {
   return {
     name: faker.name.firstName(),
     email: faker.internet.email(),

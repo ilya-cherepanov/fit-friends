@@ -1,7 +1,6 @@
 import {generateReverseDaysSequence} from './utils';
 import {random} from 'lodash';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {EatingType} from '../../../core/src';
+import {EatingType} from '@fit-friends/core';
 
 
 export function generateEatings(userId: number) {

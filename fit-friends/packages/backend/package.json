@@ -1,5 +1,5 @@
 {
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\",\"paths\":{\"@fit-friends/core\":[\"../core/src/index.ts\"],\"@fit-friends/shared-types\":[\"../shared-types/src/index.ts\"]}} prisma/seed.ts"
+    "seed": "ts-node -r tsconfig-paths/register --compiler-options {\"module\":\"CommonJS\",\"paths\":{\"@fit-friends/core\":[\"packages/core/src/index.ts\"],\"@fit-friends/shared-types\":[\"packages/shared-types/src/index.ts\"]}} prisma/seed.ts"
   }
 }

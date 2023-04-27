@@ -36,5 +36,6 @@ OpenAPI спецификации сервиса находятся по адре
 4. `npx nx run backend:db-reset` - сбрасывает данные в бд
 5. `npx nx run backend:db-seed` - наполняет бд начальными данными. Пароль пользовател по умолчанию - `pass1234` 
 6. `npx nx run backend/frontend:serve` - запускает dev server для проектов
-7. `npx nx run backend/frontend:lint` - запускает линтер для проектов
-8. `npx nx run backend/frontend:build` - создает релизный build для проектов
+7. `npx nx run backend/fronetnd:test` - запускает unit-тесты
+8. `npx nx run backend/frontend:lint` - запускает линтер для проектов
+9. `npx nx run backend/frontend:build` - создает релизный build для проектов

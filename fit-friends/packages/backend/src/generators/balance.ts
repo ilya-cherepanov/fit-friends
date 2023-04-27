@@ -1,6 +1,5 @@
 import {generateOrder} from './order';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {OrderType} from '../../../core/src';
+import {OrderType} from '@fit-friends/core';
 
 
 export function generateBalance(orders: ReturnType<typeof generateOrder>[]) {

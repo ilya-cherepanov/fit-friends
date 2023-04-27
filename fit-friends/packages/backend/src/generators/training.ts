@@ -2,8 +2,7 @@ import {getRandomFileName} from '../utils/image';
 import {random, sample} from 'lodash';
 import {TRAINING_DESCRIPTIONS, TRAINING_TITLES, TRAINING_VIDEO} from './constants';
 import {resolve} from 'path';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import {Level, MIN_PRICE, TrainingCalories, TrainingTimeIntervals, TrainingType, UserSex} from '../../../core/src/index';
+import {Level, MIN_PRICE, TrainingCalories, TrainingTimeIntervals, TrainingType, UserSex} from '@fit-friends/core';
 
 
 export async function generateTraining(coachId: number) {
