@@ -6,13 +6,13 @@ GET http://localhost:3333/api/subscribers HTTP/1.1
 # Set subscription status
 POST http://localhost:3333/api/subscribers/107/true HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEwOCwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MTI5ODEwNSwiZXhwIjoxNjgxOTAyOTA1fQ.GhdFryr6lUB_xcJYJI05t0d06CfMNlsG3yaWl7yuHHg
+Authorization: Bearer {{accessToken}}
 
 ###
 
 # Get subscription status
 GET http://localhost:3333/api/subscribers/107 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEwOCwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MTI5ODEwNSwiZXhwIjoxNjgxOTAyOTA1fQ.GhdFryr6lUB_xcJYJI05t0d06CfMNlsG3yaWl7yuHHg
+Authorization: Bearer {{accessToken}}
 
 ###

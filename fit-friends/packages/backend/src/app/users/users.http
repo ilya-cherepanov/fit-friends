@@ -1,13 +1,13 @@
 # Get user
 GET http://localhost:3333/api/users/7 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzMCwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MjI4ODk5MywiZXhwIjoxNjgyODkzNzkzfQ.ciMmTbDddWpJjz7JoVdZHywSlStGiCn4mp8a6tyT9dk
+Authorization: Bearer {{accessToken}}
 
 ###
 
 # Get many users
 GET http://localhost:3333/api/users?sortBy=sportsman&locations[]=udelnaya HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzMCwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MjI4ODk5MywiZXhwIjoxNjgyODkzNzkzfQ.ciMmTbDddWpJjz7JoVdZHywSlStGiCn4mp8a6tyT9dk
+Authorization: Bearer {{accessToken}}
 
 ###

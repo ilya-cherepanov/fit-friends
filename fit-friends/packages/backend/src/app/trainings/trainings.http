@@ -1,7 +1,7 @@
 # Create training
 POST http://localhost:3333/api/trainings HTTP/1.1
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTQxNjQ3OCwiZXhwIjoxNjgwMDIxMjc4fQ.lqB4dF7xYhA4qOrsOstERyFDdOKTSxm1WAyYz6739EI
+Authorization: Bearer {{accessToken}}
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="title"
@@ -47,7 +47,7 @@ Content-Type: video/mp4
 # Update training
 PUT http://localhost:3333/api/trainings/3 HTTP/1.1
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTQxNjQ3OCwiZXhwIjoxNjgwMDIxMjc4fQ.lqB4dF7xYhA4qOrsOstERyFDdOKTSxm1WAyYz6739EI
+Authorization: Bearer {{accessToken}}
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="title"
@@ -64,20 +64,20 @@ true
 # Get one training
 GET http://localhost:3333/api/trainings/3 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJyb2xlIjoic3BvcnRzbWFuIiwiaWF0IjoxNjgwMTEzMTM4LCJleHAiOjE2ODA3MTc5Mzh9.27rRsHxhT_06OCvI5FyteSHIeZNpZGuMKEmXLYO8-Ek
+Authorization: Bearer {{accessToken}}
 
 ###
 
 # Get coaches trainings
 GET http://localhost:3333/api/coach-trainings?minCalories=1000&maxCalories=1000 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIyLCJyb2xlIjoic3BvcnRzbWFuIiwiaWF0IjoxNjgwMTEzMTM4LCJleHAiOjE2ODA3MTc5Mzh9.27rRsHxhT_06OCvI5FyteSHIeZNpZGuMKEmXLYO8-Ek
+Authorization: Bearer {{accessToken}}
 
 ###
 
 # Get trainings
 GET http://localhost:3333/api/trainings?minCalories=1000 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInJvbGUiOiJzcG9ydHNtYW4iLCJpYXQiOjE2ODE3NDQzMjAsImV4cCI6MTY4MjM0OTEyMH0.ReGj24h-Iuk5GC-u7Yd1ubVpFxlQNnr-qTnxlRot3Nc
+Authorization: Bearer {{accessToken}}
 
 ###

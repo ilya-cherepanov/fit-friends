@@ -1,7 +1,7 @@
 # Create order
 POST http://localhost:3333/api/orders HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzMCwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MjI4ODk5MywiZXhwIjoxNjgyODkzNzkzfQ.ciMmTbDddWpJjz7JoVdZHywSlStGiCn4mp8a6tyT9dk
+Authorization: Bearer {{accessToken}}
 
 {
   "type": "training",
@@ -15,6 +15,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzMCwicm9sZ
 # Get my orders
 GET http://localhost:3333/api/orders HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEzMCwicm9sZSI6InNwb3J0c21hbiIsImlhdCI6MTY4MjI4ODk5MywiZXhwIjoxNjgyODkzNzkzfQ.ciMmTbDddWpJjz7JoVdZHywSlStGiCn4mp8a6tyT9dk
+Authorization: Bearer {{accessToken}}
 
 ###
