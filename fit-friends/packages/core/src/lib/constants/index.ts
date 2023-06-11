@@ -18,6 +18,11 @@ export enum Location {
   Udelnaya = 'udelnaya',
   Zvezdnaya = 'zvezdnaya',
   Sportivnaya = 'sportivnaya',
+  Avtovo = 'avtovo',
+  Admiralteyskaya = 'admiralteyskaya',
+  Academicheskaya = 'academicheskaya',
+  Baltiyskaya = 'baltiyskaya',
+  Buharestskaya = 'buharestskaya',
 }
 
 export enum Level {
@@ -34,6 +39,7 @@ export enum TrainingType {
   Crossfit = 'crossfit',
   Aerobics = 'aerobics',
   Pilates = 'pilates',
+  Strength = 'strength',
 }
 
 export enum TrainingTimeIntervals {

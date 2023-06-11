@@ -19,6 +19,7 @@ export enum GymParameters {
   FreeParking = 'free-parking',
   Massage = 'massage',
   KidsRoom = 'kids-room',
+  Sauna = 'sauna',
 }
 
 export const enum GymPhotoCount {

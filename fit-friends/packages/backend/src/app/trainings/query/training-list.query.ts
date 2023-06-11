@@ -118,4 +118,14 @@ export class TrainingListQuery {
   @IsEnum(TrainingOrderBy)
   @IsOptional()
   orderBy?: TrainingOrderBy;
+
+  @ApiProperty({
+    description: 'Идентификатор тренера',
+    example: 10,
+    required: false,
+  })
+  @IsInt()
+  @IsOptional()
+  @Transform(({value}) => parseInt(value))
+  coachId?: number;
 }

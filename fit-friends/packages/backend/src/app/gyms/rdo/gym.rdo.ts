@@ -74,4 +74,11 @@ export class GymRDO implements GymResponse {
   })
   @Expose()
   createdAt: string;
+
+  @ApiProperty({
+    description: 'Является ли зал фаворитом пользователя',
+    example: '2023-04-09T20:59:26.320Z',
+  })
+  @Expose()
+  isFavorite: boolean;
 }

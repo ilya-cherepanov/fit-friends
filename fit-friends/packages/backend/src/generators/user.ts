@@ -23,12 +23,13 @@ export async function generateUser(role: UserRole) {
     sex: sample([UserSex.Male, UserSex.Female]),
     birthDate: new Date(),
     role,
-    avatar: `photos/avatars/${await getRandomFileName(resolve(__dirname, '../assets/photos/avatars'))}`,
+    avatar: `avatars/${await getRandomFileName(resolve(__dirname, '../assets/photos/avatars'))}`,
     level: sample(Object.values(Level)),
     trainingTypes: sampleSize(Object.values(TrainingType), random(USER_MAX_TRAINING_TYPE_COUNT)),
     location: sample(Object.values(Location)),
     sportsman: role === UserRole.Sportsman ? {
       create: {
+        description: faker.lorem.paragraph(3),
         trainingDuration: sample(Object.values(TrainingTimeIntervals)),
         readyToTraining: Math.random() >= 0.5,
         caloriesToLose: random(SportsmanLoseCalories.Min, SportsmanLoseCalories.Max),
@@ -39,7 +40,7 @@ export async function generateUser(role: UserRole) {
       create: {
         achievements: faker.lorem.paragraph(3),
         hasPersonalTrainings: Math.random() >= 0.5,
-        certificate: `photos/certificates/${await getRandomFileName(resolve(__dirname, '../assets/photos/certificates'))}`,
+        certificate: `certificates/${await getRandomFileName(resolve(__dirname, '../assets/photos/certificates'))}`,
       },
     } : undefined,
   };

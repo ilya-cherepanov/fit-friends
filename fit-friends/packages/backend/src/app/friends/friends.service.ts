@@ -79,4 +79,16 @@ export class FriendsService {
     const user = await this.userRepository.getById(userId);
     await this.notificationService.create(friendId, `Пользователь ${user.name} удалил вас из друзей`);
   }
+
+  async check(userId: number, friendId: number) {
+    if (userId === friendId) {
+      throw new BadRequestException(SAME_USER_CANNOT_BE_FRIEND);
+    }
+
+    const friend = await this.friendRepository.getById(userId, friendId);
+
+    return {
+      status: !!friend,
+    };
+  }
 }

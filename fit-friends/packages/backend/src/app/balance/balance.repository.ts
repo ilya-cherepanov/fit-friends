@@ -13,6 +13,7 @@ export class BalanceRepository {
     skip: number,
     take: number,
     types = [OrderType.Subscription, OrderType.Training],
+    isActive?: boolean
   ) {
     const [balanceItems, count] = await this.prismaService.$transaction([
       this.prismaService.balance.findMany({
@@ -21,6 +22,7 @@ export class BalanceRepository {
           type: {
             in: types,
           },
+          remains: isActive ? {gt: 0} : undefined,
         },
         include: {
           gym: true,
@@ -35,6 +37,7 @@ export class BalanceRepository {
           type: {
             in: types,
           },
+          remains: isActive ? {gt: 0} : undefined,
         },
       }),
     ]);
@@ -82,5 +85,16 @@ export class BalanceRepository {
         training: true,
       },
     });
+  }
+
+  async check(trainingId: number, sportsmanId: number) {
+    const balanceItem = await this.prismaService.balance.findFirst({
+      where: {
+        trainingId,
+        userId: sportsmanId,
+      },
+    });
+
+    return balanceItem ? balanceItem.remains > 0 : false;
   }
 }

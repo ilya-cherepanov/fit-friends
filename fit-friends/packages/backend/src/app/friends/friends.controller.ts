@@ -28,6 +28,7 @@ import {Roles} from '../auth/decorators/roles.decorator';
 import {RolesGuard} from '../auth/guards/roles.guard';
 import {FriendsService} from './friends.service';
 import {FriendRDO} from './rdo/friend.rdo';
+import {FriendshipStatusRDO} from './rdo/friendship-status.rdo';
 
 
 @Controller('friends')
@@ -110,5 +111,22 @@ export class FriendsController {
   })
   async getMany(@User() user: JWTPayload, @Query() query: FriendsQuery) {
     return fillObject(UserListRDO, await this.friendsService.getMany(user.sub, query));
+  }
+
+  @Get(':friendId/check')
+  @UseGuards(JWTAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Получить статус дружбы',
+  })
+  @ApiOkResponse({
+    description: 'Возвращает статус дружбы пользователей',
+    type: FriendshipStatusRDO,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Пользователь не авторизован',
+  })
+  async check(@User() user: JWTPayload, @Param('friendId', ParseIntPipe) friendId: number) {
+    return fillObject(FriendshipStatusRDO, await this.friendsService.check(user.sub, friendId));
   }
 }

@@ -1,4 +1,4 @@
-# Create order
+# Create training order
 POST http://localhost:3333/api/orders HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
@@ -8,6 +8,20 @@ Authorization: Bearer {{accessToken}}
   "paymentMethod": "visa",
   "quantity": 4,
   "id": 3
+}
+
+###
+
+# Create gym order
+POST http://localhost:3333/api/orders HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "type": "subscription",
+  "paymentMethod": "visa",
+  "quantity": 4,
+  "id": 4
 }
 
 ###

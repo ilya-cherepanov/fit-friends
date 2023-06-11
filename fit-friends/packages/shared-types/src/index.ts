@@ -21,3 +21,7 @@ export * from './lib/date-interval-request';
 export * from './lib/eating-response';
 export * from './lib/balance-response';
 export * from './lib/review-request';
+export * from './lib/completed-training-response';
+export * from './lib/status-response';
+export * from './lib/create-eating-request';
+export * from './lib/create-eatings-list-request';

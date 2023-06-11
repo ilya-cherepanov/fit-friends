@@ -64,4 +64,10 @@ export class BalanceService {
     balanceEntityClone.increment(balance.remains);
     return this.balanceRepository.update(balanceEntityClone);
   }
+
+  async check(trainingId: number, sportsmanId: number) {
+    return {
+      status: await this.balanceRepository.check(trainingId, sportsmanId),
+    };
+  }
 }

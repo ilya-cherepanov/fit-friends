@@ -39,7 +39,7 @@ export class TrainingDiaryController {
     summary: 'Выполнить тренировку',
   })
   @ApiCreatedResponse({
-    description: 'Создана запись о выполненой тренировке',
+    description: 'Создана запись о выполненной тренировке',
     type: CompletedTrainingRDO,
   })
   @ApiUnauthorizedResponse({
@@ -69,10 +69,10 @@ export class TrainingDiaryController {
   @Roles(UserRole.Sportsman)
   @ApiBearerAuth()
   @ApiOperation({
-    summary: 'Получить список выполненных тренировок за указаный интервал времени',
+    summary: 'Получить список выполненных тренировок за указанный интервал времени',
   })
   @ApiOkResponse({
-    description: 'Список выполненых тренировок за указаный интервал времени',
+    description: 'Список выполненных тренировок за указанный интервал времени',
     type: [CompletedTrainingRDO],
   })
   @ApiUnauthorizedResponse({

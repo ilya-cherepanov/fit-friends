@@ -48,6 +48,7 @@ model Sportsman {
   caloriesToLose     Int                 @map("calories_to_lose") @db.SmallInt
   readyToTraining    Boolean             @map("ready_to_training")
   trainingDuration   String              @map("training_duration") @db.VarChar(31)
+  description        String              @default("") @db.VarChar(511)
   trainingRequests   TrainingRequest[]
   completedTrainings CompletedTraining[]
 

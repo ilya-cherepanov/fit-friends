@@ -1,5 +1,13 @@
 import {BaseUserResponse, CoachResponse, SportsmanResponse} from '@fit-friends/shared-types';
-import {Level, Location, UserRole, UserSex, TrainingTimeIntervals, TrainingType} from '@fit-friends/core';
+import {
+  Level,
+  Location,
+  UserRole,
+  UserSex,
+  TrainingTimeIntervals,
+  TrainingType,
+  SportsmanDescription
+} from '@fit-friends/core';
 import {ApiProperty} from '@nestjs/swagger';
 import {Expose} from 'class-transformer';
 
@@ -121,6 +129,15 @@ export class SportsmanRDO extends BaseUserRDO implements SportsmanResponse {
   })
   @Expose()
   readyToTraining: boolean;
+
+  @ApiProperty({
+    description: 'Описание пользователя',
+    example: 'Персональный тренер и инструктор групповых программ с опытом  более 4х лет. Специализация: коррекция фигуры и осанки, снижение веса, восстановление после травм, пилатес.',
+    minLength: SportsmanDescription.MinLength,
+    maxLength: SportsmanDescription.MaxLength,
+  })
+  @Expose()
+  description: string;
 }
 
 export class CoachRDO extends BaseUserRDO implements CoachResponse {

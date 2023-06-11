@@ -1,8 +1,9 @@
 import {Expose} from 'class-transformer';
 import {TrainingTimeIntervals} from '@fit-friends/core';
 import {ApiProperty} from '@nestjs/swagger';
+import {CompletedTrainingResponse} from '@fit-friends/shared-types';
 
-export class CompletedTrainingRDO {
+export class CompletedTrainingRDO implements CompletedTrainingResponse {
   @ApiProperty({
     description: 'Идетрификатор законченной тренировки',
     example: 123,

@@ -11,4 +11,5 @@ export interface GymResponse {
   description: string;
   price: number;
   createdAt: string;
+  isFavorite: boolean;
 }

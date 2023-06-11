@@ -14,7 +14,7 @@ import {TrainingEntity} from './training.entity';
 import {getRandomTrainingImage} from '../../utils/image';
 import {UpdateTrainingDTO} from './dto/update-traininig.dto';
 import {TrainingListQuery} from './query/training-list.query';
-import {MAX_COLLECTION_LENGTH} from '@fit-friends/core';
+import {MAX_COLLECTION_LENGTH, TrainingType} from '@fit-friends/core';
 
 @Injectable()
 export class TrainingsService {
@@ -41,13 +41,13 @@ export class TrainingsService {
     const skip = MAX_COLLECTION_LENGTH * query.page;
 
     const trainings = await this.trainingRepository.getMany(MAX_COLLECTION_LENGTH, skip, {
-      ...query,
       coachId,
+      ...query,
     }, query.orderBy);
 
     const count = await this.trainingRepository.count({
-      ...query,
       coachId,
+      ...query,
     });
 
     return {
@@ -104,6 +104,12 @@ export class TrainingsService {
       ...await this.trainingRepository.update(trainingEntity),
       coach: coachEntity,
     };
+  }
+
+  async getTrainingsByUserTrainingTypes(userId: number) {
+    const user = await this.userRepository.getById(userId);
+
+    return this.trainingRepository.getTrainingsByTrainingTypes(user.trainingTypes as TrainingType[]);
   }
 
   private async getCoachEntity(coachId: number) {

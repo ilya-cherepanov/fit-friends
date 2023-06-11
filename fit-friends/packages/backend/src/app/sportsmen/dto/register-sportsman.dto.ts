@@ -1,8 +1,13 @@
 import {RegisterUserDTO} from '../../users/dto/register-user.dto';
 import {SportsmanRegisterData} from '@fit-friends/shared-types';
-import {SportsmanLoseCalories, SportsmanLoseCaloriesPerDay, TrainingTimeIntervals} from '@fit-friends/core';
+import {
+  SportsmanDescription,
+  SportsmanLoseCalories,
+  SportsmanLoseCaloriesPerDay,
+  TrainingTimeIntervals
+} from '@fit-friends/core';
 import {ApiProperty} from '@nestjs/swagger';
-import {IsEnum, IsInt, Max, Min} from 'class-validator';
+import {IsEnum, IsInt, IsOptional, IsString, Length, Max, Min} from 'class-validator';
 import {Transform} from 'class-transformer';
 
 
@@ -37,4 +42,15 @@ export class RegisterSportsmanDTO extends RegisterUserDTO implements SportsmanRe
   })
   @IsEnum(TrainingTimeIntervals)
   trainingDuration: TrainingTimeIntervals;
+
+  @ApiProperty({
+    description: 'Описание пользователя',
+    example: 'Персональный тренер и инструктор групповых программ с опытом  более 4х лет. Специализация: коррекция фигуры и осанки, снижение веса, восстановление после травм, пилатес.',
+    minLength: SportsmanDescription.MinLength,
+    maxLength: SportsmanDescription.MaxLength,
+  })
+  @Length(SportsmanDescription.MinLength, SportsmanDescription.MaxLength)
+  @IsString()
+  @IsOptional()
+  description?: string;
 }

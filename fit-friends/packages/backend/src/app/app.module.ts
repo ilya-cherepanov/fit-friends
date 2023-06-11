@@ -5,7 +5,7 @@ import { CoachesModule } from './coaches/coaches.module';
 import { SportsmenModule } from './sportsmen/sportsmen.module';
 import { TrainingsModule } from './trainings/trainings.module';
 import { OrdersModule } from './orders/orders.module';
-import { ConfigModule } from '@nestjs/config';
+import {ConfigModule, ConfigService} from '@nestjs/config';
 import { ENV_FILE_PATH } from '../constants';
 import { jwtOptions } from '../config/jwt.config';
 import { envSchema } from './env.schema';
@@ -22,6 +22,7 @@ import { mailOptions } from '../config/mail.config';
 import { NotificationsModule } from './notifications/notifications.module';
 import { TrainingRequestsModule } from './training-requests/training-requests.module';
 import { ReviewsModule } from './reviews/reviews.module';
+import {ServeStaticModule} from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -49,6 +50,14 @@ import { ReviewsModule } from './reviews/reviews.module';
     NotificationsModule,
     TrainingRequestsModule,
     ReviewsModule,
+    ServeStaticModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ([{
+        rootPath: configService.get<string>('upload.directory'),
+        serveRoot: '/static',
+      }]),
+      inject: [ConfigService],
+    }),
   ],
   controllers: [],
   providers: [],

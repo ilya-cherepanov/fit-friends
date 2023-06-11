@@ -61,7 +61,7 @@ export class TrainingRepository {
     switch (orderBy) {
       case TrainingOrderBy.Expensive:
         query.orderBy = {
-          price: 'asc',
+          price: 'desc',
         };
         break;
       case TrainingOrderBy.Free:
@@ -124,6 +124,14 @@ export class TrainingRepository {
       where: {isNew: true},
       data: {isNew: false},
     });
+  }
+
+  async getTrainingsByTrainingTypes(trainingTypes: TrainingType[]) {
+    const trainings = await this.prismaService.$transaction(
+      trainingTypes.map((trainingType) => this.prismaService.training.findFirst({where: {type: trainingType}}))
+    );
+
+    return trainings.filter((training) => training !== null);
   }
 
   async recalculateAvgRating(trainingId: number) {

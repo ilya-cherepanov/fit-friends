@@ -8,7 +8,7 @@ import {Level, MIN_PRICE, TrainingCalories, TrainingTimeIntervals, TrainingType,
 export async function generateTraining(coachId: number) {
   return {
     title: sample(TRAINING_TITLES),
-    image: `photos/trainings/${await getRandomFileName(resolve(__dirname, '../assets/photos/trainings'))}`,
+    image: `trainings/${await getRandomFileName(resolve(__dirname, '../assets/photos/trainings'))}`,
     level: sample(Object.values(Level)),
     type: sample(Object.values(TrainingType)),
     duration: sample(Object.values(TrainingTimeIntervals)),

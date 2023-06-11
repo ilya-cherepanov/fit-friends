@@ -9,13 +9,18 @@ import {GymFilters} from '../../types/gym-filters';
 export class GymRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async getById(gymId: number) {
+  async getById(gymId: number, sportsmanId?: number) {
     return this.prismaService.gym.findFirst({
       where: {id: gymId},
+      include: {
+        favoriteGyms: {
+          where: {userId: sportsmanId},
+        },
+      },
     });
   }
 
-  async getMany(skip: number, take: number, filters: GymFilters) {
+  async getMany(skip: number, take: number, filters: GymFilters, sportsmanId?: number) {
     const [gyms, count] = await this.prismaService.$transaction([
       this.prismaService.gym.findMany({
         where: {
@@ -29,6 +34,11 @@ export class GymRepository {
           price: {
             gte: filters.minPrice,
             lte: filters.maxPrice,
+          },
+        },
+        include: {
+          favoriteGyms: {
+            where: {userId: sportsmanId},
           },
         },
         orderBy: {

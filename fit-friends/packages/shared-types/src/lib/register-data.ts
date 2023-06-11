@@ -22,6 +22,7 @@ export interface SportsmanRegisterData extends BaseRegisterData {
   caloriesPerDay: number;
   caloriesToLose: number;
   trainingDuration: TrainingTimeIntervals;
+  description?: string;
 }
 
 export type SignUpData = SportsmanRegisterData | CoachRegisterData;

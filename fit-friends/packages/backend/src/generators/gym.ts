@@ -15,7 +15,7 @@ export async function generateGym() {
     title: sample(GYM_NAMES),
     description: sample(GYM_DESCRIPTIONS),
     price: random(GymPrice.Min, GymPrice.Max),
-    photos: photos.map((photo) => `photos/gyms/${photo}`),
+    photos: photos.map((photo) => `gyms/${photo}`),
     isVerified: Math.random() >= 0.5,
     location: sample(Object.values(Location)),
     parameters: sampleSize(Object.values(GymParameters), random(Object.values(GymParameters).length)),

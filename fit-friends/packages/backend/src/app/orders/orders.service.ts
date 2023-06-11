@@ -6,6 +6,7 @@ import {TrainingRepository} from '../trainings/training.repository';
 import {GetManyOrdersQuery} from './query/get-many-orders.query';
 import {BalanceService} from '../balance/balance.service';
 import {BalanceEntity} from '../balance/balance-entity';
+import {GymRepository} from '../gyms/gym.repository';
 
 
 @Injectable()
@@ -13,6 +14,7 @@ export class OrdersService {
   constructor(
     private readonly orderRepository: OrderRepository,
     private readonly trainingRepository: TrainingRepository,
+    private readonly gymRepository: GymRepository,
     private readonly balanceService: BalanceService,
   ) {}
 
@@ -21,7 +23,7 @@ export class OrdersService {
       return this.createTrainingOrder(dto, sportsmanId);
     }
 
-    throw new NotImplementedException();
+    return this.createGymOrder(dto, sportsmanId);
   }
 
   async getMany(userId: number, query: GetManyOrdersQuery) {
@@ -39,6 +41,32 @@ export class OrdersService {
       currentPage: query.page,
       items: trainings,
     };
+  }
+
+  private async createGymOrder(dto: CreateOrderDTO, sportsmanId: number) {
+    const gym = await this.gymRepository.getById(dto.id);
+
+    const order = await this.orderRepository.create({
+      type: dto.type,
+      price: gym.price,
+      quantity: dto.quantity,
+      sum: gym.price * dto.quantity,
+      paymentMethod: dto.paymentMethod,
+      userId: sportsmanId,
+      trainingId: null,
+      gymId: gym.id,
+    });
+
+    const balanceEntity = new BalanceEntity({
+      type: OrderType.Subscription,
+      userId: sportsmanId,
+      gymId: dto.id,
+      remains: dto.quantity,
+    });
+
+    await this.balanceService.upsert(balanceEntity);
+
+    return order;
   }
 
   private async createTrainingOrder(dto: CreateOrderDTO, sportsmanId: number) {

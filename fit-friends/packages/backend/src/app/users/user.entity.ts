@@ -87,6 +87,7 @@ export abstract class BaseUserEntity implements BaseUser {
         location: user.location as Location,
         ...user.sportsman,
         trainingDuration: user.sportsman.trainingDuration as TrainingTimeIntervals,
+        description: user.sportsman.description,
       });
     }
 
@@ -100,9 +101,10 @@ export class SportsmanEntity extends BaseUserEntity implements Sportsman {
   caloriesToLose: number;
   readyToTraining: boolean;
   trainingDuration: TrainingTimeIntervals;
+  description: string;
 
   constructor(sportsman: Sportsman) {
-    super(sportsman);
+     super(sportsman);
   }
 
   update(user: Partial<Sportsman>) {
@@ -112,6 +114,7 @@ export class SportsmanEntity extends BaseUserEntity implements Sportsman {
     this.caloriesPerDay = user.caloriesPerDay ?? this.caloriesPerDay;
     this.readyToTraining = user.readyToTraining ?? this.readyToTraining;
     this.trainingDuration = user.trainingDuration ?? this.trainingDuration;
+    this.description = user.description ?? this.description;
   }
 
   fillEntity(sportsman: Sportsman) {
@@ -120,6 +123,7 @@ export class SportsmanEntity extends BaseUserEntity implements Sportsman {
     this.caloriesToLose = sportsman.caloriesToLose;
     this.readyToTraining = sportsman.readyToTraining;
     this.trainingDuration = sportsman.trainingDuration;
+    this.description = sportsman.description;
 
     this.role = UserRole.Sportsman;
   }

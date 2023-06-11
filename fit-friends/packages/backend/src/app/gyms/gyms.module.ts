@@ -6,5 +6,6 @@ import {GymRepository} from './gym.repository';
 @Module({
   controllers: [GymsController],
   providers: [GymsService, GymRepository],
+  exports: [GymRepository],
 })
 export class GymsModule {}

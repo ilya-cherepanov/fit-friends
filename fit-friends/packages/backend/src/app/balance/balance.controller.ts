@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Post, Query, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Query, UseGuards} from '@nestjs/common';
 import {
   ApiBadRequestResponse, ApiBearerAuth,
   ApiForbiddenResponse, ApiNotFoundResponse,
@@ -18,6 +18,7 @@ import {RolesGuard} from '../auth/guards/roles.guard';
 import {BalanceListRDO} from './rdo/balance-list.rdo';
 import {ChangeBalanceDTO} from './dto/change-balance.dto';
 import {BalanceItemRDO} from './rdo/balance-item.rdo';
+import {BalanceStatusRDO} from './rdo/balance-status.rdo';
 
 
 @Controller('balance')
@@ -75,5 +76,25 @@ export class BalanceController {
   })
   async change(@User() user: JWTPayload, @Body() dto: ChangeBalanceDTO) {
     return fillObject(BalanceItemRDO, await this.balanceService.change(user.sub, dto));
+  }
+
+  @Get('check/:trainingId')
+  @UseGuards(JWTAuthGuard, RolesGuard)
+  @Roles(UserRole.Sportsman)
+  @ApiOperation({
+    summary: 'Получить статус наличия в балансе',
+  })
+  @ApiOkResponse({
+    description: 'Возвращает статус наличия в балансе',
+    type: BalanceStatusRDO,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Пользователь не авторизован',
+  })
+  @ApiForbiddenResponse({
+    description: 'Пользователь не является спортсменом',
+  })
+  async check(@User() user: JWTPayload, @Param('trainingId', ParseIntPipe) trainingId: number) {
+    return fillObject(BalanceStatusRDO, await this.balanceService.check(trainingId, user.sub));
   }
 }

@@ -140,7 +140,7 @@ export class TrainingsController {
     return fillObject(TrainingRDO, await this.trainingsService.create(dto, user.sub, video.filename));
   }
 
-  @Put('trainings/:id')
+  @Put('trainings/:id([0-9]+)')
   @UseInterceptors(FileInterceptor('video'))
   @UseGuards(JWTAuthGuard, RolesGuard)
   @Roles(UserRole.Coach)
@@ -173,5 +173,23 @@ export class TrainingsController {
     ) video?: Express.Multer.File
   ) {
     return fillObject(TrainingRDO, await this.trainingsService.update(id, dto, user.sub, video?.filename));
+  }
+
+  @Get('trainings/by-type')
+  @UseGuards(JWTAuthGuard, RolesGuard)
+  @Roles(UserRole.Sportsman)
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Получить тренировки по типу',
+  })
+  @ApiOkResponse({
+    description: 'Возвращает тренировки по типам указанным пользователем',
+    type: [TrainingRDO],
+  })
+  async getByType(@User() user: JWTPayload) {
+    return fillObject(
+      TrainingRDO,
+      await this.trainingsService.getTrainingsByUserTrainingTypes(user.sub)
+    );
   }
 }

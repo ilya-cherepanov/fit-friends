@@ -8,24 +8,24 @@ import {GetGymsQuery} from './query/get-gyms.query';
 export class GymsService {
   constructor(private readonly gymRepository: GymRepository) {}
 
-  async getOne(gymId: number) {
-    const gym = await this.gymRepository.getById(gymId);
+  async getOne(gymId: number, sportsmanId: number) {
+    const gym = await this.gymRepository.getById(gymId, sportsmanId);
     if (!gym) {
       throw new NotFoundException();
     }
 
-    return gym;
+    return {...gym, isFavorite: gym.favoriteGyms.length > 0};
   }
 
-  async getMany(query: GetGymsQuery) {
+  async getMany(query: GetGymsQuery, sportsmanId: number) {
     const skip = query.page * MAX_COLLECTION_LENGTH;
 
-    const {gyms, count} = await this.gymRepository.getMany(skip, MAX_COLLECTION_LENGTH, query);
+    const {gyms, count} = await this.gymRepository.getMany(skip, MAX_COLLECTION_LENGTH, {...query, locations: query.location}, sportsmanId);
 
     return {
       currentPage: query.page,
       totalPages: Math.ceil(count / MAX_COLLECTION_LENGTH),
-      items: gyms,
+      items: gyms.map((gym) => ({...gym, isFavorite: gym.favoriteGyms.length > 0})),
     };
   }
 
@@ -45,7 +45,7 @@ export class GymsService {
     return {
       currentPage: page,
       totalPages: Math.ceil(count / MAX_COLLECTION_LENGTH),
-      items: gyms,
+      items: gyms.map((gym) => ({...gym, isFavorite: true})),
     };
   }
 }

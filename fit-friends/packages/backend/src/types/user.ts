@@ -20,6 +20,7 @@ export interface Sportsman extends BaseUser {
   caloriesToLose: number;
   readyToTraining: boolean;
   trainingDuration: TrainingTimeIntervals;
+  description: string;
 }
 
 export interface Coach extends BaseUser {
